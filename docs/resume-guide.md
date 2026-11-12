@@ -25,7 +25,7 @@ Order by what the posting names, and only list what you can defend in an intervi
 
 ## 3. Add a “Selected project” section
 
-> **Groundwork — independent design-engineering concept** · https://github.com/Gayanekh/groundwork · https://groundwork-tau-lemon.vercel.app
+> **Groundwork — independent design-engineering concept** · https://github.com/Gayanekh/groundwork · https://groundwork-concept.vercel.app
 > *Independent speculative concept, not affiliated with Artemis.*
 > - Designed and built a post-sale project-operations prototype in React 19, TypeScript and Tailwind CSS v4, with a complete core workflow (triage → unblock → advance → homeowner update).
 > - Created a design system from scratch: DTCG token pipeline generating the Tailwind theme, 25+ accessible components, Storybook documentation, and a build that fails on token drift or contrast below WCAG AA.
