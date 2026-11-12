@@ -1,0 +1,5 @@
+# Keep LF everywhere (Vercel builds on Linux; generated token files are compared byte-for-byte)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary

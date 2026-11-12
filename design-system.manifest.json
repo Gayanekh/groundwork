@@ -1,0 +1,81 @@
+{
+  "name": "Groundwork Design System",
+  "version": "0.1.0",
+  "notice": "Independent Speculative Concept — Not Affiliated with Artemis.",
+  "import": "import { Name } from '@/design-system'",
+  "tokens": {
+    "source": "src/design-system/tokens/tokens.json",
+    "format": "W3C DTCG draft",
+    "generated": ["src/design-system/tokens/tokens.css", "src/design-system/tokens/tokens.ts"],
+    "regenerate": "npm run tokens",
+    "utilityExamples": {
+      "surface": ["bg-paper-base", "bg-paper-raised", "bg-paper-sunken", "bg-paper-inverse"],
+      "text": ["text-ink-primary", "text-ink-secondary", "text-ink-tertiary", "text-ink-disabled", "text-ink-inverse"],
+      "border": ["border-line-subtle", "border-line-default", "border-line-strong"],
+      "accent": ["bg-ember-50", "text-ember-600", "text-ember-700", "bg-ember-400 (decorative only)"],
+      "status": ["{success|warning|danger|info|neutral}-{fg|bg|line}", "bg-danger-solid"],
+      "type": ["text-2xs", "text-xs", "text-sm", "text-base", "text-md", "text-lg", "text-xl", "text-2xl", "text-3xl", "text-4xl", "text-5xl", "font-sans", "font-serif", "font-mono"],
+      "radius": ["rounded-xs", "rounded-sm", "rounded-md", "rounded-lg", "rounded-xl"],
+      "shadow": ["shadow-xs", "shadow-sm", "shadow-md", "shadow-lg"],
+      "motion": ["duration-fast", "duration-base", "duration-slow", "ease-standard", "ease-out", "ease-in"]
+    },
+    "forbidden": ["Tailwind default palette (e.g. bg-blue-500) — disabled, generates nothing", "hex values in components", "arbitrary color utilities like bg-[#fff]"]
+  },
+  "components": [
+    {
+      "name": "Button",
+      "file": "src/design-system/components/Button/Button.tsx",
+      "role": "button",
+      "props": { "variant": "primary | accent | secondary | ghost | danger (default secondary)", "size": "sm | md | lg (default md)", "loading": "boolean — spinner + aria-busy, blocks clicks", "leadingIcon": "ReactNode", "trailingIcon": "ReactNode", "fullWidth": "boolean" },
+      "states": ["hover", "focus-visible", "active", "disabled", "loading"],
+      "rules": ["One primary per view region", "danger only for destructive actions", "Explain disabled state with visible text + aria-describedby"],
+      "related": ["buttonStyles() for links", "IconButton"]
+    },
+    {
+      "name": "IconButton",
+      "file": "src/design-system/components/IconButton/IconButton.tsx",
+      "props": { "aria-label": "string (required)", "icon": "ReactNode", "variant": "ghost | secondary", "size": "sm | md" },
+      "rules": ["Pair with Tooltip showing the same label"]
+    },
+    {
+      "name": "Field",
+      "file": "src/design-system/components/Field/Field.tsx",
+      "props": { "label": "ReactNode (required)", "hint": "ReactNode", "error": "ReactNode — sets aria-invalid + describedby", "required": "boolean — shows *", "optional": "boolean — shows 'Optional'", "hideLabel": "boolean", "aside": "ReactNode" },
+      "rules": ["Wrap exactly one control", "Errors explain how to fix"]
+    },
+    { "name": "Input", "file": "src/design-system/components/Input/Input.tsx", "props": { "size": "sm | md", "leading": "ReactNode (decorative)", "trailing": "ReactNode", "invalid": "boolean (inherits from Field)" }, "states": ["hover", "focus-visible", "invalid", "disabled"] },
+    { "name": "Textarea", "file": "src/design-system/components/Input/Input.tsx", "props": { "rows": "number", "invalid": "boolean" } },
+    {
+      "name": "Select",
+      "file": "src/design-system/components/Select/Select.tsx",
+      "pattern": "WAI-ARIA select-only combobox",
+      "props": { "options": "{ value, label, description?, icon?, disabled? }[]", "value|defaultValue": "string", "onChange": "(value) => void", "placeholder": "string", "prefix": "string", "size": "sm | md", "aria-label": "required outside Field" },
+      "keyboard": ["ArrowDown/ArrowUp open + move", "Home/End", "Enter/Space select", "Escape close", "type-ahead"]
+    },
+    { "name": "Checkbox", "file": "src/design-system/components/Checkbox/Checkbox.tsx", "props": { "label": "ReactNode", "description": "ReactNode", "strikeWhenChecked": "boolean" }, "notes": "Native input, custom visual" },
+    { "name": "Switch", "file": "src/design-system/components/Switch/Switch.tsx", "role": "switch", "props": { "label": "ReactNode", "description": "ReactNode", "checked|defaultChecked": "boolean", "onChange": "(checked) => void" }, "rules": ["Only for settings that apply immediately"] },
+    { "name": "SegmentedControl", "file": "src/design-system/components/SegmentedControl/SegmentedControl.tsx", "role": "radiogroup", "props": { "options": "{ value, label, count? }[]", "label": "string (required)", "size": "sm | md" }, "keyboard": ["Arrow keys move + select"] },
+    { "name": "Menu", "file": "src/design-system/components/Menu/Menu.tsx", "pattern": "WAI-ARIA menu button", "parts": ["Menu", "MenuItem", "MenuSeparator", "MenuLabel"], "props": { "trigger": "single focusable element", "placement": "bottom-start | bottom-end | top-start | top-end" }, "itemProps": { "onSelect": "() => void", "icon": "ReactNode", "hint": "ReactNode", "tone": "default | danger", "disabled": "boolean" } },
+    { "name": "Dialog", "file": "src/design-system/components/Dialog/Dialog.tsx", "pattern": "WAI-ARIA modal dialog", "props": { "open": "boolean", "onClose": "() => void", "title": "ReactNode (required)", "description": "ReactNode", "footer": "ReactNode — primary action last", "size": "sm | md | lg", "placement": "center | left", "initialFocus": "RefObject", "dismissOnOverlay": "boolean", "bare": "boolean" }, "behavior": ["portal", "focus trap", "Escape closes", "restores focus", "scroll lock", "bottom sheet below 640px"] },
+    { "name": "Tabs", "file": "src/design-system/components/Tabs/Tabs.tsx", "pattern": "WAI-ARIA tabs (automatic activation)", "parts": ["Tabs", "TabList", "Tab", "TabPanel"], "props": { "value|defaultValue": "string", "onChange": "(value) => void" }, "tabProps": { "count": "number", "disabled": "boolean" } },
+    { "name": "Tooltip", "file": "src/design-system/components/Tooltip/Tooltip.tsx", "props": { "content": "ReactNode", "placement": "Placement", "delay": "ms" }, "rules": ["Supplementary only; never essential info", "Esc dismisses (WCAG 1.4.13)"] },
+    { "name": "Badge", "file": "src/design-system/components/Badge/Badge.tsx", "props": { "tone": "neutral | success | warning | danger | info | accent", "dot": "boolean", "icon": "ReactNode", "size": "sm | md" } },
+    { "name": "StatusDot", "file": "src/design-system/components/Badge/Badge.tsx", "props": { "tone": "Tone", "label": "string (required)", "pulse": "boolean" } },
+    { "name": "Card", "file": "src/design-system/components/Card/Card.tsx", "parts": ["Card", "CardHeader"], "props": { "as": "section | div | article | li", "padding": "none | sm | md", "interactive": "boolean" } },
+    { "name": "Table", "file": "src/design-system/components/Table/Table.tsx", "parts": ["TableContainer", "Table", "THead", "TBody", "TRow", "TH", "TD"], "thProps": { "sortable": "boolean", "sorted": "asc | desc | false", "onSort": "() => void", "align": "left | right" }, "rules": ["Render a card list below 768px"] },
+    { "name": "Toast", "file": "src/design-system/components/Toast/Toast.tsx", "api": "const toast = useToast(); toast({ title, description?, tone?: 'success'|'info'|'danger', action?: { label, onClick }, duration? })", "requires": "ToastProvider at app root" },
+    { "name": "Avatar", "file": "src/design-system/components/Avatar/Avatar.tsx", "props": { "name": "string", "size": "xs | sm | md", "decorative": "boolean" } },
+    { "name": "Stepper", "file": "src/design-system/components/Stepper/Stepper.tsx", "props": { "steps": "{ id, label, meta?, status: complete|current|blocked|upcoming }[]", "label": "string", "variant": "full | compact" } },
+    { "name": "Alert", "file": "src/design-system/components/Feedback/Feedback.tsx", "props": { "tone": "info | success | warning | danger", "title": "ReactNode", "action": "ReactNode" } },
+    { "name": "EmptyState", "file": "src/design-system/components/Feedback/Feedback.tsx", "props": { "icon": "ReactNode", "title": "ReactNode", "action": "ReactNode", "variant": "quiet | page" }, "rules": ["Say why it is empty and offer the next step"] },
+    { "name": "Skeleton", "file": "src/design-system/components/Feedback/Feedback.tsx", "props": { "className": "size/shape" }, "rules": ["Mirror final layout", "Set aria-busy on the region"] },
+    { "name": "ProgressBar", "file": "src/design-system/components/Feedback/Feedback.tsx", "props": { "value": "number", "max": "number", "label": "string", "showValue": "boolean", "tone": "ink | accent | success" } },
+    { "name": "Kbd", "file": "src/design-system/components/Feedback/Feedback.tsx" },
+    { "name": "Spinner", "file": "src/design-system/components/Spinner/Spinner.tsx", "props": { "size": "number", "label": "string (omit when decorative)" } }
+  ],
+  "productPatterns": [
+    { "name": "HealthBadge", "file": "src/app/features/projectUi.tsx", "notes": "Icon + label for Health; never color alone" },
+    { "name": "ProjectStepper", "file": "src/app/features/projectUi.tsx", "notes": "Maps project stages to Stepper" },
+    { "name": "UpdateComposer", "file": "src/app/features/UpdateComposer.tsx", "notes": "Drafted homeowner message + plain-language check + live preview" }
+  ]
+}

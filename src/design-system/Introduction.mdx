@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Groundwork Design System
+
+> **Independent Speculative Concept — Not Affiliated with Artemis.**
+
+A small design system built from scratch for **Groundwork**, a concept product for post-sale project operations in home energy.
+No UI component library is used: every component here is custom React + TypeScript, styled with Tailwind CSS utilities bound to Groundwork tokens.
+
+## Principles
+
+1. **Status in words, not color alone.** Every status color is paired with an icon and a text label.
+2. **Calm surfaces, one accent.** Warm paper neutrals for long work sessions; `ember` is reserved for focus, progress and brand moments.
+3. **States are part of the component.** Hover, focus-visible, active, disabled, loading, invalid and empty are designed and built, not left to defaults.
+4. **Keyboard first.** Every interactive component follows its WAI-ARIA pattern.
+5. **Tokens are data.** `src/design-system/tokens/tokens.json` is the single source of truth.
+
+## How to use
+
+```tsx
+import { Button, Field, Input } from '@/design-system';
+
+<Field label="ZIP code" required error={errors.zip}>
+  <Input inputMode="numeric" />
+</Field>
+<Button variant="primary">Create project</Button>
+```
+
+- Import only from `@/design-system` (enforced by ESLint).
+- `className` on a component is for **layout** (margin, width, grid placement), never to override colors or type.
+- Use only token utilities (`bg-paper-raised`, `text-ink-secondary`, `border-line-default`). Tailwind's default palette is disabled, so `bg-blue-500` generates nothing.
+
+## Where things live
+
+| What | Where |
+| --- | --- |
+| Tokens (source) | `src/design-system/tokens/tokens.json` |
+| Generated CSS / TS | `tokens.css`, `tokens.ts` (run `npm run tokens`) |
+| Components | `src/design-system/components/*` |
+| Public API | `src/design-system/index.ts` |
+| Rules for AI agents | `AGENTS.md`, `design-system.manifest.json` |
+| Full docs | `docs/design-system.md` |
