@@ -2,6 +2,8 @@
 
 **Post-sale project operations for home-energy installers — a product design + design engineering concept.**
 
+**Live prototype:** https://groundwork-tau-lemon.vercel.app · **Case study:** [docs/case-study.md](docs/case-study.md)
+
 > **Independent Speculative Concept — Not Affiliated with Artemis.**
 > An independent speculative product concept exploring how Product Design and Design Engineering come together to create thoughtful, functional digital experiences. It was not commissioned by or built with Artemis. All people, companies, addresses and numbers are fictional and illustrative. Messages and actions in the prototype are simulated.
 

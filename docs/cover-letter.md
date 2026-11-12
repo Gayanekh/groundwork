@@ -34,4 +34,4 @@ Thank you for your time,
 
 [Your Name]
 
-Links: [Prototype URL] · [Storybook URL] · [Case study URL] · [Repository URL]
+Links: Prototype — https://groundwork-tau-lemon.vercel.app · Case study — https://github.com/Gayanekh/groundwork/blob/main/docs/case-study.md · Code — https://github.com/Gayanekh/groundwork

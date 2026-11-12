@@ -308,7 +308,12 @@ export function PresentationPage() {
             <span className="font-medium text-ink-secondary">{DISCLAIMER}</span> All people, companies, addresses and numbers in the prototype are
             fictional.
           </p>
-          <p>Designed and built by [Your Name]</p>
+          <p className="flex flex-wrap gap-x-4 gap-y-1">
+            <span>Designed and built by [Your Name]</span>
+            <a href="https://github.com/Gayanekh/groundwork" className="font-medium text-ember-600 hover:text-ember-700">
+              View source on GitHub
+            </a>
+          </p>
         </div>
       </footer>
     </div>

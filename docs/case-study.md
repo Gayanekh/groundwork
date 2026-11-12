@@ -11,7 +11,7 @@
 | **Type** | Independent, self-initiated |
 | **Stack** | React 19 · TypeScript (strict) · Tailwind CSS v4 · Vite · Storybook 9 · Vitest |
 | **Deliverables** | Working prototype · design system (25+ components) · Storybook · AGENTS.md + component manifest · docs |
-| **Live** | [Prototype URL] · [Storybook URL] · [Repository URL] |
+| **Live** | [Prototype](https://groundwork-tau-lemon.vercel.app) · [Repository](https://github.com/Gayanekh/groundwork) · Storybook: run `npm run storybook` locally |
 
 ---
 
