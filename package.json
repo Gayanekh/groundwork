@@ -18,7 +18,8 @@
     "build-storybook": "storybook build -o storybook-static",
     "check": "npm run tokens:check && npm run tokens:contrast && npm run audit:ui && npm run typecheck && npm run lint && npm run test && npm run build",
     "audit:ui": "node scripts/audit-ui-deps.mjs",
-    "tokens:contrast": "node scripts/contrast.mjs"
+    "tokens:contrast": "node scripts/contrast.mjs",
+    "build:site": "npm run build && storybook build -o dist/storybook --quiet"
   },
   "dependencies": {
     "lucide-react": "^0.511.0",
