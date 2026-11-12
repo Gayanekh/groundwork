@@ -13,7 +13,7 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 | R1 — tokens | Design tokens | DTCG `tokens.json` → generated Tailwind theme + TS; drift check fails the build; contrast check | `tokens/`, `scripts/build-tokens.mjs`, `scripts/contrast.mjs` | **Fully** |
 | R1 — APIs | API design | Consistent `variant/size/tone`, controlled + uncontrolled (`useControllableState`), compound components, `forwardRef` | components, `lib/hooks.ts` | **Fully** |
 | R1 — accessibility | A11y engineering | WAI-ARIA patterns by hand; axe 0 violations on all routes; keyboard tests | components, `components.test.tsx` | **Fully** (no screen-reader user testing) |
-| R1 — in sync across Figma, Storybook, code | Design-to-code | Code ↔ Storybook: stories render from the same components and generated tokens. Figma: **no file exists**; naming mapping documented only | `.storybook/`, `docs/design-system.md#6` | **Partially** |
+| R1 — in sync across Figma, Storybook, code | Design-to-code | Code ↔ Storybook: stories render from the same components and generated tokens. Storybook is public at https://groundwork-concept.vercel.app/storybook/. Figma: a plugin generates variables, styles and Button/Badge/Input with prop names identical to code; type-checked, **not yet run in Figma** | `.storybook/`, `figma-plugin/` | **Partially** |
 | R2 Make it readable by AI | AI-readable docs | `AGENTS.md` (rules, cheat sheet, patterns, checklist), `design-system.manifest.json` (component metadata), JSDoc on props, Storybook docs | repo root, `src/design-system/Introduction.mdx` | **Fully** (not evaluated with an AI eval) |
 | R3 Path to production — quality checks | Tooling | `npm run check`: token drift, contrast, UI-dependency audit, types, lint (incl. import rule), tests, build | `package.json`, `scripts/`, `eslint.config.js` | **Fully** |
 | R3 — starters / reference flows | Reference patterns | Documented reference patterns (validation, disabled-with-reason, URL state, domain guards) in AGENTS.md; no CLI starter template | `AGENTS.md §6` | **Partially** |
@@ -29,7 +29,7 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 | Q2 TypeScript | TypeScript | Strict mode, generic components (`Select<V>`, `SegmentedControl<V>`), discriminated-union actions | `tsconfig.app.json`, reducer | **Fully** |
 | Q2 Tailwind | Tailwind v4 | `@theme` tokens, theme reset, custom utilities, `pointer-coarse`/`aria-*` variants | `styles/index.css`, `tokens.css` | **Fully** |
 | Q2 shadcn | shadcn/ui | Intentionally **not used** (portfolio constraint). The same patterns (Tailwind + accessible primitives + variants) are built from scratch. Prior shadcn/ui production use is on the résumé | `docs/job-analysis.md §4` | **Partially** |
-| Q2 Storybook | Storybook | 27 stories + 8 docs pages; builds (`build-storybook`) and runs; a11y addon; autodocs from TS types | `.storybook/`, `*.stories.tsx` | **Fully** |
+| Q2 Storybook | Storybook | 27 stories + 8 docs pages, public at https://groundwork-concept.vercel.app/storybook/ (deployed with the site, verified rendering); a11y addon; autodocs from TS types | `.storybook/`, `*.stories.tsx` | **Fully** |
 | Q3 Leading user feedback sessions | Research facilitation | No sessions run. A validation plan is written | `product-strategy.md §10` | **Not** |
 | Q4 HTML, CSS | Semantics + styling | Semantic landmarks, native table/form elements, `dl`, `ol`; CSS animations, reduced motion | across `src/` | **Fully** |
 | Q4 Accessibility | WCAG | axe 0 violations; contrast script; keyboard tests | see above | **Fully** |
@@ -43,10 +43,10 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 
 | # | Area | Evidence | Status |
 | --- | --- | --- | --- |
-| 1 | Figma-to-code consistency | Mapping documented; no Figma file | **Partially** |
+| 1 | Figma-to-code consistency | Figma plugin generated from `tokens.json`; not yet run in Figma | **Partially** |
 | 2 | Design tokens | Generated, enforced, contrast-checked | **Fully** |
 | 3 | Reusable components | 25+, public API, lint-enforced | **Fully** |
-| 4 | Storybook & component docs | Runs and builds; all 27 stories render without errors (checked one by one) | **Fully** |
+| 4 | Storybook & component docs | Public; all 27 stories render without errors (checked one by one) | **Fully** |
 | 5 | AI-readable documentation | AGENTS.md + manifest + JSDoc | **Fully** |
 | 6 | Real product workflows | Core journey + 3 supporting journeys, browser-tested | **Fully** |
 | 7 | Frontend implementation quality | Strict TS, lint clean, tests pass, prod build passes | **Fully** |
@@ -58,8 +58,8 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 
 | Gap | Next step |
 | --- | --- |
-| No Figma library | Build variables + components from `tokens.json` with identical names |
-| No user feedback sessions | Run the 5-interview plan in `product-strategy.md` |
-| Not deployed | `vercel` deploy of app and Storybook (needs your Vercel account) |
+| Figma plugin not yet run | Run `figma-plugin` in Figma desktop, screenshot the result, fix anything Figma reports |
+| No user feedback sessions | Kit ready in `docs/feedback-sessions.md`; run 3 sessions and fill in the case-study section |
+| ~~Not deployed~~ | Done: app and Storybook on Vercel |
 | No e2e / visual tests | Playwright for the core journey; Storybook test-runner with axe per story |
 | shadcn not shown | Optional branch re-implementing two components on shadcn/ui to compare |

@@ -20,7 +20,8 @@ There is **no backend**. State lives in a reducer and is persisted to `localStor
 | Type check | `npm run typecheck` |
 | Lint | `npm run lint` |
 | Unit + component tests | `npm test` |
-| Storybook | `npm run storybook` (http://localhost:6006) |
+| Storybook | `npm run storybook` (http://localhost:6006) · live: https://groundwork-concept.vercel.app/storybook/ |
+| Figma plugin | `npm run figma:build` / `npm run figma:check` (see `figma-plugin/README.md`) |
 | Everything CI runs | `npm run check` |
 
 Run `npm run check` before you say a change is done. It must pass.

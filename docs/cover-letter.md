@@ -34,4 +34,4 @@ Thank you for your time,
 
 [Your Name]
 
-Links: Prototype — https://groundwork-concept.vercel.app · Case study — https://github.com/Gayanekh/groundwork/blob/main/docs/case-study.md · Code — https://github.com/Gayanekh/groundwork
+Links: Prototype — https://groundwork-concept.vercel.app · Storybook — https://groundwork-concept.vercel.app/storybook/ · Case study — https://github.com/Gayanekh/groundwork/blob/main/docs/case-study.md · Code — https://github.com/Gayanekh/groundwork

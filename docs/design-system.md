@@ -3,7 +3,7 @@
 > **Independent Speculative Concept — Not Affiliated with Artemis.**
 > Built from scratch: custom React + TypeScript components styled with Tailwind CSS utilities. **No UI component library or kit is used.**
 
-Live reference: `npm run storybook` → http://localhost:6006
+Live reference: https://groundwork-concept.vercel.app/storybook/ (or `npm run storybook` → http://localhost:6006)
 Machine-readable inventory: [`design-system.manifest.json`](../design-system.manifest.json)
 Rules for AI agents: [`AGENTS.md`](../AGENTS.md)
 
@@ -136,9 +136,9 @@ Product patterns (in `src/app/features`, not in the design system because they k
 
 ## 6. Figma ↔ code mapping
 
-**Status: there is no Figma file for this project.** I did not create one and do not claim one exists. The code was designed so a Figma library can mirror it one-to-one:
+**Status:** a Figma plugin in [`figma-plugin/`](../figma-plugin/README.md) builds the library below from `tokens.json`. It type-checks against Figma's official API types but **has not been run inside Figma yet**, so no Figma file exists until you run it. The mapping:
 
-| Code | Figma equivalent (planned) |
+| Code | Figma equivalent (created by the plugin) |
 | --- | --- |
 | `tokens.json` → `color.*` | Variable collection **Color** (modes: Light; Dark later) |
 | `text.*`, `font.*` | Text styles named `text/base`, `text/sm`… |

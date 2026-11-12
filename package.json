@@ -16,10 +16,12 @@
     "test:watch": "vitest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o storybook-static",
-    "check": "npm run tokens:check && npm run tokens:contrast && npm run audit:ui && npm run typecheck && npm run lint && npm run test && npm run build",
+    "check": "npm run tokens:check && npm run tokens:contrast && npm run audit:ui && npm run figma:check && npm run typecheck && npm run lint && npm run test && npm run build",
     "audit:ui": "node scripts/audit-ui-deps.mjs",
     "tokens:contrast": "node scripts/contrast.mjs",
-    "build:site": "npm run build && storybook build -o dist/storybook --quiet"
+    "build:site": "npm run build && storybook build -o dist/storybook --quiet",
+    "figma:build": "node scripts/build-figma-plugin.mjs",
+    "figma:check": "tsc -p figma-plugin && node scripts/build-figma-plugin.mjs --check"
   },
   "dependencies": {
     "lucide-react": "^0.511.0",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
+    "@figma/plugin-typings": "^1.142.0",
     "@storybook/addon-a11y": "^9.0.18",
     "@storybook/addon-docs": "^9.0.18",
     "@storybook/react-vite": "^9.0.18",

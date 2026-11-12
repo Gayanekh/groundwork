@@ -2,7 +2,7 @@
 
 **Post-sale project operations for home-energy installers — a product design + design engineering concept.**
 
-**Live prototype:** https://groundwork-concept.vercel.app · **Case study:** [docs/case-study.md](docs/case-study.md)
+**Live prototype:** https://groundwork-concept.vercel.app · **Storybook:** https://groundwork-concept.vercel.app/storybook/ · **Case study:** [docs/case-study.md](docs/case-study.md)
 
 > **Independent Speculative Concept — Not Affiliated with Artemis.**
 > An independent speculative product concept exploring how Product Design and Design Engineering come together to create thoughtful, functional digital experiences. It was not commissioned by or built with Artemis. All people, companies, addresses and numbers are fictional and illustrative. Messages and actions in the prototype are simulated.
@@ -49,6 +49,9 @@ Tip: add `?latency=0` to skip the simulated loading delay. Use the workspace men
 | `npm run tokens:contrast` | Fail if any text/background token pair is below WCAG AA |
 | `npm run audit:ui` | Fail if any prebuilt UI library is installed |
 | `npm run build-storybook` | Static Storybook into `storybook-static/` |
+| `npm run build:site` | App + Storybook into `dist/` (what Vercel runs) |
+| `npm run figma:build` | Rebuild the Figma plugin from `tokens.json` (see [figma-plugin/README.md](figma-plugin/README.md)) |
+| `npm run figma:check` | Type-check the plugin and fail if it is stale |
 | `npm run check` | Everything above that CI should run |
 
 ## Deploying to Vercel
@@ -58,7 +61,7 @@ Tip: add `?latency=0` to skip the simulated loading delay. Use the workspace men
 3. Vercel reads `vercel.json`: framework Vite, build `npm run build`, output `dist`, SPA rewrites.
 4. Deploy. **No environment variables are needed.** The project has no API keys or secrets.
 
-Storybook (optional): create a second Vercel project from the same repo with build command `npm run build-storybook` and output directory `storybook-static`.
+Storybook is built into the same deployment: `vercel.json` runs `npm run build:site`, which puts Storybook in `dist/storybook`, served at `/storybook`.
 
 ## Environment variables
 
@@ -86,6 +89,8 @@ See [`docs/technical-architecture.md`](docs/technical-architecture.md).
 - [Technical architecture](docs/technical-architecture.md)
 - [Case study](docs/case-study.md)
 - [Skills matrix & requirements audit](docs/skills-matrix.md)
+- [Feedback session kit](docs/feedback-sessions.md)
+- [Figma plugin](figma-plugin/README.md)
 - [Cover letter (draft)](docs/cover-letter.md)
 - [CV recommendations](docs/resume-guide.md)
 
