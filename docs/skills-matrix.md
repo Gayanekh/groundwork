@@ -24,7 +24,7 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 
 | Job requirement | Relevant skill | Project evidence | Location | Status |
 | --- | --- | --- | --- | --- |
-| Q1 Shipped component-based frontends and design systems | Shipping | This project is component-based and deploy-ready (Vercel config). “Shipped” to real users is evidenced by the résumé, not by this repo | `vercel.json`, résumé | **Partially** (not deployed yet) |
+| Q1 Shipped component-based frontends and design systems | Shipping | This project is component-based and deployed on Vercel (https://groundwork-concept.vercel.app). “Shipped” to real users is evidenced by the résumé, not by this repo | `vercel.json`, résumé | **Partially** (deployed, but no real users) |
 | Q2 React | React | React 19, hooks, context, portals, `useSyncExternalStore` | `src/` | **Fully** |
 | Q2 TypeScript | TypeScript | Strict mode, generic components (`Select<V>`, `SegmentedControl<V>`), discriminated-union actions | `tsconfig.app.json`, reducer | **Fully** |
 | Q2 Tailwind | Tailwind v4 | `@theme` tokens, theme reset, custom utilities, `pointer-coarse`/`aria-*` variants | `styles/index.css`, `tokens.css` | **Fully** |
