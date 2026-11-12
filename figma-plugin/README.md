@@ -47,4 +47,4 @@ npm run figma:check   # type-check against Figma's API types + fail if code.js i
 
 - ✅ `src/plugin.js` type-checks in strict mode against `@figma/plugin-typings` 1.142 (Figma’s official API types).
 - ✅ `code.js` is valid JavaScript and stays in sync with `tokens.json` (`figma:check` in CI).
-- ⚠️ It was **not run inside Figma** while building this project (no Figma access in that environment). Run it once, take screenshots, and fix anything Figma reports before citing it as evidence.
+- ⚠️ This plugin itself has not been run inside Figma. The published library (https://www.figma.com/design/56o8GWt9D6Ko6WLTQEbOJi) was built through the Figma MCP server instead, from the same tokens, and is the version to cite. Differences: the MCP-built file uses collections named `Color` and `Dimension`, scoped variables, Tailwind spacing variables bound to padding and gaps, and medium/semibold text styles.

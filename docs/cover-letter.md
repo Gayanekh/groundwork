@@ -16,7 +16,7 @@ Dear Artemis team,
 
 Your Design Engineer posting asks candidates to “send something you designed and built.” So I built something: **Groundwork**, an independent concept for the people who move a home-energy project from signed contract to permission to operate. It is not affiliated with Artemis and does not redesign your product. I chose the post-sale problem because your site names Operations and the journey “from sale to PTO,” and it let me show the four things your posting asks for in one working piece.
 
-**Own the design system.** Groundwork has its own system: one token file in DTCG format that generates the Tailwind theme, more than 25 React + TypeScript components built from scratch with full keyboard and ARIA support, and a Storybook that renders from the same code. The build fails if tokens drift, and a contrast script fails it if any text pair drops below WCAG AA. Automated axe checks found zero violations on every screen.
+**Own the design system.** Groundwork has its own system: one token file in DTCG format that generates the Tailwind theme, more than 25 React + TypeScript components built from scratch with full keyboard and ARIA support, a Storybook that renders from the same code, and a Figma library generated from the same tokens, with component properties named exactly like the React props. The build fails if tokens drift, and a contrast script fails it if any text pair drops below WCAG AA. Automated axe checks found zero violations on every screen.
 
 **Make it readable by AI.** The repo includes an `AGENTS.md` with rules, a component cheat sheet and reference patterns, and a machine-readable component manifest. I built the project with an AI coding agent, using those files as the contract. That is also how I work day to day: at ZEMA I used Claude, Claude Code, ChatGPT and GitHub Copilot to explore UI options, draft specs and acceptance criteria, and generate and debug React and React Native components.
 
@@ -34,4 +34,4 @@ Thank you for your time,
 
 [Your Name]
 
-Links: Prototype — https://groundwork-concept.vercel.app · Storybook — https://groundwork-concept.vercel.app/storybook/ · Case study — https://github.com/Gayanekh/groundwork/blob/main/docs/case-study.md · Code — https://github.com/Gayanekh/groundwork
+Links: Prototype — https://groundwork-concept.vercel.app · Storybook — https://groundwork-concept.vercel.app/storybook/ · Figma — https://www.figma.com/design/56o8GWt9D6Ko6WLTQEbOJi · Case study — https://github.com/Gayanekh/groundwork/blob/main/docs/case-study.md · Code — https://github.com/Gayanekh/groundwork

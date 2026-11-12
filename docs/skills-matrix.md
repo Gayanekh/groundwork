@@ -13,7 +13,7 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 | R1 — tokens | Design tokens | DTCG `tokens.json` → generated Tailwind theme + TS; drift check fails the build; contrast check | `tokens/`, `scripts/build-tokens.mjs`, `scripts/contrast.mjs` | **Fully** |
 | R1 — APIs | API design | Consistent `variant/size/tone`, controlled + uncontrolled (`useControllableState`), compound components, `forwardRef` | components, `lib/hooks.ts` | **Fully** |
 | R1 — accessibility | A11y engineering | WAI-ARIA patterns by hand; axe 0 violations on all routes; keyboard tests | components, `components.test.tsx` | **Fully** (no screen-reader user testing) |
-| R1 — in sync across Figma, Storybook, code | Design-to-code | Code ↔ Storybook: stories render from the same components and generated tokens. Storybook is public at https://groundwork-concept.vercel.app/storybook/. Figma: a plugin generates variables, styles and Button/Badge/Input with prop names identical to code; type-checked, **not yet run in Figma** | `.storybook/`, `figma-plugin/` | **Partially** |
+| R1 — in sync across Figma, Storybook, code | Design-to-code | Code ↔ Storybook: stories render from the same components and generated tokens. Storybook is public at https://groundwork-concept.vercel.app/storybook/. Figma: [library](https://www.figma.com/design/56o8GWt9D6Ko6WLTQEbOJi) generated from `tokens.json` — 76 variables, 29 styles, Button/Badge/Input with prop names identical to code, bindings audited. 23 components and Code Connect not yet in Figma | `.storybook/`, Figma file, `docs/design-system.md#6` | **Partially** (foundations full; 3 of 26 components) |
 | R2 Make it readable by AI | AI-readable docs | `AGENTS.md` (rules, cheat sheet, patterns, checklist), `design-system.manifest.json` (component metadata), JSDoc on props, Storybook docs | repo root, `src/design-system/Introduction.mdx` | **Fully** (not evaluated with an AI eval) |
 | R3 Path to production — quality checks | Tooling | `npm run check`: token drift, contrast, UI-dependency audit, types, lint (incl. import rule), tests, build | `package.json`, `scripts/`, `eslint.config.js` | **Fully** |
 | R3 — starters / reference flows | Reference patterns | Documented reference patterns (validation, disabled-with-reason, URL state, domain guards) in AGENTS.md; no CLI starter template | `AGENTS.md §6` | **Partially** |
@@ -43,7 +43,7 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 
 | # | Area | Evidence | Status |
 | --- | --- | --- | --- |
-| 1 | Figma-to-code consistency | Figma plugin generated from `tokens.json`; not yet run in Figma | **Partially** |
+| 1 | Figma-to-code consistency | Figma library built from `tokens.json`; same names and values; component bindings audited against code | **Fully** for foundations · **Partially** for components (3 of 26) |
 | 2 | Design tokens | Generated, enforced, contrast-checked | **Fully** |
 | 3 | Reusable components | 25+, public API, lint-enforced | **Fully** |
 | 4 | Storybook & component docs | Public; all 27 stories render without errors (checked one by one) | **Fully** |
@@ -58,7 +58,7 @@ Legend: **Fully** = implemented and verified · **Partially** = some working evi
 
 | Gap | Next step |
 | --- | --- |
-| Figma plugin not yet run | Run `figma-plugin` in Figma desktop, screenshot the result, fix anything Figma reports |
+| Figma covers 3 of 26 components | Add Checkbox, Select, Tabs, Dialog next; add Code Connect mappings |
 | No user feedback sessions | Kit ready in `docs/feedback-sessions.md`; run 3 sessions and fill in the case-study section |
 | ~~Not deployed~~ | Done: app and Storybook on Vercel |
 | No e2e / visual tests | Playwright for the core journey; Storybook test-runner with axe per story |

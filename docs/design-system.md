@@ -136,9 +136,24 @@ Product patterns (in `src/app/features`, not in the design system because they k
 
 ## 6. Figma ↔ code mapping
 
-**Status:** a Figma plugin in [`figma-plugin/`](../figma-plugin/README.md) builds the library below from `tokens.json`. It type-checks against Figma's official API types but **has not been run inside Figma yet**, so no Figma file exists until you run it. The mapping:
+**Status: the Figma library exists** — [Groundwork Design System](https://www.figma.com/design/56o8GWt9D6Ko6WLTQEbOJi) (built Nov 12, 2026 through the Figma MCP server from `tokens.json`, then verified by screenshots and a binding audit).
 
-| Code | Figma equivalent (created by the plugin) |
+| In Figma | Count |
+| --- | --- |
+| Variable collection **Color** (mode Light) — scoped (fills / text / stroke) with WEB code syntax `var(--color-…)` | 35 |
+| Variable collection **Dimension** — `radius/*`, `spacing/*` (Tailwind steps), `font-size/*`, `line-height/*` | 41 |
+| Text styles (`text/<size>`, `text/<size>-medium` or `-semibold`, `display/serif-*`, `mono/xs`) | 25 |
+| Effect styles `shadow/xs…lg` | 4 |
+| Component sets **Button** (variant × size × state), **Badge** (tone × size, `label`, `dot`), **Input** (state, `label`, `hint`, `error`) | 30 + 12 + 4 variants |
+| Pages | Foundations (bound swatches, type, shadow, radius, an in-use example from instances) · Components |
+
+Every fill, stroke, radius, padding and gap on the components is bound to a variable (audited). Example: Button `variant=primary, size=md` = `paper/inverse` fill, `spacing/3-5` padding, `spacing/2` gap, `radius/md`, `text/base-medium`, `shadow/xs` — identical to `px-3.5 gap-2 rounded-md text-base font-medium shadow-xs` in `Button.tsx`.
+
+**Not yet in Figma:** the other 23 components, Code Connect mappings, and a dark mode. An offline alternative that produces a similar library without the MCP server is in [`figma-plugin/`](../figma-plugin/README.md).
+
+The mapping:
+
+| Code | Figma equivalent |
 | --- | --- |
 | `tokens.json` → `color.*` | Variable collection **Color** (modes: Light; Dark later) |
 | `text.*`, `font.*` | Text styles named `text/base`, `text/sm`… |

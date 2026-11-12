@@ -11,7 +11,7 @@
 | **Type** | Independent, self-initiated |
 | **Stack** | React 19 · TypeScript (strict) · Tailwind CSS v4 · Vite · Storybook 9 · Vitest |
 | **Deliverables** | Working prototype · design system (25+ components) · Storybook · AGENTS.md + component manifest · docs |
-| **Live** | [Prototype](https://groundwork-concept.vercel.app) · [Repository](https://github.com/Gayanekh/groundwork) · [Storybook](https://groundwork-concept.vercel.app/storybook/) |
+| **Live** | [Prototype](https://groundwork-concept.vercel.app) · [Figma](https://www.figma.com/design/56o8GWt9D6Ko6WLTQEbOJi) · [Repository](https://github.com/Gayanekh/groundwork) · [Storybook](https://groundwork-concept.vercel.app/storybook/) |
 
 ---
 
@@ -209,7 +209,7 @@ Tested at **390, 768, 1024, 1440 and 1920px** with no horizontal page overflow o
 - **No backend**: a reducer plus `localStorage` keeps the demo honest and fast. Sending is visibly labeled as simulated.
 - **No real users**: I designed against labeled assumptions. The biggest risk is that the health rules don’t match how coordinators actually triage.
 - **Light theme only**: I spent the time on workflows and accessibility first.
-- **Figma**: a plugin (`figma-plugin/`) builds variables, styles and the Button, Badge and Input component sets from `tokens.json`. It is type-checked against Figma's API but has not yet been run inside Figma.
+- **Figma**: the library was generated from `tokens.json` (76 variables, 29 styles, Button/Badge/Input), so names and values match the code by construction. Only 3 of 26 components are in Figma so far, and there is no Code Connect yet.
 
 ## 24. What I would validate first
 
@@ -221,7 +221,7 @@ The session plan, tasks and note templates are in [`feedback-sessions.md`](feedb
 
 ## 25. Future improvements
 
-- Run the Figma plugin, publish the library, and extend it beyond Button, Badge and Input.
+- Extend the Figma library beyond Button, Badge and Input, then add Code Connect so Figma's Dev Mode shows the real React usage.
 - Visual regression + axe checks for every Storybook story in CI.
 - Dark theme by redefining color variables.
 - Homeowner-facing status page using the same stage language.
