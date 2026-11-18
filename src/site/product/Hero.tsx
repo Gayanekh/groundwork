@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowRight, MessageSquareText } from 'lucide-react';
-import { Atmosphere, Avatar, CardStack, ChatBubble, CountUp, EASE_OUT, Panel, Reveal, Stepper, buttonStyles, type Step } from '@/design-system';
+import { ArrowRight } from 'lucide-react';
+import { Atmosphere, Avatar, CardStack, CountUp, EASE_OUT, Panel, Reveal, Stepper, buttonStyles, type Step } from '@/design-system';
 import { Link } from '@/app/router';
 import { HealthBadge } from '@/app/features/projectUi';
 import { LogoMark } from '@/app/layout/Logo';
-import { DEVON, PRIYA } from './shared';
+import { PHOTOS } from './images';
 
 const steps: Step[] = [
   { id: 'c', label: 'Contract', status: 'complete' },
@@ -62,53 +62,40 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <div className="lg:col-span-5 lg:self-center">
-            <CardStack delay={0.5} float className="mx-auto w-full max-w-md lg:ml-auto">
-              <div>
-                <div className="flex items-center gap-3">
-                  <Avatar name="Maria Delgado" size="lg" decorative />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-md font-semibold tracking-tight">Maria Delgado</p>
-                    <p className="text-sm text-ink-tertiary">Solar + battery · Riverside</p>
+          <figure className="mx-auto w-full max-w-md lg:col-span-5 lg:ml-auto lg:self-center">
+            <Reveal from="right">
+              <div className="relative">
+                <div className="aspect-square overflow-hidden rounded-3xl bg-paper-sunken sm:aspect-4/5">
+                  <img src={PHOTOS.installers.src} alt={PHOTOS.installers.alt} decoding="async" className="size-full object-cover object-[62%_50%]" />
+                </div>
+                <CardStack delay={0.6} float className="relative z-10 -mt-12 ml-3 w-[92%] sm:absolute sm:-bottom-8 sm:-left-10 sm:mt-0 sm:ml-0 sm:w-[88%]">
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <Avatar name="Maria Delgado" size="lg" decorative />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-md font-semibold tracking-tight">Maria Delgado</p>
+                        <p className="truncate text-sm text-ink-tertiary">Solar + battery · Riverside</p>
+                      </div>
+                      <HealthBadge health="blocked" size="sm" shape="pill" />
+                    </div>
+                    <div className="mt-4 flex items-end gap-3">
+                      <span className="text-6xl leading-none font-medium tracking-[-0.05em] text-danger-fg">
+                        <CountUp value={26} suffix="d" duration={1.6} />
+                      </span>
+                      <span className="pb-1 text-sm leading-snug text-ink-secondary">
+                        in Permitting.
+                        <br />
+                        Target is 21 days.
+                      </span>
+                    </div>
                   </div>
-                  <HealthBadge health="blocked" size="sm" shape="pill" />
-                </div>
-                <div className="mt-5 flex items-end gap-3">
-                  <span className="text-6xl leading-none font-medium tracking-[-0.05em] text-danger-fg">
-                    <CountUp value={26} suffix="d" duration={1.6} />
-                  </span>
-                  <span className="pb-1 text-sm leading-snug text-ink-secondary">
-                    in Permitting.
-                    <br />
-                    Target is 21 days.
-                  </span>
-                </div>
-                <div className="mt-4">
-                  <Stepper steps={steps} label="Project stages" variant="compact" />
-                </div>
+                </CardStack>
               </div>
-              <div className="space-y-4">
-                {[
-                  { row: DEVON, text: 'has not heard from you in 9 days' },
-                  { row: PRIYA, text: 'has an inspection on Thursday' },
-                ].map(({ row, text }) => (
-                  <div key={row.id} className="flex items-center gap-3">
-                    <Avatar name={row.name} size="md" decorative />
-                    <p className="min-w-0 flex-1 text-sm leading-snug">
-                      <span className="font-semibold">{row.name}</span> <span className="text-ink-secondary">{text}</span>
-                    </p>
-                    <HealthBadge health={row.health} size="sm" shape="pill" />
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="flex items-center gap-2 text-sm text-ink-tertiary">
-                  <MessageSquareText aria-hidden="true" className="size-4" /> What Maria reads
-                </p>
-                <ChatBubble from="homeowner">The city has asked us for more information before approving your plans.</ChatBubble>
-              </div>
-            </CardStack>
-          </div>
+            </Reveal>
+            <figcaption className="mt-4 text-xs text-ink-tertiary sm:mt-14">
+              Illustrative photo · Photo: {PHOTOS.installers.photographer} / Unsplash
+            </figcaption>
+          </figure>
 
           <Reveal delay={0.45} className="lg:col-span-12">
             <Panel padding="md" elevated>
