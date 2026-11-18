@@ -4,8 +4,8 @@
 
 **Live prototype:** https://groundwork-concept.vercel.app · **Storybook:** https://groundwork-concept.vercel.app/storybook/ · **Figma:** https://www.figma.com/design/56o8GWt9D6Ko6WLTQEbOJi · **Case study:** [docs/case-study.md](docs/case-study.md)
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.**
-> An independent speculative product concept exploring how Product Design and Design Engineering come together to create thoughtful, functional digital experiences. It was not commissioned by or built with Artemis. All people, companies, addresses and numbers are fictional and illustrative. Messages and actions in the prototype are simulated.
+> **Independent Speculative Concept.**
+> An independent speculative product concept exploring how Product Design and Design Engineering come together to create thoughtful, functional digital experiences. All people, companies, addresses and numbers are fictional and illustrative. Messages and actions in the prototype are simulated.
 
 Groundwork helps a project coordinator see which projects need them today, move each project safely from signed contract to permission to operate (PTO), and keep homeowners informed in plain language.
 

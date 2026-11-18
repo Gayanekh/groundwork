@@ -1,6 +1,6 @@
 # Technical architecture — Groundwork
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.**
+> **Independent Speculative Concept.**
 
 ## 1. Stack and why
 

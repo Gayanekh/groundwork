@@ -1,12 +1,13 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { ArrowRight, Boxes, FileCode2, Inbox, LayoutList, MessageSquareText, OctagonAlert, ShieldCheck, Workflow } from 'lucide-react';
-import { Badge, Button, Field, Stepper, Textarea, buttonStyles, cx, tokens, type Step } from '@/design-system';
+import { Atmosphere, Badge, Button, SectionTag, Stepper, buttonStyles, cx, tokens, type Step } from '@/design-system';
 import { Link } from '@/app/router';
 import { Logo } from '@/app/layout/Logo';
 import { HealthBadge } from '@/app/features/projectUi';
-import { findJargon, replaceJargon } from '@/app/domain/plainLanguage';
+import { PlainLanguageDemo } from './product/PlainLanguage';
+import { jumpTo } from './product/scroll';
 
-const DISCLAIMER = 'Independent Speculative Concept — Not Affiliated with Artemis.';
+const DISCLAIMER = 'Independent Speculative Concept.';
 
 type Evidence = 'verified' | 'observation' | 'interpretation' | 'assumption';
 const EVIDENCE: Record<Evidence, { label: string; tone: 'success' | 'info' | 'accent' | 'warning' }> = {
@@ -18,7 +19,7 @@ const EVIDENCE: Record<Evidence, { label: string; tone: 'success' | 'info' | 'ac
 
 function Tag({ kind }: { kind: Evidence }) {
   return (
-    <Badge tone={EVIDENCE[kind].tone} size="sm">
+    <Badge tone={EVIDENCE[kind].tone} size="sm" shape="pill">
       {EVIDENCE[kind].label}
     </Badge>
   );
@@ -36,13 +37,12 @@ const heroSteps: Step[] = [
 
 function Section({ n, title, kicker, children, id }: { n: string; title: ReactNode; kicker?: string; children: ReactNode; id?: string }) {
   return (
-    <section id={id} aria-labelledby={`s-${n}`} className="grid gap-6 border-t border-line-default py-14 sm:py-20 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
+    <section id={id} aria-labelledby={`s-${n}`} className="grid gap-6 border-t border-line-default py-12 sm:py-16 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-12">
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <p className="font-mono text-xs text-ember-600">{n}</p>
-        {kicker && <p className="mt-1 text-sm text-ink-tertiary">{kicker}</p>}
+        <SectionTag label={kicker ?? 'Case study'} />
       </div>
       <div className="min-w-0">
-        <h2 id={`s-${n}`} className="max-w-3xl font-serif text-3xl leading-[1.1] tracking-[-0.01em] text-balance sm:text-4xl">
+        <h2 id={`s-${n}`} className="max-w-3xl text-3xl leading-[1] font-medium tracking-[-0.03em] text-balance sm:text-4xl md:text-heading">
           {title}
         </h2>
         <div className="mt-8">{children}</div>
@@ -51,17 +51,22 @@ function Section({ n, title, kicker, children, id }: { n: string; title: ReactNo
   );
 }
 
-export function PresentationPage() {
+export function CaseStudyPage() {
   return (
-    <div className="min-h-dvh bg-paper-base">
+    <div data-surface="mist" className="relative min-h-dvh overflow-x-clip bg-paper-base font-sans text-pretty">
       <a href="#content" className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0">
         Skip to content
       </a>
-      <header className="sticky top-0 z-30 border-b border-line-subtle bg-paper-base/85 backdrop-blur">
+      <header className="sticky top-0 z-30 bg-paper-base/70 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-8">
-          <Logo />
+          <Link to="/" aria-label="Groundwork, back to the homepage" className="rounded-sm">
+            <Logo />
+          </Link>
           <span className="hidden text-xs text-ink-tertiary md:inline">{DISCLAIMER}</span>
-          <Link to="/app" className={cx(buttonStyles({ variant: 'primary', size: 'sm' }), 'ml-auto')}>
+          <Link to="/" className={cx(buttonStyles({ variant: 'ghost', size: 'sm' }), 'ml-auto')}>
+            Home
+          </Link>
+          <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'sm', press: true })}>
             Open prototype <ArrowRight aria-hidden="true" />
           </Link>
         </div>
@@ -69,13 +74,14 @@ export function PresentationPage() {
 
       <main id="content" className="mx-auto max-w-6xl px-4 sm:px-8">
         {/* Hero */}
-        <section aria-labelledby="hero-title" className="pt-14 pb-16 sm:pt-24 sm:pb-24">
-          <p role="note" className="inline-flex items-center gap-2 rounded-full border border-line-default bg-paper-raised px-3 py-1 text-xs font-medium text-ink-secondary shadow-xs">
+        <section aria-labelledby="hero-title" className="relative isolate pt-12 pb-12 sm:pt-16 sm:pb-16">
+          <Atmosphere parallax={false} className="absolute inset-x-[-50vw] top-[-6rem] -z-10 h-[34rem]" />
+          <p role="note" className="inline-flex items-center gap-2 rounded-full border border-line-subtle bg-paper-raised/70 px-3 py-1 text-xs font-medium text-ink-secondary shadow-xs">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-ember-600" />
             {DISCLAIMER}
           </p>
-          <h1 id="hero-title" className="mt-6 max-w-4xl animate-rise font-serif text-[2.75rem] leading-[1.02] tracking-[-0.02em] text-balance sm:text-5xl">
-            The long, quiet months between <em className="text-ember-600">signed</em> and <em className="text-ember-600">switched on</em>.
+          <h1 id="hero-title" className="mt-6 max-w-4xl animate-rise text-4xl leading-[0.95] font-medium tracking-[-0.04em] text-balance md:text-heading">
+            The long, quiet months between <em className="text-ember-600 not-italic">signed</em> and <em className="text-ember-600 not-italic">switched on</em>.
           </h1>
           <p className="mt-6 max-w-2xl text-md leading-relaxed text-ink-secondary sm:text-lg">
             Groundwork is a speculative product concept for the people who carry a home-energy project from signed contract to permission to
@@ -83,10 +89,10 @@ export function PresentationPage() {
             together to create thoughtful, functional software.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'lg' })}>
+            <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'lg', pill: true, press: true })}>
               Open the working prototype <ArrowRight aria-hidden="true" />
             </Link>
-            <a href="#case-study" className={buttonStyles({ variant: 'secondary', size: 'lg' })}>
+            <a href="#case-study" onClick={jumpTo('case-study')} className={buttonStyles({ variant: 'secondary', size: 'lg', pill: true, press: true })}>
               Read the case study
             </a>
           </div>
@@ -106,25 +112,25 @@ export function PresentationPage() {
 
           {/* Live composition: real components, not a screenshot */}
           <figure className="mt-16">
-            <div className="rounded-xl border border-line-default bg-paper-raised p-4 shadow-lg sm:p-8">
+            <div className="rounded-3xl bg-paper-raised p-4 shadow-float sm:p-8">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="text-lg font-semibold tracking-tight">Maria Delgado</p>
                   <p className="text-sm text-ink-tertiary">1482 Larkspur Lane, Riverside · Solar + battery, 8.4 kW</p>
                 </div>
-                <HealthBadge health="blocked" />
+                <HealthBadge health="blocked" shape="pill" />
               </div>
               <div className="mt-8">
                 <Stepper steps={heroSteps} label="Example project stages" />
               </div>
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-lg border border-danger-line bg-danger-bg/50 p-4 text-sm">
+                <div className="rounded-2xl border border-danger-line bg-danger-bg/50 p-4 text-sm">
                   <p className="flex items-center gap-2 font-semibold text-danger-fg">
                     <OctagonAlert aria-hidden="true" className="size-4" /> City requested a structural letter
                   </p>
                   <p className="mt-1 text-ink-secondary">Waiting on structural engineer · open 6d</p>
                 </div>
-                <div className="rounded-lg border border-line-default bg-paper-base p-4 text-sm">
+                <div className="rounded-2xl border border-line-subtle bg-paper-base p-4 text-sm">
                   <p className="flex items-center gap-2 font-semibold">
                     <MessageSquareText aria-hidden="true" className="size-4 text-ink-tertiary" /> What Maria sees
                   </p>
@@ -136,15 +142,15 @@ export function PresentationPage() {
           </figure>
         </section>
 
-        <div id="case-study" />
+        <div id="case-study" className="scroll-mt-20" />
 
         <Section n="01" kicker="Context & research" title="Sales tools get a home-energy project signed. Then a different, slower job begins.">
           <div className="grid gap-4 md:grid-cols-2">
-            <ResearchCard kind="verified" source="artemispower.com">
-              Artemis presents an all-in-one platform for residential solar and roofing teams, covering AI design, proposals, financing and sales.
+            <ResearchCard kind="verified" source="Public company site">
+              A public all-in-one platform for residential solar and roofing teams presents AI design, proposals, financing and sales.
               Its site names four audiences: Designers, Sales, Operations and Owners.
             </ResearchCard>
-            <ResearchCard kind="verified" source="artemispower.com/solutions">
+            <ResearchCard kind="verified" source="Public solutions page">
               The Operations audience is described as tracking every project “from sale to PTO” (permission to operate).
             </ResearchCard>
             <ResearchCard kind="observation" source="Public site review">
@@ -181,7 +187,7 @@ export function PresentationPage() {
               ]}
             />
           </div>
-          <blockquote className="mt-10 border-l-2 border-ember-600 pl-5 font-serif text-2xl leading-snug text-ink-primary">
+          <blockquote className="mt-10 border-l border-ember-600 pl-5 text-3xl leading-tight font-medium tracking-[-0.03em] text-ink-primary">
             How might we help a coordinator see which projects need them today, and keep each homeowner informed in words they understand?
           </blockquote>
           <p className="mt-4 flex items-center gap-2 text-xs text-ink-tertiary">
@@ -210,7 +216,7 @@ export function PresentationPage() {
         </Section>
 
         <Section n="04" kicker="Core journey" title="One coordinator, one morning, one stalled permit.">
-          <ol className="grid gap-px overflow-hidden rounded-lg border border-line-default bg-line-default md:grid-cols-5">
+          <ol className="grid gap-px overflow-hidden rounded-3xl border border-line-default bg-line-default md:grid-cols-5">
             {[
               ['Today', 'Maria’s project is first in the queue: blocked 6 days, 5 days over target.'],
               ['Project', 'The stepper and alert explain where it is stuck and why.'],
@@ -226,14 +232,14 @@ export function PresentationPage() {
             ))}
           </ol>
           <div className="mt-6">
-            <Link to="/app" className={buttonStyles({ variant: 'secondary' })}>
+            <Link to="/app" className={buttonStyles({ variant: 'secondary', pill: true, press: true })}>
               Try this journey in the prototype <ArrowRight aria-hidden="true" />
             </Link>
           </div>
         </Section>
 
         <Section n="05" kicker="Interaction example" title="Try the plain-language check.">
-          <JargonDemo />
+          <PlainLanguageDemo />
         </Section>
 
         <Section n="06" kicker="Design system" title="A small system, built from first principles and owned end to end.">
@@ -310,6 +316,9 @@ export function PresentationPage() {
           </p>
           <p className="flex flex-wrap gap-x-4 gap-y-1">
             <span>Designed and built by [Your Name]</span>
+            <Link to="/" className="font-medium text-ember-600 hover:text-ember-700">
+              Back to the homepage
+            </Link>
             <a href="https://github.com/Gayanekh/groundwork" className="font-medium text-ember-600 hover:text-ember-700">
               View source on GitHub
             </a>
@@ -322,7 +331,7 @@ export function PresentationPage() {
 
 function ResearchCard({ kind, source, children }: { kind: Evidence; source?: string; children: ReactNode }) {
   return (
-    <div className="rounded-lg border border-line-default bg-paper-raised p-5">
+    <div className="rounded-2xl border border-line-subtle bg-paper-raised p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <Tag kind={kind} />
         {source && <span className="font-mono text-2xs text-ink-tertiary">{source}</span>}
@@ -350,7 +359,7 @@ function ProblemList({ title, items }: { title: string; items: string[] }) {
 
 function Principle({ icon, title, feature, children }: { icon: ReactNode; title: string; feature: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col rounded-lg border border-line-default bg-paper-raised p-5">
+    <div className="flex flex-col rounded-2xl border border-line-subtle bg-paper-raised p-5">
       <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-md bg-ember-50 text-ember-700 [&_svg]:size-[18px]">
         {icon}
       </span>
@@ -365,50 +374,12 @@ function Principle({ icon, title, feature, children }: { icon: ReactNode; title:
 
 function EngCard({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
   return (
-    <div className="rounded-lg border border-line-default bg-paper-raised p-5">
+    <div className="rounded-2xl border border-line-subtle bg-paper-raised p-5">
       <span aria-hidden="true" className="text-ink-secondary [&_svg]:size-5">
         {icon}
       </span>
       <h3 className="mt-3 font-semibold">{title}</h3>
       <p className="mt-1 text-sm leading-relaxed text-ink-secondary">{children}</p>
-    </div>
-  );
-}
-
-const SAMPLE = 'Hi Maria, the AHJ approved your plan set! Next we schedule install, then inspection, then we apply for PTO with the utility.';
-
-function JargonDemo() {
-  const [text, setText] = useState(SAMPLE);
-  const hits = useMemo(() => findJargon(text), [text]);
-  const unique = Array.from(new Map(hits.map((h) => [h.term.toLowerCase(), h])).values());
-  return (
-    <div className="grid gap-6 rounded-xl border border-line-default bg-paper-raised p-5 shadow-sm sm:p-8 md:grid-cols-2">
-      <div>
-        <Field label="Message to a homeowner" hint="Edit it, or replace the flagged terms.">
-          <Textarea rows={5} value={text} onChange={(e) => setText(e.target.value)} />
-        </Field>
-        <Button variant="ghost" size="sm" className="mt-2" onClick={() => setText(SAMPLE)}>
-          Reset example
-        </Button>
-      </div>
-      <div aria-live="polite">
-        <p className="text-sm font-semibold">
-          {unique.length === 0 ? 'Clear — no jargon found.' : `${unique.length} term${unique.length === 1 ? '' : 's'} a homeowner may not know`}
-        </p>
-        <ul className="mt-3 space-y-2">
-          {unique.map((h) => (
-            <li key={h.term} className="flex items-center gap-3 rounded-md border border-line-subtle bg-paper-base px-3 py-2 text-sm">
-              <span className="min-w-0 flex-1">
-                <span className="font-mono text-xs text-warning-fg">{h.match}</span> → {h.plain}
-              </span>
-              <Button size="sm" variant="secondary" onClick={() => setText((t) => replaceJargon(t, h.term, h.plain))} aria-label={`Replace ${h.match}`}>
-                Replace
-              </Button>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-xs text-ink-tertiary">Same domain function the product uses (src/app/domain/plainLanguage.ts), unit-tested.</p>
-      </div>
     </div>
   );
 }
@@ -436,7 +407,7 @@ function TokenShowcase() {
         </p>
         <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
           {swatches.map(([name, hex]) => (
-            <li key={name} className="overflow-hidden rounded-md border border-line-default bg-paper-raised">
+            <li key={name} className="overflow-hidden rounded-2xl border border-line-subtle bg-paper-raised">
               <span aria-hidden="true" className="block h-14 border-b border-line-subtle" style={{ background: hex }} />
               <span className="block px-2.5 py-2">
                 <span className="block font-mono text-2xs text-ink-primary">{name}</span>
@@ -448,9 +419,9 @@ function TokenShowcase() {
       </div>
       <div className="grid gap-8 md:grid-cols-2">
         <div>
-          <h3 className="text-sm font-semibold">Type — Instrument Sans for work, Instrument Serif for story</h3>
-          <div className="mt-4 space-y-3 rounded-lg border border-line-default bg-paper-raised p-5">
-            <p className="font-serif text-3xl leading-none">Approval to turn on</p>
+          <h3 className="text-sm font-semibold">Type — Inter Tight, tight and medium-weight</h3>
+          <div className="mt-4 space-y-3 rounded-2xl border border-line-subtle bg-paper-raised p-5">
+            <p className="text-3xl leading-none font-medium tracking-[-0.03em]">Approval to turn on</p>
             <p className="text-2xl font-semibold tracking-tight">Projects</p>
             <p className="text-md font-semibold">Permitting checklist</p>
             <p className="text-base text-ink-secondary">Required items must be done first.</p>
@@ -459,7 +430,7 @@ function TokenShowcase() {
         </div>
         <div>
           <h3 className="text-sm font-semibold">Components — states, not just variants</h3>
-          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-lg border border-line-default bg-paper-raised p-5">
+          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-line-subtle bg-paper-raised p-5">
             <Button variant="primary">Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="ghost">Ghost</Button>
@@ -469,9 +440,9 @@ function TokenShowcase() {
             <Button variant="primary" disabled>
               Disabled
             </Button>
-            <HealthBadge health="on-track" />
-            <HealthBadge health="at-risk" />
-            <HealthBadge health="blocked" />
+            <HealthBadge health="on-track" shape="pill" />
+            <HealthBadge health="at-risk" shape="pill" />
+            <HealthBadge health="blocked" shape="pill" />
           </div>
           <p className="mt-3 text-xs text-ink-tertiary">
             Full inventory with every state:{' '}
@@ -495,7 +466,7 @@ function Pipeline() {
   ];
   const outs = ['App', 'Storybook', 'AGENTS.md + manifest', 'Figma library'];
   return (
-    <div className="rounded-xl border border-line-default bg-paper-raised p-5 sm:p-8">
+    <div className="rounded-3xl border border-line-subtle bg-paper-raised p-5 sm:p-8">
       <ol className="grid gap-3 md:grid-cols-4">
         {nodes.map((n, i) => (
           <li key={n.t} className="relative rounded-md border border-line-default bg-paper-base p-4">

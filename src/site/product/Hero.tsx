@@ -6,7 +6,6 @@ import { Link } from '@/app/router';
 import { HealthBadge } from '@/app/features/projectUi';
 import { LogoMark } from '@/app/layout/Logo';
 import { DEVON, PRIYA } from './shared';
-import { jumpTo } from './scroll';
 
 const steps: Step[] = [
   { id: 'c', label: 'Contract', status: 'complete' },
@@ -53,12 +52,12 @@ export function Hero() {
                 <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
                   Try the prototype <ArrowRight aria-hidden="true" />
                 </Link>
-                <a href="#how" onClick={jumpTo('how')} className={`${buttonStyles({ variant: 'secondary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
-                  See how it works
-                </a>
+                <Link to="/case-study" className={`${buttonStyles({ variant: 'secondary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
+                  Read the case study
+                </Link>
               </div>
               <p className="mt-5 max-w-md text-sm leading-snug text-ink-secondary">
-                <span className="font-medium text-ink-primary">Independent Speculative Concept — Not Affiliated with Artemis.</span> A working prototype with fictional data. Messages are simulated.
+                <span className="font-medium text-ink-primary">Independent Speculative Concept.</span> A working prototype with fictional data. Messages are simulated.
               </p>
             </Reveal>
           </div>

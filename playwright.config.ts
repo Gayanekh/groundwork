@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   webServer: {
     command: `npx vite --port ${PORT} --strictPort`,
-    url: `http://localhost:${PORT}/product`,
+    url: `http://localhost:${PORT}/`,
     reuseExistingServer: true,
     timeout: 60_000,
   },

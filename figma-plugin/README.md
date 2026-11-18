@@ -2,7 +2,7 @@
 
 Builds the Figma side of the Groundwork design system from the **same `tokens.json` the code uses**, so names and values match by construction.
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.**
+> **Independent Speculative Concept.**
 
 ## What it creates
 

@@ -23,7 +23,7 @@ export function Closing() {
                   <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'lg', pill: true, press: true })}>
                     Try the prototype <ArrowRight aria-hidden="true" />
                   </Link>
-                  <Link to="/" className={buttonStyles({ variant: 'secondary', size: 'lg', pill: true, press: true })}>
+                  <Link to="/case-study" className={buttonStyles({ variant: 'secondary', size: 'lg', pill: true, press: true })}>
                     Read the case study
                   </Link>
                 </div>

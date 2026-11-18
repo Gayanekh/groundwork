@@ -1,6 +1,6 @@
 import type { Health } from '@/app/domain/types';
 
-export const DISCLAIMER = 'Independent Speculative Concept — Not Affiliated with Artemis.';
+export const DISCLAIMER = 'Independent Speculative Concept.';
 
 /** Sections of the page, in order. Drives the header menu. */
 export const SECTIONS = [

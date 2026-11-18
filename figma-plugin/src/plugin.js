@@ -211,7 +211,7 @@ async function buildFoundationsPage() {
   root.paddingLeft = root.paddingRight = root.paddingTop = root.paddingBottom = 64;
   root.fills = [paint('paper/base')];
   root.appendChild(await text('Groundwork — Foundations', '3xl', 'ink/primary', 'semibold'));
-  root.appendChild(await text('Generated from src/design-system/tokens/tokens.json. Independent speculative concept — not affiliated with Artemis.', 'base', 'ink/tertiary'));
+  root.appendChild(await text('Generated from src/design-system/tokens/tokens.json. Independent speculative concept.', 'base', 'ink/tertiary'));
 
   // Color swatches, grouped
   for (const group of Object.keys(T.color).filter((k) => !k.startsWith('$'))) {

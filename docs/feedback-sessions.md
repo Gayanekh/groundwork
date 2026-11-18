@@ -1,6 +1,6 @@
 # Feedback sessions — kit
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.**
+> **Independent Speculative Concept.**
 > This is a plan and a set of empty templates. **No sessions have been run yet.** Fill in only what real participants said and did. If you run fewer than three, say so.
 
 **Goal:** learn whether the core idea and the main workflow make sense to people who coordinate work, and fix the biggest problem you find.

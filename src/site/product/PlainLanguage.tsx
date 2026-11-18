@@ -6,7 +6,7 @@ import { findJargon, replaceJargon, type JargonHit } from '@/app/domain/plainLan
 const SAMPLE = 'Hi Maria, the AHJ approved your plan set! Next we schedule install, then inspection, then we apply for PTO with the utility.';
 
 /** A draft message in a bubble. Words a homeowner may not know are highlighted; tap one to say it plainly. */
-function Demo() {
+export function PlainLanguageDemo() {
   const [text, setText] = useState(SAMPLE);
   const hits = useMemo(() => findJargon(text), [text]);
   const parts: Array<string | JargonHit> = [];
@@ -81,7 +81,7 @@ export function PlainLanguage() {
           </h2>
           <p className="mt-6 max-w-lg text-md leading-snug text-ink-inverse-secondary">Every stage has a homeowner name and a plain explanation. Before an update goes out, Groundwork flags the words a homeowner may not know. Try it.</p>
           <Reveal className="mt-12">
-            <Demo />
+            <PlainLanguageDemo />
           </Reveal>
         </div>
       </Panel>

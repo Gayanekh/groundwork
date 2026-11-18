@@ -1,6 +1,6 @@
 # Skills-to-requirements matrix and final audit
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.**
+> **Independent Speculative Concept.**
 > Requirements are taken from the public job posting (see `job-analysis.md`). A requirement is marked **Fully** only when working evidence exists in this repository and was run. Documentation alone never counts.
 
 Legend: **Fully** = implemented and verified · **Partially** = some working evidence, with a stated gap · **Not** = not demonstrated by this project.

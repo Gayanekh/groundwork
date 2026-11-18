@@ -3,7 +3,7 @@
 Instructions for AI coding agents (Claude Code, Cursor, Copilot, Codex, etc.) and for people new to this repo.
 Read this file before you change anything. It is short on purpose.
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.** Never add copy, logos or claims that suggest otherwise.
+> **Independent Speculative Concept.** Never add copy, logos or claims that suggest Groundwork is a real product, a real company, or affiliated with one.
 
 ## 1. What this is
 
@@ -44,8 +44,8 @@ src/
     pages/                ← route screens
     layout/               ← AppShell, Logo
     router.tsx            ← tiny History API router
-  site/PresentationPage.tsx ← case-study page at "/"
-  site/product/         ← marketing page at "/product", composed from design-system components
+  site/product/         ← the landing page at "/", composed from design-system components
+  site/CaseStudyPage.tsx ← the case study at "/case-study" (research, strategy, design decisions)
 ```
 
 Dependency direction: `site → app → design-system → tokens`. The design system must never import from `app/`.
@@ -61,9 +61,9 @@ Dependency direction: `site → app → design-system → tokens`. The design sy
 7. **Every interactive element is keyboard-operable** with a visible focus ring (global `:focus-visible` style; don't remove outlines).
 8. **Every input has a label.** Wrap controls in `<Field label=…>` or pass `aria-label`. Icon-only buttons use `IconButton` (its `aria-label` is required by type).
 9. **Never claim simulated things are real.** Sending messages is simulated; keep the "Simulated" copy.
-10. **Fictional data only.** Phones `(xxx) 555-01xx`, emails `@example.com`, fictional names and companies. Exception: the marketing page (`/product`) may use Unsplash photos of people as illustrative imagery. Never present them as real customers, never attach testimonials or real-sounding claims to them, and label them "Illustrative photo" with a photographer credit.
+10. **Fictional data only.** Phones `(xxx) 555-01xx`, emails `@example.com`, fictional names and companies. Exception: the landing page (`/`) may use Unsplash photos of people as illustrative imagery. Never present them as real customers, never attach testimonials or real-sounding claims to them, and label them "Illustrative photo" with a photographer credit.
 11. **No BEM class names.** `block__element` and `block--modifier` in `className` fail lint. Use token utilities or a component variant.
-12. **Surfaces.** The default surface is warm paper. The cool "mist" surface is opt-in via `data-surface="mist"`. `/product` sets it on its wrapper; the app (`/app`) sets it on `<html>` from `AppShell`. The case study at `/` and Storybook stay warm. Under mist, Button, Badge, Card, Dialog, Menu, Select, Input and SegmentedControl switch to the soft pill/rounded look automatically (`in-data-[surface=mist]:` classes). Never change `paper.*` tokens for a marketing look; add or edit `color.mist.*`. `color.wash.*` is decorative (see `Atmosphere`); never put text on `wash.coral`.
+12. **Surfaces.** The default surface is warm paper. The cool "mist" surface is opt-in via `data-surface="mist"`. The landing page sets it on its wrapper; the app (`/app`) sets it on `<html>` from `AppShell`. The case study at `/` and Storybook stay warm. Under mist, Button, Badge, Card, Dialog, Menu, Select, Input and SegmentedControl switch to the soft pill/rounded look automatically (`in-data-[surface=mist]:` classes). Never change `paper.*` tokens for a marketing look; add or edit `color.mist.*`. `color.wash.*` is decorative (see `Atmosphere`); never put text on `wash.coral`.
 13. **Motion uses the `motion` package** (`motion/react`) and only for the marketing page and design-system primitives that need it. Animate `transform` and `opacity` only, keep UI transitions under about 300ms, use ease-out for entrances, and respect `prefers-reduced-motion`. Existing CSS keyframes in `src/styles/index.css` stay as they are.
 
 ## 5. Component cheat sheet

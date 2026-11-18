@@ -3,16 +3,16 @@ import AxeBuilder from '@axe-core/playwright';
 
 const SECTION_IDS = ['top', 'problem', 'solution', 'how', 'features', 'product', 'results', 'plain', 'faq', 'start'];
 
-test.describe('/product marketing page', () => {
+test.describe('landing page at /', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/product');
+    await page.goto('/');
   });
 
   test('shows the headline and a prominent disclaimer', async ({ page }) => {
     await expect(page).toHaveTitle(/Groundwork/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('without the silence');
-    await expect(page.getByText('Independent Speculative Concept — Not Affiliated with Artemis.').first()).toBeVisible();
-    await expect(page.locator('footer')).toContainText('Not Affiliated with Artemis');
+    await expect(page.getByText('Independent Speculative Concept.').first()).toBeVisible();
+    await expect(page.locator('footer')).toContainText('Independent Speculative Concept');
   });
 
   test('has every section, one h1, and credits its photos as illustrative', async ({ page }) => {
@@ -22,14 +22,11 @@ test.describe('/product marketing page', () => {
     await expect(page.locator('footer')).toContainText('not Groundwork customers');
   });
 
-  test('uses the cool mist surface and the grotesque font here only', async ({ page }) => {
+  test('uses the cool mist surface and the grotesque font', async ({ page }) => {
     const bg = await page.locator('[data-surface="mist"]').evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(bg).toBe('rgb(245, 247, 250)');
     const font = await page.getByRole('heading', { level: 1 }).evaluate((el) => getComputedStyle(el).fontFamily);
     expect(font).toContain('Inter Tight');
-    await page.goto('/');
-    const home = await page.locator('div.min-h-dvh').first().evaluate((el) => getComputedStyle(el).backgroundColor);
-    expect(home).toBe('rgb(246, 244, 239)');
   });
 
   test('never scrolls sideways', async ({ page }) => {
@@ -113,7 +110,7 @@ test.describe('/product marketing page', () => {
 
 test('section menu works on small screens', async ({ page, isMobile, viewport }) => {
   test.skip(!isMobile && (viewport?.width ?? 0) >= 1024, 'The menu button is only shown below 1024px.');
-  await page.goto('/product');
+  await page.goto('/');
   await page.getByRole('button', { name: 'Open section menu' }).click();
   await page.getByRole('menuitem', { name: 'FAQ' }).click();
   await expect(page).toHaveURL(/#faq$/);
@@ -121,7 +118,7 @@ test('section menu works on small screens', async ({ page, isMobile, viewport })
 
 test('a nav link glides to its section and updates the address', async ({ page, viewport }) => {
   test.skip((viewport?.width ?? 0) < 1024, 'The link row is only shown from 1024px.');
-  await page.goto('/product');
+  await page.goto('/');
   const start = await page.evaluate(() => window.scrollY);
   await page.getByRole('navigation', { name: 'Sections' }).getByRole('link', { name: 'Features' }).click();
   // Mid-flight the page is somewhere between the start and the section: it is a glide, not a jump.
@@ -132,7 +129,8 @@ test('a nav link glides to its section and updates the address', async ({ page, 
   await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('features')!.getBoundingClientRect().top))).toBeLessThanOrEqual(70);
 });
 
-test('the existing case-study homepage is untouched', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('The long, quiet months');
+test('the old /product address redirects to the homepage', async ({ page }) => {
+  await page.goto('/product');
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('without the silence');
 });

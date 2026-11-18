@@ -4,11 +4,10 @@ import { Reveal, SectionTag, cx } from '@/design-system';
 
 const ITEMS = [
   { q: 'What is Groundwork?', a: 'An independent speculative product concept: a working prototype of a post-sale project-operations tool for home-energy installers.' },
-  { q: 'Is it a real product or company?', a: 'No. It has no customers, pricing or backend. It exists to explore how product design and design engineering fit together.' },
+  { q: 'Is it a real product or company?', a: 'No. It has no customers, pricing or backend. It is an independent concept that exists to explore how product design and design engineering fit together.' },
   { q: 'Who is it designed for?', a: 'Project coordinators, who see what needs them each day. Homeowners are the second audience: they receive plain-language updates but never log in.' },
   { q: 'Are the messages really sent?', a: 'No. Sending is simulated, and nothing leaves your browser. Every person, address and number in the prototype is fictional.' },
   { q: 'Where is my data kept?', a: 'In your own browser only. Use the workspace menu in the prototype to reset the demo data at any time.' },
-  { q: 'Is it affiliated with Artemis?', a: 'No. It is an independent concept, not commissioned by or built with Artemis.' },
 ];
 
 export function Faq() {

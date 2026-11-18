@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { MotionConfig, useMotionValueEvent, useScroll } from 'motion/react';
 import { ArrowRight, Menu as MenuIcon } from 'lucide-react';
 import { IconButton, Menu, MenuItem, buttonStyles, cx } from '@/design-system';
-import { Link } from '@/app/router';
+import { Link, navigate } from '@/app/router';
 import { Logo } from '@/app/layout/Logo';
 import { Hero } from './Hero';
 import { Problem } from './Problem';
@@ -44,6 +44,9 @@ function Header() {
                 {n.label}
               </a>
             ))}
+            <Link to="/case-study" className="rounded-full px-4 py-1.5 text-base font-medium whitespace-nowrap text-ink-primary transition-colors duration-fast ease-standard hover:bg-paper-raised/70">
+              Case study
+            </Link>
           </nav>
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
             <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'md', press: true, pill: true })}>
@@ -56,6 +59,7 @@ function Header() {
                     {n.label}
                   </MenuItem>
                 ))}
+                <MenuItem onSelect={() => navigate('/case-study')}>Case study</MenuItem>
               </Menu>
             </div>
           </div>
@@ -76,7 +80,7 @@ function Footer() {
         <div className="space-y-2 md:text-right">
           <p>Photographs are illustrative stock images from Unsplash by {credits.join(' and ')}. The people shown are not Groundwork customers.</p>
           <p className="flex flex-wrap gap-x-5 gap-y-1 md:justify-end">
-            <Link to="/" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
+            <Link to="/case-study" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
               Case study
             </Link>
             <a href="/storybook/" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
@@ -92,7 +96,7 @@ function Footer() {
   );
 }
 
-/** Marketing page for Groundwork at /product, in the cool "mist" surface. The case study stays at "/". */
+/** The Groundwork landing page, served at "/" in the cool "mist" surface. */
 export function ProductPage() {
   return (
     <MotionConfig reducedMotion="user">
