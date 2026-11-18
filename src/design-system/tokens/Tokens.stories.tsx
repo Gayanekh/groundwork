@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { tokens } from './tokens';
 
@@ -12,7 +13,7 @@ const entries = (prefix: string) => Object.entries(tokens).filter(([k]) => k.sta
 
 export const Color: Story = {
   render: () => {
-    const groups = ['paper', 'ink', 'line', 'ember', 'success', 'warning', 'danger', 'info', 'neutral'];
+    const groups = ['paper', 'ink', 'line', 'mist', 'wash', 'ember', 'success', 'warning', 'danger', 'info', 'neutral'];
     return (
       <div className="space-y-8">
         {groups.map((g) => (
@@ -34,6 +35,40 @@ export const Color: Story = {
       </div>
     );
   },
+};
+
+// The page may already be on the mist surface, so the warm card sets the original paper values itself.
+const warm = {
+  '--color-paper-base': tokens['color.paper.base'],
+  '--color-paper-sunken': tokens['color.paper.sunken'],
+  '--color-paper-inverse': tokens['color.paper.inverse'],
+  '--color-line-subtle': tokens['color.line.subtle'],
+  '--color-line-default': tokens['color.line.default'],
+} as CSSProperties;
+
+export const Surfaces: Story = {
+  parameters: { docs: { description: { story: 'The same components on warm paper (default) and on the cool mist surface. Mist is switched on with `data-surface="mist"`.' } } },
+  render: () => (
+    <div className="grid gap-4 md:grid-cols-2">
+      {[
+        { name: 'Warm paper (default)', surface: undefined, style: warm },
+        { name: 'Mist (site and app)', surface: 'mist', style: undefined },
+      ].map(({ name, surface, style }) => (
+        <div key={name} data-surface={surface} style={style} className="rounded-3xl bg-paper-base p-6 ring-1 ring-line-default">
+          <p className="font-mono text-xs text-ink-tertiary">{name}</p>
+          <p className="mt-3 text-3xl leading-none font-medium tracking-[-0.03em]">Signed to switched on</p>
+          <div className="mt-5 rounded-2xl border border-line-subtle bg-paper-raised p-4">
+            <p className="font-semibold">Maria Delgado</p>
+            <p className="text-sm text-ink-secondary">Permitting · 26d of 21d target</p>
+          </div>
+          <div className="mt-4 flex gap-2">
+            <span className="rounded-md bg-paper-inverse px-3 py-1.5 text-sm text-ink-inverse">paper.inverse</span>
+            <span className="rounded-md bg-paper-sunken px-3 py-1.5 text-sm">paper.sunken</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  ),
 };
 
 export const Typography: Story = {

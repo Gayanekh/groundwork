@@ -176,7 +176,7 @@ export function Select<V extends string = string>({
         className={cx(
           controlStyles,
           'flex items-center gap-2 text-left',
-          size === 'sm' ? 'h-8 pl-2.5 pr-2 text-sm pointer-coarse:h-10' : 'h-10 pl-3 pr-2.5 text-base pointer-coarse:h-11',
+          size === 'sm' ? 'h-8 pl-2.5 pr-2 text-sm in-data-[surface=mist]:h-10 pointer-coarse:h-10' : 'h-10 pl-3 pr-2.5 text-base in-data-[surface=mist]:h-12 in-data-[surface=mist]:rounded-full in-data-[surface=mist]:pl-5 in-data-[surface=mist]:pr-4 pointer-coarse:h-11',
           open && 'border-ember-600 ring-3 ring-ember-100',
           className,
         )}

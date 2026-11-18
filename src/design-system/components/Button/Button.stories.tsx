@@ -27,6 +27,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = { args: { variant: 'primary' } };
 
+export const Pill: Story = {
+  parameters: { docs: { description: { story: '`pill` makes a marketing button fully rounded. On the mist surface every button is a pill automatically.' } } },
+  render: (args) => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button {...args} variant="primary" pill size="lg" trailingIcon={<ArrowRight />}>
+        Try the prototype
+      </Button>
+      <Button {...args} variant="secondary" pill size="lg">
+        Read the case study
+      </Button>
+    </div>
+  ),
+};
+
 export const Variants: Story = {
   render: (args) => (
     <div className="flex flex-wrap items-center gap-3">

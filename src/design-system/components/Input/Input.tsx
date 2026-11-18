@@ -4,10 +4,10 @@ import { useField } from '../Field/Field';
 
 /** Shared control surface. Exported so Select's trigger matches inputs exactly. */
 export const controlStyles = cx(
-  'w-full rounded-sm in-data-[surface=mist]:rounded-xl border bg-paper-raised text-ink-primary shadow-xs',
+  'w-full rounded-sm in-data-[surface=mist]:rounded-2xl border bg-paper-raised text-ink-primary shadow-xs in-data-[surface=mist]:shadow-none',
   'placeholder:text-ink-tertiary transition-[border-color,box-shadow] duration-fast ease-standard',
   'hover:border-ink-tertiary',
-  'focus-visible:outline-none focus-visible:border-ember-600 focus-visible:ring-3 focus-visible:ring-ember-100',
+  'focus-visible:outline-none focus-visible:border-ember-600 focus-visible:ring-3 focus-visible:ring-ember-100 in-data-[surface=mist]:focus-visible:ring-4 in-data-[surface=mist]:focus-visible:ring-ember-100/70',
   'disabled:cursor-not-allowed disabled:bg-paper-sunken disabled:text-ink-disabled disabled:hover:border-line-default disabled:border-line-default',
   'aria-invalid:border-danger-fg aria-invalid:focus-visible:ring-danger-bg',
 );
@@ -31,7 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   return (
     <div className={cx('relative flex items-center', className)}>
       {leading && (
-        <span aria-hidden="true" className="pointer-events-none absolute left-3 flex text-ink-tertiary [&_svg]:size-4">
+        <span aria-hidden="true" className="pointer-events-none absolute left-3 flex text-ink-tertiary in-data-[surface=mist]:left-4.5 [&_svg]:size-4">
           {leading}
         </span>
       )}
@@ -44,8 +44,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         className={cx(
           controlStyles,
           // 16px text on touch avoids iOS zoom-on-focus
-          size === 'sm' ? 'h-8 px-2.5 text-sm pointer-coarse:h-10 pointer-coarse:text-md' : 'h-10 px-3 text-base pointer-coarse:h-11 pointer-coarse:text-md',
-          leading ? 'pl-9' : '',
+          size === 'sm' ? 'h-8 px-2.5 text-sm in-data-[surface=mist]:h-10 pointer-coarse:h-10 pointer-coarse:text-md' : 'h-10 px-3 text-base in-data-[surface=mist]:h-12 in-data-[surface=mist]:rounded-full in-data-[surface=mist]:px-5 pointer-coarse:h-11 pointer-coarse:text-md',
+          leading ? 'pl-9 in-data-[surface=mist]:pl-12' : '',
           trailing ? 'pr-10' : '',
         )}
         {...rest}

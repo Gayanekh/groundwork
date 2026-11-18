@@ -1,8 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from '../Feedback/Feedback';
+import { ArrowRight, Search } from 'lucide-react';
 import { Atmosphere } from '../Atmosphere/Atmosphere';
+import { Avatar } from '../Avatar/Avatar';
+import { Input } from '../Input/Input';
+import { Select } from '../Select/Select';
+import { Tab, TabList, TabPanel, Tabs } from '../Tabs/Tabs';
+import { TableContainer, Table, THead, TBody, TRow, TH, TD } from '../Table/Table';
 import { Panel } from '../Panel/Panel';
 import { CardStack } from '../CardStack/CardStack';
+import { ChatBubble } from '../ChatBubble/ChatBubble';
+import { CountUp } from '../CountUp/CountUp';
 import { Badge } from '../Badge/Badge';
 import { Button, buttonStyles } from '../Button/Button';
 import { Reveal } from '../Reveal/Reveal';
@@ -18,7 +26,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Building blocks for marketing pages (`/product`). `EditorialSection` is a numbered section with a large serif heading and an optional dark band. `SpecimenFrame` shows live components like editorial photography. `Reveal` fades content in on scroll and `ThreadRail` is a scroll-linked section navigation. Motion uses the `motion` package, animates only `transform` and `opacity`, takes its easing and durations from the motion tokens, and is switched off by `prefers-reduced-motion`.',
+          'Building blocks for marketing pages (the landing page at `/`). `EditorialSection` is a numbered section with a large serif heading and an optional dark band. `SpecimenFrame` shows live components like editorial photography. `Reveal` fades content in on scroll and `ThreadRail` is a scroll-linked section navigation. Motion uses the `motion` package, animates only `transform` and `opacity`, takes its easing and durations from the motion tokens, and is switched off by `prefers-reduced-motion`.',
       },
     },
   },
@@ -138,6 +146,86 @@ export const Cards: StoryObj<typeof CardStack> = {
         </Alert>
         <p className="text-sm text-ink-secondary">“The city has asked us for more information.”</p>
       </CardStack>
+    </div>
+  ),
+};
+
+export const ChatBubbles: StoryObj<typeof ChatBubble> = {
+  render: () => (
+    <div data-surface="mist" className="mx-auto flex max-w-md flex-col gap-3 rounded-3xl bg-paper-raised p-6">
+      <ChatBubble from="team">The AHJ approved the plan set. Next is install, then PTO.</ChatBubble>
+      <ChatBubble from="homeowner">The city approved your system plans. Next we install, then we get approval to turn on your system.</ChatBubble>
+    </div>
+  ),
+};
+
+export const Counting: StoryObj<typeof CountUp> = {
+  parameters: { docs: { description: { story: 'Counts up once, the first time it scrolls into view. Screen readers always get the final value.' } } },
+  render: () => (
+    <div className="p-8">
+      <p className="text-8xl leading-none font-medium tracking-[-0.05em]">
+        <CountUp value={26} suffix="d" duration={1.6} />
+      </p>
+    </div>
+  ),
+};
+
+export const RefinedControls: StoryObj = {
+  name: 'Refined controls (mist)',
+  parameters: { docs: { description: { story: 'Tabs, inputs, buttons and tables on the mist surface: a sliding pill for the active tab, tall rounded fields with a calm focus glow, buttons that lift and nudge their arrow, and a table whose hovered row lifts into a rounded white row. Switch the toolbar Surface to Warm to compare with the original.' } } },
+  render: () => (
+    <div data-surface="mist" className="mx-auto max-w-4xl space-y-10 bg-paper-base p-8">
+      <Tabs defaultValue="overview">
+        <TabList label="Project sections">
+          <Tab value="overview">Overview</Tab>
+          <Tab value="blockers" count={1}>Blockers</Tab>
+          <Tab value="updates" count={3}>Homeowner updates</Tab>
+        </TabList>
+        <TabPanel value="overview" className="pt-4 text-ink-secondary">Click a tab: the white pill slides to it.</TabPanel>
+        <TabPanel value="blockers" className="pt-4 text-ink-secondary">One open blocker.</TabPanel>
+        <TabPanel value="updates" className="pt-4 text-ink-secondary">Three updates sent.</TabPanel>
+      </Tabs>
+
+      <div className="flex flex-wrap gap-3">
+        <Input aria-label="Search projects" placeholder="Search projects" leading={<Search />} className="w-72" />
+        <Select aria-label="Stage" prefix="Stage" value="all" onChange={() => {}} className="w-60" options={[{ value: 'all', label: 'All stages' }]} />
+        <Button variant="primary" size="lg" trailingIcon={<ArrowRight />}>
+          Try the prototype
+        </Button>
+        <Button variant="secondary" size="lg">
+          Read the case study
+        </Button>
+      </div>
+
+      <TableContainer label="Example projects">
+        <Table>
+          <THead>
+            <tr>
+              <TH>Homeowner</TH>
+              <TH>Stage</TH>
+              <TH align="right">In stage</TH>
+            </tr>
+          </THead>
+          <TBody>
+            {[
+              ['Maria Delgado', 'Permitting', '26d / 21d'],
+              ['Rebecca Stein', 'Site survey', '9d / 7d'],
+              ['Hannah Brooks', 'Final design', '7d / 5d'],
+            ].map(([name, stage, days]) => (
+              <TRow key={name} interactive>
+                <TD>
+                  <span className="flex items-center gap-3 font-semibold">
+                    <Avatar name={name} size="md" decorative />
+                    {name}
+                  </span>
+                </TD>
+                <TD>{stage}</TD>
+                <TD align="right" className="tabular">{days}</TD>
+              </TRow>
+            ))}
+          </TBody>
+        </Table>
+      </TableContainer>
     </div>
   ),
 };

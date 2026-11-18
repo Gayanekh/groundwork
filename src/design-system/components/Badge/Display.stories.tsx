@@ -16,6 +16,26 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const PillBadges: Story = {
+  parameters: { docs: { description: { story: '`shape="pill"` is the soft marketing badge: fully rounded, borderless, roomier. On the mist surface every badge looks like this automatically.' } } },
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge shape="pill" tone="danger" icon={<OctagonAlert />}>
+        Blocked
+      </Badge>
+      <Badge shape="pill" tone="warning" icon={<TriangleAlert />}>
+        At risk
+      </Badge>
+      <Badge shape="pill" tone="success" icon={<CircleDot />}>
+        On track
+      </Badge>
+      <Badge shape="pill" tone="neutral" size="sm">
+        Small
+      </Badge>
+    </div>
+  ),
+};
+
 export const Badges: Story = {
   render: () => (
     <div className="space-y-4">

@@ -8,15 +8,17 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 const base =
   'relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap font-medium ' +
   'transition-[background-color,border-color,color,box-shadow,transform] duration-fast ease-standard ' +
-  'active:translate-y-px disabled:pointer-events-none disabled:active:translate-y-0 aria-busy:cursor-progress';
+  'active:translate-y-px disabled:pointer-events-none disabled:active:translate-y-0 aria-busy:cursor-progress ' +
+  // Soft marketing feel: a small lift on hover, and a trailing arrow nudges forward.
+  'in-data-[surface=mist]:hover:-translate-y-px in-data-[surface=mist]:disabled:hover:translate-y-0 [&_svg]:transition-transform [&_svg]:duration-base [&_svg]:ease-out in-data-[surface=mist]:hover:[&>svg:last-child:not(:first-child)]:translate-x-0.5';
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'bg-paper-inverse text-ink-inverse shadow-xs hover:bg-paper-inverse-hover disabled:bg-paper-sunken disabled:text-ink-disabled disabled:shadow-none',
+    'in-data-[surface=mist]:shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_1px_2px_rgb(28_27_25/0.25)] in-data-[surface=mist]:hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_8px_20px_-6px_rgb(28_27_25/0.4)] bg-paper-inverse text-ink-inverse shadow-xs hover:bg-paper-inverse-hover disabled:bg-paper-sunken disabled:text-ink-disabled disabled:shadow-none',
   accent:
     'bg-ember-600 text-white shadow-xs hover:bg-ember-700 disabled:bg-paper-sunken disabled:text-ink-disabled disabled:shadow-none',
   secondary:
-    'bg-paper-raised text-ink-primary border border-line-default shadow-xs hover:border-line-strong hover:bg-paper-base disabled:text-ink-disabled disabled:bg-paper-base disabled:shadow-none',
+    'in-data-[surface=mist]:hover:shadow-float bg-paper-raised text-ink-primary border border-line-default shadow-xs hover:border-line-strong hover:bg-paper-base disabled:text-ink-disabled disabled:bg-paper-base disabled:shadow-none',
   ghost: 'text-ink-secondary hover:bg-paper-sunken hover:text-ink-primary disabled:text-ink-disabled',
   danger:
     'bg-danger-solid text-white shadow-xs hover:bg-danger-solid-hover disabled:bg-paper-sunken disabled:text-ink-disabled disabled:shadow-none',

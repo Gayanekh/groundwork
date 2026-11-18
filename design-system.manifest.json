@@ -1,7 +1,7 @@
 {
   "name": "Groundwork Design System",
   "version": "0.1.0",
-  "notice": "Independent Speculative Concept — Not Affiliated with Artemis.",
+  "notice": "Independent Speculative Concept.",
   "import": "import { Name } from '@/design-system'",
   "tokens": {
     "source": "src/design-system/tokens/tokens.json",

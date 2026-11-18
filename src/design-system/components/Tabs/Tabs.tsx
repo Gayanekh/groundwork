@@ -70,12 +70,12 @@ export function TabList({ children, label, className }: { children: ReactNode; l
 
   return (
     <div className={cx('relative overflow-x-auto [scrollbar-width:none]', className)}>
-      <div ref={listRef} role="tablist" aria-label={label} onKeyDown={onKeyDown} className="relative flex min-w-max gap-1 border-b border-line-default">
+      <div ref={listRef} role="tablist" aria-label={label} onKeyDown={onKeyDown} className="relative flex min-w-max gap-1 border-b border-line-default in-data-[surface=mist]:w-fit in-data-[surface=mist]:rounded-full in-data-[surface=mist]:border-b-0 in-data-[surface=mist]:bg-paper-sunken in-data-[surface=mist]:p-1">
         {children}
         {indicator && (
           <span
             aria-hidden="true"
-            className="absolute bottom-[-1px] h-0.5 rounded-full bg-ink-primary transition-[left,width] duration-base ease-out"
+            className="absolute bottom-[-1px] h-0.5 rounded-full bg-ink-primary transition-[left,width] duration-base ease-out in-data-[surface=mist]:top-1 in-data-[surface=mist]:bottom-1 in-data-[surface=mist]:h-auto in-data-[surface=mist]:bg-paper-raised in-data-[surface=mist]:shadow-float"
             style={{ left: indicator.left, width: indicator.width }}
           />
         )}
@@ -98,7 +98,8 @@ export function Tab({ value, children, count, disabled }: { value: string; child
       disabled={disabled}
       onClick={() => ctx.setValue(value)}
       className={cx(
-        'relative -mb-px flex h-10 items-center gap-2 rounded-t-sm px-3 text-base font-medium whitespace-nowrap transition-colors duration-fast pointer-coarse:h-12',
+        'relative z-10 -mb-px flex h-10 items-center gap-2 rounded-t-sm px-3 text-base font-medium whitespace-nowrap transition-colors duration-fast pointer-coarse:h-12',
+        'in-data-[surface=mist]:mb-0 in-data-[surface=mist]:h-9 in-data-[surface=mist]:rounded-full in-data-[surface=mist]:px-4 pointer-coarse:in-data-[surface=mist]:h-11',
         selected ? 'text-ink-primary' : 'text-ink-tertiary hover:text-ink-primary',
         'disabled:text-ink-disabled',
       )}

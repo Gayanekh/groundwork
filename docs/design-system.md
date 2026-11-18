@@ -1,6 +1,6 @@
 # Groundwork Design System
 
-> **Independent Speculative Concept — Not Affiliated with Artemis.**
+> **Independent Speculative Concept.**
 > Built from scratch: custom React + TypeScript components styled with Tailwind CSS utilities. **No UI component library or kit is used.**
 
 Live reference: https://groundwork-concept.vercel.app/storybook/ (or `npm run storybook` → http://localhost:6006)
@@ -110,6 +110,8 @@ All exported from `@/design-system`. Every component has typed props with JSDoc.
 **Mist surface.** `color.mist.*` (base `#F5F7FA`, sunken, inverse, three line tones) is an opt-in cool surface for the marketing page. Put `data-surface="mist"` on a wrapper and the paper and line tokens are remapped inside it, so every component adopts the cool look and nothing outside changes. The same block swaps `font.sans` for `font.grotesk` (Inter Tight), so marketing text uses the grotesque face. Marketing display sizes: `text-heading` (64px), plus `radius.2xl`/`3xl` for panels. The block is generated into `tokens.css` by `build-tokens.mjs`. `color.wash.*` (sky, cloud, peach, coral) are decorative colors used by `Atmosphere`; coral is never used behind text.
 
 **Cards on the marketing page.** Cards that sit on the plain page use a hairline border and no shadow. Cards that float over a gradient, a photo or a dark panel use `shadow-float` (`0 12px 28px` at 12% ink). `Panel` follows this: light, dark and wash panels have a border; `elevated` is the one exception, a borderless card with a large soft shadow over a gradient.
+
+**Refined controls on the mist surface.** Under `data-surface="mist"`, Tabs become a soft pill track with a white pill that slides to the active tab. Inputs and selects are 48px tall and fully rounded with a calm ember glow on focus. Buttons get a small lift on hover, a soft inner highlight on the primary, and a trailing arrow that nudges forward. Tables lose their frame, use sentence-case headers and airy rows, and a hovered row lifts into a rounded white row.
 
 **Motion in JS.** Marketing components use the `motion` package. Easing and durations come from `lib/motion.ts`, which reads the same tokens as the CSS, so JS and CSS can’t disagree. Animate `transform` and `opacity` only, keep UI transitions under about 300ms, use `EASE_OUT` for entrances, and rely on `prefers-reduced-motion` (the page wraps itself in `MotionConfig reducedMotion="user"` and components also check `useReducedMotion`). `buttonStyles({ press: true })` gives the 97% press scale used on marketing buttons.
 
