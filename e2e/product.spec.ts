@@ -15,11 +15,11 @@ test.describe('landing page at /', () => {
     await expect(page.locator('footer')).toContainText('Independent Speculative Concept');
   });
 
-  test('has every section, one h1, and credits its photos as illustrative', async ({ page }) => {
+  test('has every section, one h1, and labels its photos as illustrative', async ({ page }) => {
     for (const id of SECTION_IDS) await expect(page.locator(`#${id}`)).toBeAttached();
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
     await expect(page.getByText('Illustrative photo').first()).toBeAttached();
-    await expect(page.locator('footer')).toContainText('not Groundwork customers');
+    await expect(page.locator('footer')).toContainText('are fictional');
   });
 
   test('uses the cool mist surface and the grotesque font', async ({ page }) => {

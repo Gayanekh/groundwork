@@ -14,8 +14,6 @@ import { Results } from './Results';
 import { PlainLanguage } from './PlainLanguage';
 import { Faq } from './Faq';
 import { Closing } from './Closing';
-import { PHOTOS } from './images';
-import { AVATAR_CREDITS } from '@/app/data/avatars';
 import { DISCLAIMER } from './shared';
 import { jumpTo, scrollToId } from './scroll';
 
@@ -71,7 +69,6 @@ function Header() {
 }
 
 function Footer() {
-  const credits = Array.from(new Set(Object.values(PHOTOS).map((p) => p.photographer)));
   return (
     <footer className="overflow-hidden">
       <div className="mx-auto grid max-w-7xl gap-8 border-t border-line-default px-4 pt-10 pb-12 text-sm text-ink-secondary sm:px-10 md:grid-cols-2">
@@ -79,7 +76,6 @@ function Footer() {
           <span className="font-medium text-ink-primary">{DISCLAIMER}</span> All people, companies, addresses and numbers in the prototype are fictional. Messages are simulated.
         </p>
         <div className="space-y-2 md:text-right">
-          <p>Photographs are illustrative stock images from Unsplash by {credits.join(' and ')}. Profile portraits are also Unsplash stock photos by {AVATAR_CREDITS.join(', ')}. The people shown are not Groundwork customers, and the names are made up.</p>
           <p className="flex flex-wrap gap-x-5 gap-y-1 md:justify-end">
             <Link to="/case-study" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
               Case study
