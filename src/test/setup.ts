@@ -25,4 +25,14 @@ if (!('ResizeObserver' in window)) {
     disconnect() {}
   };
 }
+if (!('IntersectionObserver' in window)) {
+  (window as unknown as { IntersectionObserver: unknown }).IntersectionObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  };
+}
 Element.prototype.scrollIntoView ??= function () {};

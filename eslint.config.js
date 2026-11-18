@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'storybook-static', 'node_modules', 'figma-plugin/code.js'] },
+  { ignores: ['dist', 'test-results', 'playwright-report', 'storybook-static', 'node_modules', 'figma-plugin/code.js'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -32,6 +32,24 @@ export default tseslint.config(
               message: 'Import from "@/design-system" instead of deep component paths.',
             },
           ],
+        },
+      ],
+    },
+  },
+  {
+    // Styling convention: Tailwind token utilities only. BEM class names (block__element, block--modifier)
+    // are banned in className strings, so styles never drift into hand-written CSS selectors.
+    files: ['src/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: `JSXAttribute[name.name='className'] Literal[value=/(^|\\s)[a-z][a-z0-9]*(-[a-z0-9]+)*(__|--)[a-z0-9]/]`,
+          message: 'BEM class names (block__element, block--modifier) are not allowed. Use token utilities or a component variant.',
+        },
+        {
+          selector: `JSXAttribute[name.name='className'] TemplateElement[value.raw=/(^|\\s)[a-z][a-z0-9]*(-[a-z0-9]+)*(__|--)[a-z0-9]/]`,
+          message: 'BEM class names (block__element, block--modifier) are not allowed. Use token utilities or a component variant.',
         },
       ],
     },

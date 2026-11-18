@@ -7,3 +7,5 @@ storybook-static
 .env.local
 .vercel
 *.tsbuildinfo
+test-results
+playwright-report
