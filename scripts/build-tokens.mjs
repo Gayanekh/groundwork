@@ -57,7 +57,7 @@ const mistLines = ['  --font-sans: var(--font-grotesk);'];
  */
 const CORE_TARGETS = {
   canvas: ['paper-base'],
-  chip: ['paper-sunken'],
+  chip: ['paper-sunken', 'ink-inverse'],
   card: [],
   ink: ['paper-inverse', 'ink-primary'],
   'ink-hover': ['paper-inverse-hover'],

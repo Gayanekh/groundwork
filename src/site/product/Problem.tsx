@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { DURATION, EASE_OUT, EditorialSection, Panel, Reveal, buttonStyles, cx } from '@/design-system';
 import { Photo } from './Photo';
 import { PHOTOS } from './images';
@@ -51,7 +51,7 @@ export function Problem() {
               <div className="flex flex-wrap items-end justify-between gap-5">
                 <p className="max-w-sm text-base leading-snug text-ink-secondary">{s.body}</p>
                 <a href="#solution" onClick={jumpTo('solution')} className={buttonStyles({ variant: 'primary', press: true })}>
-                  See the fix <ArrowRight aria-hidden="true" />
+                  See the fix <ArrowUpRight aria-hidden="true" />
                 </a>
               </div>
             </Reveal>

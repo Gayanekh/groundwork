@@ -1,6 +1,6 @@
 import { useId, useRef, type ReactNode } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
-import { ArrowRight, CircleCheck, Inbox, Send } from 'lucide-react';
+import { ArrowUpRight, CircleCheck, Inbox, Send } from 'lucide-react';
 import { SectionTag, buttonStyles, cx } from '@/design-system';
 import { Link } from '@/app/router';
 
@@ -83,7 +83,7 @@ export function How() {
           </h2>
           <p className="mt-6 max-w-sm text-md leading-snug text-ink-secondary">One coordinator, one morning, one stalled permit. Here is the journey, from the first look to the update Maria reads.</p>
           <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'md', press: true })} mt-10`}>
-            Try the journey <ArrowRight aria-hidden="true" />
+            Try the journey <ArrowUpRight aria-hidden="true" />
           </Link>
         </div>
         <ol ref={list} className="relative space-y-6 pb-16 lg:pb-40">

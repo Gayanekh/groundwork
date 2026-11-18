@@ -158,6 +158,7 @@
   --shadow-lg: var(--shadow-md);
   --color-paper-base: var(--color-core-canvas);
   --color-paper-sunken: var(--color-core-chip);
+  --color-ink-inverse: var(--color-core-chip);
   --color-paper-inverse: var(--color-core-ink);
   --color-ink-primary: var(--color-core-ink);
   --color-ink-tertiary: var(--color-core-muted);

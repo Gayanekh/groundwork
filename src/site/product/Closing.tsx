@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Panel, Reveal, SectionTag, buttonStyles } from '@/design-system';
 import { Link } from '@/app/router';
 import { Photo } from './Photo';
@@ -21,7 +21,7 @@ export function Closing() {
                 <p className="mt-6 max-w-md text-md leading-snug text-ink-secondary">Open the working prototype and take the stalled-permit journey yourself, from the Today queue to the update Maria reads. Everything in it is fictional, and nothing is really sent.</p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'md', press: true })}>
-                    Try the prototype <ArrowRight aria-hidden="true" />
+                    Try the prototype <ArrowUpRight aria-hidden="true" />
                   </Link>
                   <Link to="/case-study" className={buttonStyles({ variant: 'secondary', size: 'md', press: true })}>
                     Read the case study

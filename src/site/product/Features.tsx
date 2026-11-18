@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, OctagonAlert } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, OctagonAlert } from 'lucide-react';
 import { Avatar, Button, CardStack, ChatBubble, Checkbox, Panel, Reveal, SectionTag, Stepper, buttonStyles, type Step } from '@/design-system';
 import { HealthBadge } from '@/app/features/projectUi';
 
@@ -20,7 +20,7 @@ function GuardrailDemo() {
         </div>
       </fieldset>
       <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line-default pt-4">
-        <Button variant="primary" disabled={missing.length > 0} aria-describedby={reasonId} trailingIcon={<ArrowRight />}>
+        <Button variant="primary" disabled={missing.length > 0} aria-describedby={reasonId} trailingIcon={<ArrowUpRight />}>
           Move to Installation
         </Button>
         <p id={reasonId} className="text-sm text-ink-secondary">
