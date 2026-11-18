@@ -21,7 +21,7 @@ export function initials(name: string) {
 
 export interface AvatarProps {
   name: string;
-  size?: 'xs' | 'sm' | 'md';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /** When the name is shown next to the avatar, hide it from AT to avoid repetition. */
   decorative?: boolean;
   className?: string;
@@ -39,6 +39,7 @@ export function Avatar({ name, size = 'sm', decorative, className }: AvatarProps
         size === 'xs' && 'size-5 text-[9px]',
         size === 'sm' && 'size-7 text-2xs',
         size === 'md' && 'size-9 text-xs',
+        size === 'lg' && 'size-11 text-sm',
         palette[hash(name) % palette.length],
         className,
       )}

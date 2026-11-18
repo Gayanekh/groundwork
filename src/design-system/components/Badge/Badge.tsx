@@ -19,16 +19,19 @@ export interface BadgeProps {
   dot?: boolean;
   icon?: ReactNode;
   size?: 'sm' | 'md';
+  /** `tag` is the compact, outlined app badge. `pill` is the softer marketing badge: fully rounded, borderless, roomier. */
+  shape?: 'tag' | 'pill';
   className?: string;
 }
 
 /** Short status/metadata label. Not interactive. */
-export function Badge({ children, tone = 'neutral', dot, icon, size = 'md', className }: BadgeProps) {
+export function Badge({ children, tone = 'neutral', dot, icon, size = 'md', shape = 'tag', className }: BadgeProps) {
   return (
     <span
       className={cx(
-        'inline-flex shrink-0 items-center gap-1.5 rounded-xs border font-medium whitespace-nowrap [&_svg]:size-3',
-        size === 'sm' ? 'h-5 px-1.5 text-2xs' : 'h-6 px-2 text-xs',
+        'inline-flex shrink-0 items-center font-medium whitespace-nowrap',
+        shape === 'pill' ? 'gap-1.5 rounded-full border border-transparent [&_svg]:size-3.5' : 'gap-1.5 rounded-xs border in-data-[surface=mist]:rounded-full in-data-[surface=mist]:border-transparent [&_svg]:size-3',
+        shape === 'pill' ? (size === 'sm' ? 'h-6 px-2.5 text-xs' : 'h-7 px-3 text-sm') : size === 'sm' ? 'h-5 px-1.5 text-2xs' : 'h-6 px-2 text-xs',
         tones[tone].badge,
         className,
       )}

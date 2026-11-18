@@ -118,7 +118,7 @@ export function Menu({ trigger, children, placement = 'bottom-end', label }: Men
               style={style}
               onKeyDown={onMenuKey}
               className={cx(
-                'z-40 min-w-52 rounded-md border border-line-default bg-paper-raised p-1 shadow-md',
+                'z-[55] min-w-52 rounded-md in-data-[surface=mist]:rounded-2xl border border-line-default bg-paper-raised p-1 shadow-md',
                 'transition-[opacity,transform] duration-fast ease-out',
                 state === 'open' ? 'opacity-100' : 'opacity-0 -translate-y-1',
               )}

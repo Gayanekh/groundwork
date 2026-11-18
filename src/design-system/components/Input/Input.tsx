@@ -4,7 +4,7 @@ import { useField } from '../Field/Field';
 
 /** Shared control surface. Exported so Select's trigger matches inputs exactly. */
 export const controlStyles = cx(
-  'w-full rounded-sm border bg-paper-raised text-ink-primary shadow-xs',
+  'w-full rounded-sm in-data-[surface=mist]:rounded-xl border bg-paper-raised text-ink-primary shadow-xs',
   'placeholder:text-ink-tertiary transition-[border-color,box-shadow] duration-fast ease-standard',
   'hover:border-ink-tertiary',
   'focus-visible:outline-none focus-visible:border-ember-600 focus-visible:ring-3 focus-visible:ring-ember-100',

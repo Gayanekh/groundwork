@@ -16,9 +16,10 @@
       "status": ["{success|warning|danger|info|neutral}-{fg|bg|line}", "bg-danger-solid"],
       "type": ["text-2xs", "text-xs", "text-sm", "text-base", "text-md", "text-lg", "text-xl", "text-2xl", "text-3xl", "text-4xl", "text-5xl", "font-sans", "font-serif", "font-mono"],
       "radius": ["rounded-xs", "rounded-sm", "rounded-md", "rounded-lg", "rounded-xl"],
-      "shadow": ["shadow-xs", "shadow-sm", "shadow-md", "shadow-lg"],
+      "shadow": ["shadow-xs", "shadow-sm", "shadow-md", "shadow-lg", "shadow-float (marketing: cards floating over imagery)"],
       "motion": ["duration-fast", "duration-base", "duration-slow", "ease-standard", "ease-out", "ease-in"]
     },
+    "surfaces": { "mist": "Opt-in cool surface. Put data-surface=\"mist\" on a wrapper (marketing page only): remaps paper.base/sunken/inverse and line.* to the color.mist.* tokens. Generated into tokens.css from color.mist.*" },
     "forbidden": ["Tailwind default palette (e.g. bg-blue-500) — disabled, generates nothing", "hex values in components", "arbitrary color utilities like bg-[#fff]"]
   },
   "components": [
@@ -26,7 +27,7 @@
       "name": "Button",
       "file": "src/design-system/components/Button/Button.tsx",
       "role": "button",
-      "props": { "variant": "primary | accent | secondary | ghost | danger (default secondary)", "size": "sm | md | lg (default md)", "loading": "boolean — spinner + aria-busy, blocks clicks", "leadingIcon": "ReactNode", "trailingIcon": "ReactNode", "fullWidth": "boolean" },
+      "props": { "variant": "primary | accent | secondary | ghost | danger (default secondary)", "size": "sm | md | lg (default md)", "loading": "boolean — spinner + aria-busy, blocks clicks", "leadingIcon": "ReactNode", "trailingIcon": "ReactNode", "fullWidth": "boolean", "press": "boolean — marketing press feel: scale to 97% (buttonStyles and Button)", "pill": "boolean — fully rounded marketing button" },
       "states": ["hover", "focus-visible", "active", "disabled", "loading"],
       "rules": ["One primary per view region", "danger only for destructive actions", "Explain disabled state with visible text + aria-describedby"],
       "related": ["buttonStyles() for links", "IconButton"]
@@ -59,7 +60,7 @@
     { "name": "Dialog", "file": "src/design-system/components/Dialog/Dialog.tsx", "pattern": "WAI-ARIA modal dialog", "props": { "open": "boolean", "onClose": "() => void", "title": "ReactNode (required)", "description": "ReactNode", "footer": "ReactNode — primary action last", "size": "sm | md | lg", "placement": "center | left", "initialFocus": "RefObject", "dismissOnOverlay": "boolean", "bare": "boolean" }, "behavior": ["portal", "focus trap", "Escape closes", "restores focus", "scroll lock", "bottom sheet below 640px"] },
     { "name": "Tabs", "file": "src/design-system/components/Tabs/Tabs.tsx", "pattern": "WAI-ARIA tabs (automatic activation)", "parts": ["Tabs", "TabList", "Tab", "TabPanel"], "props": { "value|defaultValue": "string", "onChange": "(value) => void" }, "tabProps": { "count": "number", "disabled": "boolean" } },
     { "name": "Tooltip", "file": "src/design-system/components/Tooltip/Tooltip.tsx", "props": { "content": "ReactNode", "placement": "Placement", "delay": "ms" }, "rules": ["Supplementary only; never essential info", "Esc dismisses (WCAG 1.4.13)"] },
-    { "name": "Badge", "file": "src/design-system/components/Badge/Badge.tsx", "props": { "tone": "neutral | success | warning | danger | info | accent", "dot": "boolean", "icon": "ReactNode", "size": "sm | md" } },
+    { "name": "Badge", "file": "src/design-system/components/Badge/Badge.tsx", "props": { "tone": "neutral | success | warning | danger | info | accent", "shape": "tag | pill (pill = soft, rounded, borderless; marketing only)", "dot": "boolean", "icon": "ReactNode", "size": "sm | md" } },
     { "name": "StatusDot", "file": "src/design-system/components/Badge/Badge.tsx", "props": { "tone": "Tone", "label": "string (required)", "pulse": "boolean" } },
     { "name": "Card", "file": "src/design-system/components/Card/Card.tsx", "parts": ["Card", "CardHeader"], "props": { "as": "section | div | article | li", "padding": "none | sm | md", "interactive": "boolean" } },
     { "name": "Table", "file": "src/design-system/components/Table/Table.tsx", "parts": ["TableContainer", "Table", "THead", "TBody", "TRow", "TH", "TD"], "thProps": { "sortable": "boolean", "sorted": "asc | desc | false", "onSort": "() => void", "align": "left | right" }, "rules": ["Render a card list below 768px"] },
@@ -71,6 +72,64 @@
     { "name": "Skeleton", "file": "src/design-system/components/Feedback/Feedback.tsx", "props": { "className": "size/shape" }, "rules": ["Mirror final layout", "Set aria-busy on the region"] },
     { "name": "ProgressBar", "file": "src/design-system/components/Feedback/Feedback.tsx", "props": { "value": "number", "max": "number", "label": "string", "showValue": "boolean", "tone": "ink | accent | success" } },
     { "name": "Kbd", "file": "src/design-system/components/Feedback/Feedback.tsx" },
+    {
+      "name": "EditorialSection",
+      "file": "src/design-system/components/EditorialSection/EditorialSection.tsx",
+      "role": "region",
+      "props": { "id": "string (anchor)", "index": "string, optional number after the tag label", "label": "string (circle-dot tag, shown uppercase)", "title": "ReactNode (the h2, 64px medium, -0.03em)", "lede": "ReactNode", "align": "left | center | split (tag left, heading right)", "actions": "ReactNode", "tone": "paper | ink (ink = full-bleed dark band)" }, "parts": ["EditorialSection", "SectionTag"],
+      "rules": ["One h2 per section", "Marketing pages only; the app uses Card/CardHeader", "On ink bands use only ink.inverse*, line.inverse* and ember.400 for text"]
+    },
+    {
+      "name": "SpecimenFrame",
+      "file": "src/design-system/components/SpecimenFrame/SpecimenFrame.tsx",
+      "role": "figure",
+      "props": { "label": "string (mono label above)", "caption": "ReactNode", "on": "paper | ink (surface it sits on)", "bleed": "none | right | left (crop off the layout edge)" },
+      "rules": ["Children are live design-system components, never screenshots", "Say what the viewer is looking at in the caption", "Do not put focusable controls in a frame unless the frame is an intentional demo"]
+    },
+    {
+      "name": "Panel",
+      "file": "src/design-system/components/Panel/Panel.tsx",
+      "props": { "tone": "light | dark | wash (dark has a faint grid, wash shows Atmosphere)", "as": "div | section | article | li", "padding": "none | md | lg", "radius": "2xl (24px) | 3xl (32px)", "elevated": "boolean, no outline + large soft shadow (light tone, floats over a gradient)" },
+      "rules": ["Marketing surface; the app uses Card", "Use as=section with an aria-label or heading when it is a landmark", "Decoration is aria-hidden; content sits above it"]
+    },
+    {
+      "name": "CountUp",
+      "file": "src/design-system/components/CountUp/CountUp.tsx",
+      "props": { "value": "number (final value; screen readers always get this)", "suffix": "string", "duration": "seconds (default 1.4)" },
+      "rules": ["Counts once, on first scroll into view", "Shows the final value at once with reduced motion", "Use for headline numbers, not data people compare"]
+    },
+    {
+      "name": "ChatBubble",
+      "file": "src/design-system/components/ChatBubble/ChatBubble.tsx",
+      "props": { "from": "team (grey, left) | homeowner (ember, right)" },
+      "rules": ["Use for messages people read, instead of a labelled box", "Put in a block container; the homeowner bubble aligns itself right"]
+    },
+    {
+      "name": "CardStack",
+      "file": "src/design-system/components/CardStack/CardStack.tsx",
+      "props": { "children": "each child becomes one floating card (3-4 read best)", "delay": "seconds before the first card arrives (others follow 0.12s apart)", "float": "boolean, slow idle float (stops with reduced motion)", "className": "width and placement only" },
+      "rules": ["Put live components inside, never screenshots", "No device frames: the stack is as tall as its content"]
+    },
+    {
+      "name": "Atmosphere",
+      "file": "src/design-system/components/Atmosphere/Atmosphere.tsx",
+      "props": { "parallax": "boolean (default true; ignored with reduced motion)", "from": "top | bottom (bottom: base above, coral rising from the bottom)", "fade": "boolean (default true; fades into paper.base)", "className": "placement/size only, e.g. absolute inset-0 -z-10" },
+      "rules": ["Decorative only: aria-hidden, no interactive children", "Keep text on the pale sky/peach areas; coral only behind white cards", "Place inside a relative isolate wrapper; fades into paper.base, so wrap the page in data-surface=\"mist\" for the cool base"]
+    },
+    {
+      "name": "Reveal",
+      "file": "src/design-system/components/Reveal/Reveal.tsx",
+      "props": { "as": "div | li | p | figure | span", "from": "up | left | right | scale (default up)", "delay": "number (seconds; stagger siblings by 0.1)", "y": "number (px travel, default 40)", "once": "boolean (default true)" },
+      "motion": "opacity + transform only; soft spring (stiffness 400, damping 70, no bounce); scale uses a livelier spring; shows content immediately under prefers-reduced-motion",
+      "rules": ["Never for repeated or frequent actions", "Do not wrap content that must be read immediately above the fold in long delays"]
+    },
+    {
+      "name": "ThreadRail",
+      "file": "src/design-system/components/ThreadRail/ThreadRail.tsx",
+      "role": "navigation",
+      "props": { "stops": "{ id, label }[] (ids of section elements)", "label": "string (nav name)" },
+      "rules": ["Shown from 1024px up; small screens need another way to navigate", "Each stop is a real link with a text label"]
+    },
     { "name": "Spinner", "file": "src/design-system/components/Spinner/Spinner.tsx", "props": { "size": "number", "label": "string (omit when decorative)" } }
   ],
   "productPatterns": [

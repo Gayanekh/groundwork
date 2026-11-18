@@ -98,11 +98,11 @@ export function Dialog({
               'pointer-events-auto flex max-h-full flex-col bg-paper-raised shadow-lg outline-none',
               'transition-[opacity,transform] duration-slow ease-out',
               placement === 'left' && cx('h-full w-[min(20rem,88vw)] border-r border-line-default', shown ? 'translate-x-0' : '-translate-x-full'),
-              asSheet && cx('max-h-[92dvh] w-full rounded-t-xl', shown ? 'translate-y-0' : 'translate-y-full'),
+              asSheet && cx('max-h-[92dvh] w-full rounded-t-xl in-data-[surface=mist]:rounded-t-3xl', shown ? 'translate-y-0' : 'translate-y-full'),
               placement === 'center' &&
                 !asSheet &&
                 cx(
-                  'max-h-[min(44rem,calc(100dvh-3rem))] w-full rounded-lg border border-line-subtle',
+                  'max-h-[min(44rem,calc(100dvh-3rem))] w-full rounded-lg in-data-[surface=mist]:rounded-3xl border border-line-subtle',
                   size === 'sm' && 'max-w-md',
                   size === 'md' && 'max-w-xl',
                   size === 'lg' && 'max-w-3xl',

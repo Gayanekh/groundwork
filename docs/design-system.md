@@ -97,6 +97,21 @@ All exported from `@/design-system`. Every component has typed props with JSDoc.
 | Skeleton | any shape | shimmer | hidden from AT | ✓ | — |
 | ProgressBar | ink, accent, success | — | `role=progressbar` | ✓ | — |
 | Kbd | — | — | `<kbd>` | ✓ | — |
+| EditorialSection (+ SectionTag) | paper / ink band · left / center / split · circle-dot tag, 64px heading, lede | — | region labelled by its h2 | ✓ | ✓ |
+| SpecimenFrame | on paper / ink · bleed none / right / left | — | figure + figcaption | ✓ | ✓ |
+| Panel | light / dark / wash · 24 or 32px radius | — | landmark when `as="section"` | ✓ | ✓ |
+| CardStack | — | — | plain cards | ✓ | ✓ |
+| ChatBubble | team / homeowner | — | paragraph | — | ✓ |
+| CountUp | value, suffix, duration | counts on first view | final value for AT | — | ✓ |
+| Atmosphere | parallax, from, fade | — | decorative, aria-hidden | ✓ | ✓ |
+| Reveal | as, delay, y, once | enter on scroll; static with reduced motion | — | ✓ | ✓ |
+| ThreadRail | stops | active section, hover/focus label | navigation of labelled links | ✓ | ✓ |
+
+**Mist surface.** `color.mist.*` (base `#F5F7FA`, sunken, inverse, three line tones) is an opt-in cool surface for the marketing page. Put `data-surface="mist"` on a wrapper and the paper and line tokens are remapped inside it, so every component adopts the cool look and nothing outside changes. The same block swaps `font.sans` for `font.grotesk` (Inter Tight), so marketing text uses the grotesque face. Marketing display sizes: `text-heading` (64px), plus `radius.2xl`/`3xl` for panels. The block is generated into `tokens.css` by `build-tokens.mjs`. `color.wash.*` (sky, cloud, peach, coral) are decorative colors used by `Atmosphere`; coral is never used behind text.
+
+**Cards on the marketing page.** Cards that sit on the plain page use a hairline border and no shadow. Cards that float over a gradient, a photo or a dark panel use `shadow-float` (`0 12px 28px` at 12% ink). `Panel` follows this: light, dark and wash panels have a border; `elevated` is the one exception, a borderless card with a large soft shadow over a gradient.
+
+**Motion in JS.** Marketing components use the `motion` package. Easing and durations come from `lib/motion.ts`, which reads the same tokens as the CSS, so JS and CSS can’t disagree. Animate `transform` and `opacity` only, keep UI transitions under about 300ms, use `EASE_OUT` for entrances, and rely on `prefers-reduced-motion` (the page wraps itself in `MotionConfig reducedMotion="user"` and components also check `useReducedMotion`). `buttonStyles({ press: true })` gives the 97% press scale used on marketing buttons.
 
 Product patterns (in `src/app/features`, not in the design system because they know the domain): `HealthBadge`, `ProjectStepper`, `UpdateComposer`, `NewProjectDialog`, `AddBlockerDialog`, `ResolveBlockerDialog`, `AdvanceStageDialog`.
 

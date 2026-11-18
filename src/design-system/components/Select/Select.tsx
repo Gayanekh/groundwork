@@ -200,7 +200,7 @@ export function Select<V extends string = string>({
             style={floatingStyle}
             data-state={state}
             className={cx(
-              'z-40 max-h-80 overflow-auto rounded-md border border-line-default bg-paper-raised p-1 shadow-md',
+              'z-[55] max-h-80 overflow-auto rounded-md in-data-[surface=mist]:rounded-2xl border border-line-default bg-paper-raised p-1 shadow-md',
               'transition-[opacity,transform] duration-fast ease-out',
               state === 'open' ? 'opacity-100' : 'opacity-0 -translate-y-1',
             )}

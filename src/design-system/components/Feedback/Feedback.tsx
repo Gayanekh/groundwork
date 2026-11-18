@@ -24,7 +24,7 @@ export interface AlertProps {
 export function Alert({ tone = 'info', title, children, action, className }: AlertProps) {
   const { box, icon: Icon } = alertTones[tone];
   return (
-    <div role={tone === 'danger' ? 'alert' : 'note'} className={cx('flex items-start gap-3 rounded-md border px-4 py-3', box, className)}>
+    <div role={tone === 'danger' ? 'alert' : 'note'} className={cx('flex items-start gap-3 rounded-md in-data-[surface=mist]:rounded-2xl border px-4 py-3', box, className)}>
       <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
       <div className="min-w-0 flex-1 text-sm">
         <p className="font-semibold">{title}</p>

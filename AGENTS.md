@@ -44,7 +44,8 @@ src/
     pages/                ← route screens
     layout/               ← AppShell, Logo
     router.tsx            ← tiny History API router
-  site/PresentationPage.tsx ← portfolio page at "/"
+  site/PresentationPage.tsx ← case-study page at "/"
+  site/product/         ← marketing page at "/product", composed from design-system components
 ```
 
 Dependency direction: `site → app → design-system → tokens`. The design system must never import from `app/`.
@@ -60,7 +61,10 @@ Dependency direction: `site → app → design-system → tokens`. The design sy
 7. **Every interactive element is keyboard-operable** with a visible focus ring (global `:focus-visible` style; don't remove outlines).
 8. **Every input has a label.** Wrap controls in `<Field label=…>` or pass `aria-label`. Icon-only buttons use `IconButton` (its `aria-label` is required by type).
 9. **Never claim simulated things are real.** Sending messages is simulated; keep the "Simulated" copy.
-10. **Fictional data only.** Phones `(xxx) 555-01xx`, emails `@example.com`, fictional names and companies.
+10. **Fictional data only.** Phones `(xxx) 555-01xx`, emails `@example.com`, fictional names and companies. Exception: the marketing page (`/product`) may use Unsplash photos of people as illustrative imagery. Never present them as real customers, never attach testimonials or real-sounding claims to them, and label them "Illustrative photo" with a photographer credit.
+11. **No BEM class names.** `block__element` and `block--modifier` in `className` fail lint. Use token utilities or a component variant.
+12. **Surfaces.** The default surface is warm paper. The cool "mist" surface is opt-in via `data-surface="mist"`. `/product` sets it on its wrapper; the app (`/app`) sets it on `<html>` from `AppShell`. The case study at `/` and Storybook stay warm. Under mist, Button, Badge, Card, Dialog, Menu, Select, Input and SegmentedControl switch to the soft pill/rounded look automatically (`in-data-[surface=mist]:` classes). Never change `paper.*` tokens for a marketing look; add or edit `color.mist.*`. `color.wash.*` is decorative (see `Atmosphere`); never put text on `wash.coral`.
+13. **Motion uses the `motion` package** (`motion/react`) and only for the marketing page and design-system primitives that need it. Animate `transform` and `opacity` only, keep UI transitions under about 300ms, use ease-out for entrances, and respect `prefers-reduced-motion`. Existing CSS keyframes in `src/styles/index.css` stay as they are.
 
 ## 5. Component cheat sheet
 
@@ -84,6 +88,10 @@ Full inventory with props: `design-system.manifest.json`. Live examples: Storybo
 | Nothing to show | `EmptyState` (say why + next step) | blank space |
 | Loading | `Skeleton` shaped like the content, `aria-busy` on region | spinner on whole page |
 | Ordered progress | `Stepper` | custom dots |
+| Marketing section (numbered, big serif heading, optional dark band) | `EditorialSection` | hand-built section markup |
+| Show real UI like a photograph | `SpecimenFrame` with live components | screenshots |
+| Scroll reveal | `Reveal` (motion, transform + opacity only) | custom IntersectionObserver or CSS hacks |
+| Section navigation on long pages | `ThreadRail` + header links | scroll-spy scripts |
 
 ## 6. Patterns to copy
 

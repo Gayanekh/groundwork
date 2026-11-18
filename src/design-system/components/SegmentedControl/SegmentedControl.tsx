@@ -46,7 +46,7 @@ export function SegmentedControl<V extends string>({ options, value, defaultValu
       role="radiogroup"
       aria-label={label}
       onKeyDown={onKeyDown}
-      className={cx('inline-flex max-w-full overflow-x-auto rounded-md border border-line-default bg-paper-sunken p-0.5 [scrollbar-width:none]', className)}
+      className={cx('inline-flex max-w-full overflow-x-auto rounded-md in-data-[surface=mist]:rounded-full border border-line-default bg-paper-sunken p-0.5 [scrollbar-width:none]', className)}
     >
       {options.map((o) => {
         const selected = o.value === current;
@@ -60,7 +60,7 @@ export function SegmentedControl<V extends string>({ options, value, defaultValu
             tabIndex={selected ? 0 : -1}
             onClick={() => setCurrent(o.value)}
             className={cx(
-              'inline-flex items-center gap-1.5 rounded-sm font-medium whitespace-nowrap transition-[background-color,color,box-shadow] duration-fast ease-standard',
+              'inline-flex items-center gap-1.5 rounded-sm in-data-[surface=mist]:rounded-full font-medium whitespace-nowrap transition-[background-color,color,box-shadow] duration-fast ease-standard',
               size === 'sm' ? 'h-7 px-2.5 text-sm pointer-coarse:h-9' : 'h-8 px-3 text-sm pointer-coarse:h-10',
               selected ? 'bg-paper-raised text-ink-primary shadow-sm' : 'text-ink-secondary hover:text-ink-primary',
             )}

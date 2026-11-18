@@ -24,20 +24,25 @@ const variants: Record<ButtonVariant, string> = {
 
 // pointer-coarse: bumps height to a 44px touch target on touch devices.
 const sizes: Record<ButtonSize, string> = {
-  sm: 'h-8 rounded-sm px-3 text-sm pointer-coarse:h-10 [&_svg]:size-3.5',
-  md: 'h-9 rounded-md px-3.5 text-base pointer-coarse:h-11 [&_svg]:size-4',
-  lg: 'h-11 rounded-md px-5 text-md [&_svg]:size-[18px]',
+  sm: 'h-8 rounded-sm in-data-[surface=mist]:rounded-full px-3 text-sm pointer-coarse:h-10 [&_svg]:size-3.5',
+  md: 'h-9 rounded-md in-data-[surface=mist]:rounded-full px-3.5 text-base pointer-coarse:h-11 [&_svg]:size-4',
+  lg: 'h-11 rounded-md in-data-[surface=mist]:rounded-full px-5 text-md [&_svg]:size-[18px]',
 };
 
 export interface ButtonStyleOptions {
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
+  /** Marketing feel: pressing scales the button to 97% instead of nudging it down 1px. */
+  press?: boolean;
+  /** Fully rounded marketing button. */
+  pill?: boolean;
 }
 
 /** Class string for button visuals. Use on `<a>` / router links that must look like buttons. */
-export function buttonStyles({ variant = 'secondary', size = 'md', fullWidth }: ButtonStyleOptions = {}) {
-  return cx(base, variants[variant], sizes[size], fullWidth && 'w-full');
+export function buttonStyles({ variant = 'secondary', size = 'md', fullWidth, press, pill }: ButtonStyleOptions = {}) {
+  const shape = pill ? sizes[size].replace(/rounded-(sm|md)/, 'rounded-full') : sizes[size];
+  return cx(base, variants[variant], shape, fullWidth && 'w-full', press && 'active:translate-y-0 active:scale-[0.97]', pill && variant === 'primary' && 'bg-linear-to-b from-paper-inverse-hover to-paper-inverse');
 }
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonStyleOptions {
@@ -53,7 +58,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Bu
  * - `danger` only for destructive, irreversible actions, ideally inside a confirm Dialog.
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = 'secondary', size = 'md', fullWidth, loading = false, leadingIcon, trailingIcon, disabled, className, children, type = 'button', onClick, ...rest },
+  { variant = 'secondary', size = 'md', fullWidth, press, pill, loading = false, leadingIcon, trailingIcon, disabled, className, children, type = 'button', onClick, ...rest },
   ref,
 ) {
   return (
@@ -64,7 +69,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       aria-busy={loading || undefined}
       aria-disabled={loading || undefined}
       onClick={loading ? (e) => e.preventDefault() : onClick}
-      className={cx(buttonStyles({ variant, size, fullWidth }), className)}
+      className={cx(buttonStyles({ variant, size, fullWidth, press, pill }), className)}
       {...rest}
     >
       {loading ? <Spinner size={size === 'lg' ? 18 : 14} /> : leadingIcon}

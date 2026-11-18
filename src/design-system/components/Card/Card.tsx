@@ -14,7 +14,7 @@ export function Card({ as: As = 'section', padding = 'md', interactive, classNam
   return (
     <As
       className={cx(
-        'rounded-lg border border-line-default bg-paper-raised shadow-sm',
+        'rounded-lg border border-line-default bg-paper-raised shadow-sm in-data-[surface=mist]:rounded-2xl in-data-[surface=mist]:border-line-subtle in-data-[surface=mist]:shadow-none',
         padding === 'sm' && 'p-4',
         padding === 'md' && 'p-5 sm:p-6',
         interactive && 'transition-[border-color,box-shadow] duration-fast ease-standard hover:border-line-strong hover:shadow-md',

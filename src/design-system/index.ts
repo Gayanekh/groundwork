@@ -26,4 +26,14 @@ export { TableContainer, Table, THead, TBody, TRow, TH, TD, type SortDirection }
 export { ToastProvider, useToast, type ToastOptions } from './components/Toast/Toast';
 export { Avatar, initials, type AvatarProps } from './components/Avatar/Avatar';
 export { Stepper, type Step, type StepStatus, type StepperProps } from './components/Stepper/Stepper';
+export { Atmosphere, type AtmosphereProps } from './components/Atmosphere/Atmosphere';
+export { Reveal, type RevealProps } from './components/Reveal/Reveal';
+export { SpecimenFrame, type SpecimenFrameProps } from './components/SpecimenFrame/SpecimenFrame';
+export { EditorialSection, SectionTag, type EditorialSectionProps } from './components/EditorialSection/EditorialSection';
+export { Panel, type PanelProps } from './components/Panel/Panel';
+export { CountUp, type CountUpProps } from './components/CountUp/CountUp';
+export { CardStack, type CardStackProps } from './components/CardStack/CardStack';
+export { ChatBubble, type ChatBubbleProps } from './components/ChatBubble/ChatBubble';
+export { ThreadRail, type ThreadRailProps, type ThreadStop } from './components/ThreadRail/ThreadRail';
+export { EASE_OUT, EASE_STANDARD, DURATION, REVEAL_DURATION, SPRING_SOFT, SPRING_POP } from './lib/motion';
 export { Alert, EmptyState, Skeleton, Kbd, ProgressBar, type AlertProps, type EmptyStateProps, type ProgressBarProps } from './components/Feedback/Feedback';
