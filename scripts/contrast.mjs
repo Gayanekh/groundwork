@@ -35,6 +35,8 @@ const pairs = [
   ['core.ink', 'core.canvas', 4.5],
   ['core.ink-secondary', 'core.canvas', 4.5],
   ['core.muted', 'core.canvas', 4.5],
+  ['core.ink', 'core.card', 4.5],
+  ['core.ink-secondary', 'core.card', 4.5],
   ['core.muted', 'core.chip', 4.5],
   ['core.line-strong', 'core.canvas', 3],
   ['ink.inverse', 'core.ink', 4.5],

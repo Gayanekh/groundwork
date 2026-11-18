@@ -58,6 +58,7 @@ const mistLines = ['  --font-sans: var(--font-grotesk);'];
 const CORE_TARGETS = {
   canvas: ['paper-base'],
   chip: ['paper-sunken'],
+  card: [],
   ink: ['paper-inverse', 'ink-primary'],
   'ink-hover': ['paper-inverse-hover'],
   'ink-secondary': ['ink-secondary'],
@@ -69,9 +70,8 @@ const CORE_TARGETS = {
 const coreLines = [
   '  --font-sans: var(--font-inter);',
   '  --radius-lg: var(--radius-md);',
-  '  --radius-xl: var(--radius-md);',
-  '  --radius-2xl: var(--radius-md);',
-  '  --radius-3xl: var(--radius-md);',
+  '  --radius-2xl: var(--radius-xl);',
+  '  --radius-3xl: var(--radius-xl);',
   '  --shadow-float: var(--shadow-sm);',
   '  --shadow-lg: var(--shadow-md);',
 ];

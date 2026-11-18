@@ -28,6 +28,7 @@ export const tokens = {
   "color.core.chip": "#F9F9F9",
   "color.core.ink": "#0E0E0E",
   "color.core.muted": "#696969",
+  "color.core.card": "#ECECEC",
   "color.core.ink-hover": "#2B2B2B",
   "color.core.ink-secondary": "#4D4D4D",
   "color.core.line-subtle": "#EDEDED",

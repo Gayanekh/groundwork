@@ -42,6 +42,7 @@
   --color-core-chip: #F9F9F9;
   --color-core-ink: #0E0E0E;
   --color-core-muted: #696969;
+  --color-core-card: #ECECEC;
   --color-core-ink-hover: #2B2B2B;
   --color-core-ink-secondary: #4D4D4D;
   --color-core-line-subtle: #EDEDED;
@@ -151,9 +152,8 @@
 [data-surface='core'] {
   --font-sans: var(--font-inter);
   --radius-lg: var(--radius-md);
-  --radius-xl: var(--radius-md);
-  --radius-2xl: var(--radius-md);
-  --radius-3xl: var(--radius-md);
+  --radius-2xl: var(--radius-xl);
+  --radius-3xl: var(--radius-xl);
   --shadow-float: var(--shadow-sm);
   --shadow-lg: var(--shadow-md);
   --color-paper-base: var(--color-core-canvas);
