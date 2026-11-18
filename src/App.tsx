@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Compass } from 'lucide-react';
 import { EmptyState, ToastProvider, buttonStyles } from '@/design-system';
 import { Link, matchPath, useLocation } from './app/router';
@@ -9,8 +9,12 @@ import { ProjectsPage } from './app/pages/ProjectsPage';
 import { ProjectDetailPage } from './app/pages/ProjectDetailPage';
 import { PresentationPage } from './site/PresentationPage';
 
+// Loaded on demand: the marketing page is the only consumer of the `motion` package.
+const ProductPage = lazy(() => import('./site/product/ProductPage').then((m) => ({ default: m.ProductPage })));
+
 const TITLES: Record<string, string> = {
   '/': 'Groundwork — Independent Speculative Concept',
+  '/product': 'Groundwork — Post-sale operations for home-energy installers',
   '/app': 'Today · Groundwork',
   '/app/projects': 'Projects · Groundwork',
 };
@@ -24,6 +28,13 @@ function Routes() {
   }, [pathname, detail]);
 
   if (pathname === '/' || pathname === '') return <PresentationPage />;
+  if (pathname === '/product' || pathname === '/product/') {
+    return (
+      <Suspense fallback={<div className="min-h-dvh bg-paper-base" aria-busy="true" />}>
+        <ProductPage />
+      </Suspense>
+    );
+  }
 
   let page;
   if (pathname === '/app' || pathname === '/app/') page = <TodayPage />;
