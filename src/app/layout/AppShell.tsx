@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowUpRight, ChevronsUpDown, FolderKanban, Inbox, Menu as MenuIcon, Plus, RotateCcw, Sun } from 'lucide-react';
-import { Atmosphere, Avatar, Button, Dialog, IconButton, Menu, MenuItem, MenuLabel, cx, useToast } from '@/design-system';
-import { Link, useLocation } from '../router';
+import { Plus, RotateCcw, Sparkles } from 'lucide-react';
+import { Atmosphere, Avatar, Button, IconButton, Menu, MenuItem, MenuLabel, cx, useToast } from '@/design-system';
+import { Link, navigate, useLocation } from '../router';
 import { useProjects } from '../state/ProjectsStore';
 import { getHealth } from '../domain/health';
 import { NewProjectDialog } from '../features/NewProjectDialog';
@@ -10,17 +10,20 @@ import { Logo } from './Logo';
 interface NavItem {
   to: string;
   label: string;
-  icon: ReactNode;
   match: (path: string) => boolean;
   count?: number;
 }
 
+/**
+ * The prototype's frame. It is laid out like the landing page, not like an admin dashboard: a
+ * top bar with the logo, pill navigation and one main action, then a centered page.
+ */
 export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const { projects, resetDemo, currentUser } = useProjects();
   const toast = useToast();
-  const [drawer, setDrawer] = useState(false);
   const [newOpen, setNewOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
 
   const attention = projects.filter((p) => {
@@ -29,18 +32,25 @@ export function AppShell({ children }: { children: ReactNode }) {
   }).length;
 
   const nav: NavItem[] = [
-    { to: '/app', label: 'Today', icon: <Inbox />, match: (p) => p === '/app', count: attention },
-    { to: '/app/projects', label: 'Projects', icon: <FolderKanban />, match: (p) => p.startsWith('/app/projects') },
+    { to: '/app', label: 'Today', match: (p) => p === '/app', count: attention },
+    { to: '/app/projects', label: 'Projects', match: (p) => p.startsWith('/app/projects') },
   ];
 
-  // Route change: close drawer, reset scroll, move focus to main for screen-reader users.
+  // Route change: reset scroll and move focus to main for screen-reader users.
   useEffect(() => {
-    setDrawer(false);
     window.scrollTo(0, 0);
     mainRef.current?.focus({ preventScroll: true });
   }, [pathname]);
 
-  // The app uses the same cool "mist" surface as the marketing page. Set on <html> so portals (dialogs, menus, toasts) match.
+  // Transparent over the top of the page, a light frosted bar once you scroll, like the landing page.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // The app uses the same cool "mist" surface as the landing page. Set on <html> so portals (dialogs, menus, toasts) match.
   useLayoutEffect(() => {
     const root = document.documentElement;
     const before = root.getAttribute('data-surface');
@@ -56,54 +66,34 @@ export function AppShell({ children }: { children: ReactNode }) {
     toast({ title: 'Demo data reset', description: 'All projects are back to their starting state.', tone: 'info' });
   };
 
-  const sidebar = (
-    <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center px-5">
-        <Link to="/app" className="rounded-sm" aria-label="Groundwork, go to Today">
-          <Logo />
-        </Link>
-      </div>
-      <div className="px-3">
-        <Menu
-          placement="bottom-start"
-          trigger={
-            <button
-              type="button"
-              className="flex w-full items-center gap-2.5 rounded-2xl border border-line-subtle bg-paper-raised px-2.5 py-2 text-left transition-colors hover:border-line-strong"
-            >
-              <span aria-hidden="true" className="flex size-8 items-center justify-center rounded-full bg-ember-50 text-ember-700">
-                <Sun className="size-4" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-semibold">Brightline Home Energy</span>
-                <span className="block text-xs text-ink-tertiary">Fictional installer · demo</span>
-              </span>
-              <ChevronsUpDown aria-hidden="true" className="size-4 text-ink-tertiary" />
-            </button>
-          }
-        >
-          <MenuLabel>Demo workspace</MenuLabel>
-          <MenuItem icon={<RotateCcw />} onSelect={reset}>
-            Reset demo data
-          </MenuItem>
-        </Menu>
-      </div>
-      <nav aria-label="Primary" className="mt-6 px-3">
-        <ul className="flex flex-col gap-0.5">
-          {nav.map((item) => {
-            const active = item.match(pathname);
-            return (
-              <li key={item.to}>
+  return (
+    <div className="relative isolate min-h-dvh bg-paper-base">
+      <Atmosphere parallax={false} className="absolute inset-x-0 top-0 -z-10 h-[32rem] opacity-80" />
+
+      <a href="#main" className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0">
+        Skip to content
+      </a>
+
+      <header className={cx('sticky top-0 z-30 border-b transition-[background-color,border-color] duration-base ease-standard', scrolled ? 'border-line-subtle/60 bg-paper-base/80 backdrop-blur-md' : 'border-transparent')}>
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-1 px-4 py-2 sm:px-8 md:h-16 md:flex-nowrap md:py-0">
+          <Link to="/" className="rounded-sm" aria-label="Groundwork, go to the homepage">
+            <Logo />
+          </Link>
+
+          <nav aria-label="Primary" className="order-3 flex w-full items-center gap-1 pb-1 md:order-none md:w-auto md:flex-1 md:justify-center md:pb-0">
+            {nav.map((item) => {
+              const active = item.match(pathname);
+              return (
                 <Link
+                  key={item.to}
                   to={item.to}
                   aria-current={active ? 'page' : undefined}
                   className={cx(
-                    'group relative flex h-10 items-center gap-3 rounded-full px-3.5 text-base font-medium transition-colors duration-fast pointer-coarse:h-11 [&_svg]:size-[18px]',
-                    active ? 'bg-paper-raised text-ink-primary shadow-float' : 'text-ink-secondary hover:bg-paper-sunken hover:text-ink-primary',
+                    'inline-flex h-10 items-center gap-2 rounded-full px-4 text-base whitespace-nowrap transition-colors duration-fast ease-standard',
+                    active ? 'bg-paper-raised font-medium text-ink-primary shadow-float' : 'text-ink-secondary hover:bg-paper-raised/70 hover:text-ink-primary',
                   )}
                 >
-                  <span className={cx(active ? 'text-ember-600' : 'text-ink-tertiary group-hover:text-ink-secondary')}>{item.icon}</span>
-                  <span className="flex-1">{item.label}</span>
+                  {item.label}
                   {item.count ? (
                     <span className="rounded-full bg-paper-inverse px-1.5 text-xs leading-5 text-ink-inverse tabular">
                       {item.count}
@@ -111,76 +101,44 @@ export function AppShell({ children }: { children: ReactNode }) {
                     </span>
                   ) : null}
                 </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="mt-4 px-0">
-          <Button variant="secondary" size="sm" fullWidth leadingIcon={<Plus />} onClick={() => setNewOpen(true)}>
-            New project
-          </Button>
-        </div>
-      </nav>
+              );
+            })}
+          </nav>
 
-      <div className="mt-auto space-y-3 p-3">
-        <Link
-          to="/"
-          className="group block rounded-2xl border border-dashed border-line-default p-3.5 text-sm transition-colors hover:border-line-strong hover:bg-paper-raised"
-        >
-          <span className="flex items-center justify-between font-semibold text-ink-primary">
-            About this concept <ArrowUpRight aria-hidden="true" className="size-4 text-ink-tertiary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-          <span className="mt-0.5 block text-xs text-ink-tertiary">Independent speculative concept. Not affiliated with Artemis.</span>
-        </Link>
-        <div className="flex items-center gap-2.5 px-1">
-          <Avatar name={currentUser} decorative />
-          <div className="min-w-0 text-sm">
-            <p className="truncate font-medium">{currentUser}</p>
-            <p className="text-xs text-ink-tertiary">Project coordinator (fictional)</p>
+          <div className="ml-auto flex items-center gap-2 md:ml-0">
+            <Button variant="primary" leadingIcon={<Plus />} onClick={() => setNewOpen(true)} className="max-sm:hidden">
+              New project
+            </Button>
+            <IconButton aria-label="New project" variant="secondary" icon={<Plus />} onClick={() => setNewOpen(true)} className="sm:hidden" />
+            <Menu
+              placement="bottom-end"
+              trigger={
+                <button type="button" aria-label="Account and demo options" className="grid size-10 place-items-center rounded-full transition-shadow duration-fast hover:shadow-float">
+                  <Avatar name={currentUser} size="md" decorative />
+                </button>
+              }
+            >
+              <MenuLabel>{currentUser} · Project coordinator (fictional)</MenuLabel>
+              <MenuItem icon={<RotateCcw />} onSelect={reset}>
+                Reset demo data
+              </MenuItem>
+              <MenuItem icon={<Sparkles />} onSelect={() => navigate('/')}>
+                About this concept
+              </MenuItem>
+            </Menu>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </header>
 
-  return (
-    <div className="relative isolate min-h-dvh bg-paper-base">
-      <Atmosphere parallax={false} className="absolute inset-x-0 top-0 -z-10 h-[30rem] opacity-80" />
-      <a
-        href="#main"
-        className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0"
-      >
-        Skip to content
-      </a>
+      <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-6xl px-4 pt-8 pb-20 outline-none sm:px-8 md:pt-12">
+        {children}
+      </main>
 
-      {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-line-subtle/70 bg-paper-base/60 backdrop-blur-sm lg:block">{sidebar}</aside>
-
-      {/* Mobile drawer (same content, rendered in a modal for focus management) */}
-      <Dialog open={drawer} onClose={() => setDrawer(false)} title="Navigation" placement="left" bare>
-        {sidebar}
-      </Dialog>
-
-      <div className="lg:pl-64">
-        {/* Mobile top bar */}
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-2 bg-paper-base/70 px-2 backdrop-blur-md lg:hidden">
-          <IconButton aria-label="Open navigation" icon={<MenuIcon />} onClick={() => setDrawer(true)} />
-          <Link to="/app" aria-label="Groundwork, go to Today" className="rounded-sm">
-            <Logo />
-          </Link>
-          <div className="ml-auto">
-            <IconButton aria-label="New project" variant="secondary" icon={<Plus />} onClick={() => setNewOpen(true)} />
-          </div>
-        </header>
-
-        <aside aria-label="Prototype notice" className="px-4 py-2 text-center text-xs text-ink-secondary sm:px-8">
-          <span className="font-medium text-ink-secondary">Concept prototype.</span> All people, companies and data are illustrative. Messages and actions are simulated.
+      <footer className="mx-auto max-w-6xl px-4 pb-10 sm:px-8">
+        <aside aria-label="Prototype notice" className="border-t border-line-default pt-6 text-sm text-ink-secondary">
+          <span className="font-medium text-ink-primary">Concept prototype.</span> All people, companies and data are illustrative. Messages and actions are simulated.
         </aside>
-
-        <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-[88rem] px-4 pt-6 pb-24 outline-none sm:px-8 lg:pt-10">
-          {children}
-        </main>
-      </div>
+      </footer>
 
       <NewProjectDialog open={newOpen} onClose={() => setNewOpen(false)} />
     </div>

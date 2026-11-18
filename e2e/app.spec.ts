@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test.describe('prototype app', () => {
   test('new project form can be filled, including the dropdowns', async ({ page }) => {
     await page.goto('/app?latency=0');
-    await page.getByRole('button', { name: 'New project' }).first().click();
+    await page.getByRole('button', { name: 'New project' }).and(page.locator(':visible')).first().click();
     const dialog = page.getByRole('dialog', { name: 'New project' });
 
     await dialog.getByLabel(/Full name/).fill('Test Person');
@@ -21,4 +21,11 @@ test.describe('prototype app', () => {
     await expect(dialog).toBeHidden();
     await expect(page.getByText('Test Person').first()).toBeVisible();
   });
+});
+
+test('the logo in the app goes to the homepage', async ({ page }) => {
+  await page.goto('/app?latency=0');
+  await page.getByRole('banner').getByRole('link', { name: 'Groundwork, go to the homepage' }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('without the silence');
 });

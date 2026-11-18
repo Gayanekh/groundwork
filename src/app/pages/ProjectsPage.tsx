@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Plus, Search, SearchX, X } from 'lucide-react';
+import { LayoutGrid, Plus, Rows3, Search, SearchX, X } from 'lucide-react';
 import {
   Avatar,
   Button,
@@ -17,6 +17,7 @@ import {
   TH,
   THead,
   TRow,
+  cx,
   type SortDirection,
 } from '@/design-system';
 import { Link, navigate, useLocation } from '../router';
@@ -30,6 +31,7 @@ import type { Health, Project, StageId } from '../domain/types';
 
 type SortKey = 'name' | 'stage' | 'days' | 'update';
 type HealthFilter = 'all' | Health;
+type View = 'cards' | 'table';
 
 const HEALTH_ORDER: Record<Health, number> = { blocked: 0, 'at-risk': 1, 'on-track': 2, complete: 3 };
 
@@ -46,6 +48,8 @@ export function ProjectsPage() {
   const owner = search.get('owner') ?? 'all';
   const sort = (search.get('sort') ?? 'health') as SortKey | 'health';
   const dir = (search.get('dir') ?? 'desc') as SortDirection;
+  // Cards by default. The table is for comparing many projects on a wide screen; phones always get cards.
+  const view: View = search.get('view') === 'table' ? 'table' : 'cards';
 
   const setParam = (updates: Record<string, string | null>) => {
     const next = new URLSearchParams(search);
@@ -103,7 +107,9 @@ export function ProjectsPage() {
     return [...list].sort(cmp[sort]);
   }, [baseFiltered, health, sort, dir]);
 
-  const sortBy = (key: SortKey) => {
+  const sortBy = (key: SortKey | 'health') => setParam({ sort: key === 'health' ? null : key, dir: key === 'name' || key === 'stage' ? 'asc' : null });
+  // Column headers: click once to sort, again to flip the direction.
+  const sortByColumn = (key: SortKey) => {
     if (sort === key) setParam({ dir: dir === 'asc' ? 'desc' : 'asc' });
     else setParam({ sort: key, dir: key === 'name' || key === 'stage' ? 'asc' : 'desc' });
   };
@@ -125,12 +131,9 @@ export function ProjectsPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-medium tracking-[-0.03em] sm:text-4xl">Projects</h1>
-          <p className="mt-1 text-base text-ink-secondary">Every signed project from contract to PTO.</p>
+          <h1 className="text-4xl leading-[1] font-medium tracking-[-0.04em] sm:text-6xl">Projects</h1>
+          <p className="mt-3 text-md text-ink-secondary">Every signed project, from contract to switched on.</p>
         </div>
-        <Button variant="primary" leadingIcon={<Plus />} onClick={() => setNewOpen(true)} className="max-sm:hidden">
-          New project
-        </Button>
       </header>
 
       {/* Filter bar */}
@@ -155,7 +158,7 @@ export function ProjectsPage() {
             }
             className="md:max-w-sm md:flex-1"
           />
-          <div className="grid grid-cols-2 gap-3 md:flex">
+          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap">
             <Select<StageId | 'all'>
               aria-label="Filter by stage"
               prefix="Stage"
@@ -176,6 +179,20 @@ export function ProjectsPage() {
                 ...COORDINATORS.filter((c) => c !== currentUser).map((c) => ({ value: c, label: c })),
               ]}
             />
+            <Select<SortKey | 'health'>
+              aria-label="Sort projects"
+              prefix="Sort"
+              value={sort}
+              onChange={sortBy}
+              className="col-span-2 md:col-span-1 md:w-60"
+              options={[
+                { value: 'health', label: 'Most urgent' },
+                { value: 'name', label: 'Name' },
+                { value: 'stage', label: 'Stage' },
+                { value: 'days', label: 'Longest in stage' },
+                { value: 'update', label: 'Longest without an update' },
+              ]}
+            />
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -192,6 +209,18 @@ export function ProjectsPage() {
               { value: 'complete', label: 'Complete', count: healthCounts.complete },
             ]}
           />
+          <div className="flex items-center gap-4">
+            <SegmentedControl<View>
+              label="Show projects as"
+              size="sm"
+              value={view}
+              onChange={(v) => setParam({ view: v === 'cards' ? null : v })}
+              className="max-md:hidden"
+              options={[
+                { value: 'cards', label: <span className="inline-flex items-center gap-1.5"><LayoutGrid aria-hidden="true" className="size-3.5" /> Cards</span> },
+                { value: 'table', label: <span className="inline-flex items-center gap-1.5"><Rows3 aria-hidden="true" className="size-3.5" /> Table</span> },
+              ]}
+            />
           <p className="text-sm text-ink-tertiary" aria-live="polite">
             {loading ? 'Loading…' : `${rows.length} project${rows.length === 1 ? '' : 's'}`}
             {filtersActive && !loading && (
@@ -203,13 +232,14 @@ export function ProjectsPage() {
               </>
             )}
           </p>
+          </div>
         </div>
       </div>
 
       {loading ? (
         <LoadingRows />
       ) : rows.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-line-default">
+        <div className="rounded-3xl border border-dashed border-line-default">
           <EmptyState
             variant="page"
             icon={<SearchX />}
@@ -230,60 +260,44 @@ export function ProjectsPage() {
         </div>
       ) : (
         <>
-          {/* ≥768px: table */}
-          <TableContainer label="Projects" className="max-md:hidden">
-            <Table>
-              <caption className="sr-only">Projects, sorted by {sort === 'health' ? 'urgency' : sort}</caption>
-              <THead>
-                <tr>
-                  <TH sortable sorted={sortedState('name')} onSort={() => sortBy('name')}>
-                    Homeowner
-                  </TH>
-                  <TH sortable sorted={sortedState('stage')} onSort={() => sortBy('stage')}>
-                    Stage
-                  </TH>
-                  <TH>Health</TH>
-                  <TH sortable sorted={sortedState('days')} onSort={() => sortBy('days')} align="right">
-                    In stage
-                  </TH>
-                  <TH sortable sorted={sortedState('update')} onSort={() => sortBy('update')} align="right" className="max-lg:hidden">
-                    Last update
-                  </TH>
-                  <TH className="max-xl:hidden">Owner</TH>
-                </tr>
-              </THead>
-              <TBody>
-                {rows.map(({ p, h }) => (
-                  <ProjectRow key={p.id} project={p} health={h.health} />
-                ))}
-              </TBody>
-            </Table>
-          </TableContainer>
-
-          {/* <768px: cards */}
-          <ul className="space-y-3 md:hidden">
+          <ul className={cx('grid grid-cols-1 gap-4 md:grid-cols-2', view === 'table' && 'md:hidden')}>
             {rows.map(({ p, h }) => (
               <li key={p.id}>
-                <Link to={`/app/projects/${p.id}`} className="block rounded-2xl border border-line-subtle bg-paper-raised p-4 shadow-sm active:bg-paper-base">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="font-semibold">{p.homeowner.name}</p>
-                      <p className="truncate text-sm text-ink-tertiary">
-                        {p.address.city} · <span className="font-mono text-xs">{p.id}</span>
-                      </p>
-                    </div>
-                    <HealthBadge health={h.health} size="sm" />
-                  </div>
-                  <div className="mt-4 flex items-center justify-between gap-3">
-                    <ProjectStepper project={p} variant="compact" />
-                    <span className="text-sm text-ink-secondary">
-                      {STAGE_BY_ID[p.stage].label} · <span className="tabular">{daysInStage(p)}d</span>
-                    </span>
-                  </div>
-                </Link>
+                <ProjectCard project={p} health={h.health} />
               </li>
             ))}
           </ul>
+
+          {view === 'table' && (
+            <TableContainer label="Projects" className="max-md:hidden">
+              <Table>
+                <caption className="sr-only">Projects, sorted by {sort === 'health' ? 'urgency' : sort}</caption>
+                <THead>
+                  <tr>
+                    <TH sortable sorted={sortedState('name')} onSort={() => sortByColumn('name')}>
+                      Homeowner
+                    </TH>
+                    <TH sortable sorted={sortedState('stage')} onSort={() => sortByColumn('stage')}>
+                      Stage
+                    </TH>
+                    <TH>Health</TH>
+                    <TH sortable sorted={sortedState('days')} onSort={() => sortByColumn('days')} align="right">
+                      In stage
+                    </TH>
+                    <TH sortable sorted={sortedState('update')} onSort={() => sortByColumn('update')} align="right" className="max-lg:hidden">
+                      Last update
+                    </TH>
+                    <TH className="max-xl:hidden">Owner</TH>
+                  </tr>
+                </THead>
+                <TBody>
+                  {rows.map(({ p, h }) => (
+                    <ProjectRow key={p.id} project={p} health={h.health} />
+                  ))}
+                </TBody>
+              </Table>
+            </TableContainer>
+          )}
         </>
       )}
 
@@ -313,7 +327,7 @@ function ProjectRow({ project: p, health }: { project: Project; health: Health }
         <ProjectStepper project={p} variant="compact" />
       </TD>
       <TD>
-        <HealthBadge health={health} />
+        <HealthBadge health={health} shape="pill" />
       </TD>
       <TD align="right" className="tabular">
         <span className={inStage > sla && health !== 'complete' ? 'font-medium text-warning-fg' : ''}>{inStage}d</span>
@@ -332,19 +346,70 @@ function ProjectRow({ project: p, health }: { project: Project; health: Health }
   );
 }
 
+/** One project as a card: who, how long it has been in this stage against its target, and where it sits in the journey. */
+function ProjectCard({ project: p, health }: { project: Project; health: Health }) {
+  const inStage = daysInStage(p);
+  const stage = STAGE_BY_ID[p.stage];
+  const silent = daysSinceHomeownerUpdate(p);
+  const tone = health === 'blocked' ? 'text-danger-fg' : health === 'at-risk' ? 'text-warning-fg' : 'text-ink-primary';
+  return (
+    <Link
+      to={`/app/projects/${p.id}`}
+      className="group flex h-full flex-col rounded-3xl border border-line-subtle bg-paper-raised p-5 transition-shadow duration-base ease-standard hover:shadow-float sm:p-6"
+    >
+      <div className="flex items-center gap-3">
+        <Avatar name={p.homeowner.name} size="lg" decorative />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-lg font-semibold tracking-tight">{p.homeowner.name}</p>
+          <p className="truncate text-sm text-ink-tertiary">
+            {p.address.street}, {p.address.city} · {TRADE_LABEL[p.trade]}
+          </p>
+        </div>
+        <HealthBadge health={health} size="sm" shape="pill" />
+      </div>
+
+      <div className="mt-7 flex items-end gap-3">
+        <span className={cx('text-6xl leading-none font-medium tracking-[-0.05em] tabular', tone)}>{inStage}d</span>
+        <span className="pb-1 text-sm leading-snug text-ink-secondary">
+          in {stage.label}.
+          <br />
+          Target is {stage.slaDays} days.
+        </span>
+      </div>
+
+      <div className="mt-5">
+        <ProjectStepper project={p} variant="compact" />
+      </div>
+
+      <div className="mt-auto flex items-center justify-between gap-3 pt-6 text-sm text-ink-secondary">
+        <span className="flex min-w-0 items-center gap-2">
+          <Avatar name={p.coordinator} size="xs" decorative />
+          <span className="truncate">{p.coordinator}</span>
+        </span>
+        <span className={cx('shrink-0 tabular', silent > 7 && health !== 'complete' && 'font-medium text-warning-fg')}>
+          {silent === 0 ? 'Updated today' : `Updated ${silent}d ago`}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
 function LoadingRows() {
   return (
-    <div aria-busy="true" aria-label="Loading projects" className="rounded-2xl border border-line-subtle bg-paper-raised">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <div key={i} className="flex items-center gap-6 border-b border-line-subtle px-4 py-4 last:border-0">
-          <div className="flex-1 space-y-2">
-            <Skeleton className="h-3.5 w-40" />
-            <Skeleton className="h-3 w-56 max-w-full" />
+    <ul aria-busy="true" aria-label="Loading projects" className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {[0, 1, 2, 3].map((i) => (
+        <li key={i} className="rounded-3xl border border-line-subtle bg-paper-raised p-6">
+          <div className="flex items-center gap-3">
+            <Skeleton className="size-11 rounded-full" />
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-4 w-40" />
+              <Skeleton className="h-3 w-56 max-w-full" />
+            </div>
           </div>
-          <Skeleton className="h-6 w-20 max-sm:hidden" />
-          <Skeleton className="h-3 w-12" />
-        </div>
+          <Skeleton className="mt-8 h-12 w-28" />
+          <Skeleton className="mt-6 h-1.5 w-40" />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

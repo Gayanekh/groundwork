@@ -45,12 +45,12 @@ export function TodayPage() {
   );
 
   return (
-    <div className="space-y-8">
-      <header className="flex flex-col gap-1">
+    <div className="space-y-10">
+      <header className="flex flex-col gap-2">
         <p className="text-sm text-ink-tertiary">
           {new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date())}
         </p>
-        <h1 className="text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
+        <h1 className="text-4xl leading-[1] font-medium tracking-[-0.04em] sm:text-6xl">
           {greeting()}, {currentUser.split(' ')[0]}.
         </h1>
         <p className="text-base text-ink-secondary">
@@ -58,7 +58,7 @@ export function TodayPage() {
         </p>
       </header>
 
-      <section aria-label="Summary" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <section aria-label="Summary" className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line-subtle bg-line-subtle lg:grid-cols-4">
         <StatTile loading={loading} label="Blocked" value={stats.blocked} icon={<OctagonAlert />} tone="danger" to="/app/projects?health=blocked&owner=me" />
         <StatTile loading={loading} label="At risk" value={stats.atRisk} icon={<Clock3 />} tone="warning" to="/app/projects?health=at-risk&owner=me" />
         <StatTile loading={loading} label="Homeowner waiting > 7 days" value={stats.waiting} icon={<BellRing />} tone="ember" to="/app/projects?owner=me&sort=update" />
@@ -147,7 +147,7 @@ function StatTile({ label, value, icon, tone, to, loading }: { label: string; va
   return (
     <Link
       to={to}
-      className="group flex flex-col justify-between gap-4 rounded-2xl border border-line-subtle bg-paper-raised p-4 transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-float sm:p-5"
+      className="group flex flex-col justify-between gap-8 bg-paper-raised p-5 transition-colors duration-fast ease-standard hover:bg-paper-base sm:p-6"
     >
       <span className="flex items-start justify-between gap-2">
         <span className="text-sm leading-tight text-ink-secondary">{label}</span>
@@ -156,7 +156,7 @@ function StatTile({ label, value, icon, tone, to, loading }: { label: string; va
         </span>
       </span>
       <span className="flex items-end justify-between">
-        {loading ? <Skeleton className="h-8 w-10" /> : <span className="text-4xl leading-none font-medium tracking-[-0.04em] tabular">{value}</span>}
+        {loading ? <Skeleton className="h-8 w-10" /> : <span className="text-5xl leading-none font-medium tracking-[-0.05em] tabular">{value}</span>}
         <ArrowRight aria-hidden="true" className="size-4 text-ink-tertiary opacity-0 transition-all duration-fast group-hover:translate-x-0.5 group-hover:opacity-100" />
       </span>
     </Link>
@@ -172,15 +172,15 @@ function AttentionCard({ project: p, reasons, health }: { project: Project; reas
     >
       <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
         <div className="min-w-0 flex-1">
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="text-md font-semibold tracking-tight">{p.homeowner.name}</span>
-            <span className="font-mono text-xs text-ink-tertiary">{p.id}</span>
+          <p className="flex items-center gap-3">
+            <Avatar name={p.homeowner.name} size="md" decorative />
+            <span className="text-lg font-semibold tracking-tight">{p.homeowner.name}</span>
           </p>
-          <p className="mt-0.5 truncate text-sm text-ink-tertiary">
+          <p className="mt-2 truncate text-sm text-ink-tertiary">
             {p.address.street}, {p.address.city} · {stage.label}
           </p>
         </div>
-        <HealthBadge health={health} />
+        <HealthBadge health={health} shape="pill" />
       </div>
       <ul className="mt-3 space-y-1">
         {reasons.map((r) => (
