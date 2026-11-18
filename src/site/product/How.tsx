@@ -11,6 +11,36 @@ const STEPS: Array<{ icon: ReactNode; title: string; body: string }> = [
 ];
 
 /**
+ * A large icon badge. It springs in when its card scrolls into view, then floats slowly while a soft ring
+ * pulses behind it. Transform and opacity only; with reduced motion it just sits there.
+ */
+function StepIcon({ index, children }: { index: number; children: ReactNode }) {
+  const reduce = useReducedMotion();
+  const offset = index * 0.6;
+  return (
+    <motion.span
+      aria-hidden="true"
+      className="relative grid size-20 place-items-center rounded-full bg-paper-sunken text-ink-primary [&_svg]:size-9"
+      initial={reduce ? false : { scale: 0.5, rotate: -16, opacity: 0 }}
+      whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+      viewport={{ once: true, amount: 0.6 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+    >
+      {!reduce && (
+        <motion.span
+          className="absolute inset-0 rounded-full border border-line-strong"
+          animate={{ scale: [1, 1.45], opacity: [0.5, 0] }}
+          transition={{ duration: 2.4, ease: 'easeOut', repeat: Infinity, delay: offset }}
+        />
+      )}
+      <motion.span className="grid place-items-center" animate={reduce ? undefined : { y: [0, -4, 0] }} transition={{ duration: 3.2, ease: 'easeInOut', repeat: Infinity, delay: offset }}>
+        {children}
+      </motion.span>
+    </motion.span>
+  );
+}
+
+/**
  * One step card. Each card sticks a little lower than the one before it, so as you scroll the next
  * card slides up and lands on top of the last. The card underneath eases back a little.
  */
@@ -25,9 +55,7 @@ function StepCard({ i, total, progress, step }: { i: number; total: number; prog
         className={cx('flex min-h-64 flex-col justify-between gap-8 rounded-3xl border border-line-subtle bg-paper-raised p-6 shadow-md sm:min-h-72 sm:p-8')}
       >
         <div className="flex items-start justify-between">
-          <span aria-hidden="true" className="grid size-12 place-items-center rounded-full bg-paper-base text-ink-primary [&_svg]:size-5">
-            {step.icon}
-          </span>
+          <StepIcon index={i}>{step.icon}</StepIcon>
           <span aria-hidden="true" className="text-sm font-medium text-ink-tertiary">
             /0{i + 1}
           </span>
