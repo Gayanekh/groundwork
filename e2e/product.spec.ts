@@ -139,3 +139,34 @@ test('the old /product address redirects to the homepage', async ({ page }) => {
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('From signed to switched on');
 });
+
+// The whole hero (headline, text, buttons and the disclaimer) must be readable without scrolling,
+// on short and tall, wide and narrow windows, and must never scroll sideways.
+const HERO_SIZES: Array<[string, number, number]> = [
+  ['1440x900 desktop', 1440, 900],
+  ['1440x700 short desktop', 1440, 700],
+  ['1280x640 short laptop', 1280, 640],
+  ['1024x768 small laptop', 1024, 768],
+  ['820x1180 tablet', 820, 1180],
+  ['390x844 phone', 390, 844],
+  ['390x667 small phone', 390, 667],
+];
+for (const [name, width, height] of HERO_SIZES) {
+  test(`the hero fits the first screen at ${name}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.goto('/');
+    await page.waitForTimeout(1500);
+    const m = await page.evaluate(() => {
+      const hero = document.querySelector('#top') as HTMLElement;
+      const visible = [...hero.querySelectorAll('h1, p, a')].filter((e) => !e.closest('[aria-hidden="true"]') && e.getBoundingClientRect().width > 0);
+      return {
+        heroBottom: Math.round(hero.getBoundingClientRect().bottom),
+        contentBottom: Math.round(Math.max(...visible.map((e) => e.getBoundingClientRect().bottom))),
+        sideways: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      };
+    });
+    expect(m.contentBottom).toBeLessThanOrEqual(height);
+    expect(m.heroBottom).toBeLessThanOrEqual(height + 1);
+    expect(m.sideways).toBeLessThanOrEqual(0);
+  });
+}

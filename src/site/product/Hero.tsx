@@ -7,7 +7,11 @@ import { PHOTOS } from './images';
 import { coreButton } from './coreButton';
 import { DISCLAIMER } from './shared';
 
-/** A floating image or chip, placed by pixel offsets that follow the reference: tablet values first, then the wide-desktop ones. */
+/**
+ * Floating images and chips. Their edges sit at a percentage of the hero's width and height, and the
+ * images are sized in `--u` (see Hero), so the whole cluster scales with the viewport instead of
+ * keeping pixel offsets. Chips keep their natural size so their text never gets squeezed.
+ */
 function Float({ className, delay, children }: { className: string; delay: number; children: ReactNode }) {
   return (
     <Reveal y={14} delay={delay} className={cx('absolute', className)}>
@@ -17,35 +21,36 @@ function Float({ className, delay, children }: { className: string; delay: numbe
 }
 
 const IMG = 'size-full rounded-md object-cover';
-const CHIP = 'flex items-center gap-4 rounded-md bg-core-chip px-4 text-base tracking-[0.01em]';
+const CHIP = 'flex min-h-14 w-max items-center gap-4 rounded-md bg-core-chip px-4 py-2 text-base tracking-[0.01em]';
 
 /** The four clusters of decoration. Illustrative only: nothing here is a real file, message or customer. */
 function Decoration() {
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block">
+    // Only where there is room beside the text: wide screens that are also tall enough.
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block [@media(max-height:620px)]:hidden">
       {/* Top left: a photo with a file chip */}
-      <Float delay={0.2} className="top-[176px] left-10 h-[158px] w-[131px] xl:top-[184px] xl:left-[127px] xl:h-[187px] xl:w-[156px]">
+      <Float delay={0.2} className="top-[20.4%] left-[8.8%] h-[calc(var(--u)*13)] w-[calc(var(--u)*10.83)]">
         <img src={PHOTOS.homeowner.src} alt="" decoding="async" className={cx(IMG, 'object-[30%_50%]')} />
       </Float>
-      <Float delay={0.3} className="top-[250px] left-[83px] xl:top-[279px] xl:left-[164px]">
-        <div className={cx(CHIP, 'h-14 w-[244px] xl:w-[248px]')}>
+      <Float delay={0.3} className="top-[31%] left-[11.4%]">
+        <div className={CHIP}>
           <FileText className="size-6 shrink-0" />
           <span>Permit_Delgado.pdf</span>
         </div>
       </Float>
 
       {/* Top right: three stacked photos with a folder chip */}
-      <Float delay={0.25} className="top-[152px] right-10 h-[111px] w-[93px] xl:top-[171px] xl:right-[125px] xl:h-[122px] xl:w-[102px]">
+      <Float delay={0.25} className="top-[19%] right-[8.7%] h-[calc(var(--u)*8.47)] w-[calc(var(--u)*7.08)]">
         <img src={PHOTOS.installers.src} alt="" decoding="async" className={cx(IMG, 'object-[70%_50%]')} />
       </Float>
-      <Float delay={0.3} className="top-[165px] right-14 h-[111px] w-[93px] xl:top-[184px] xl:right-[141px] xl:h-[122px] xl:w-[102px]">
+      <Float delay={0.3} className="top-[20.4%] right-[9.8%] h-[calc(var(--u)*8.47)] w-[calc(var(--u)*7.08)]">
         <img src={PHOTOS.coordinator.src} alt="" decoding="async" className={cx(IMG, 'object-[50%_30%]')} />
       </Float>
-      <Float delay={0.35} className="top-[183px] right-[68px] h-[111px] w-[93px] xl:top-[197px] xl:right-[151px] xl:h-[122px] xl:w-[102px]">
+      <Float delay={0.35} className="top-[21.9%] right-[10.5%] h-[calc(var(--u)*8.47)] w-[calc(var(--u)*7.08)]">
         <img src={PHOTOS.homeowner.src} alt="" decoding="async" className={cx(IMG, 'object-[80%_40%]')} />
       </Float>
-      <Float delay={0.45} className="top-[193px] right-[98px] xl:top-[222px] xl:right-[184px]">
-        <div className={cx(CHIP, 'h-[72px] w-[232px] xl:h-16 xl:w-[236px]')}>
+      <Float delay={0.45} className="top-[24.7%] right-[12.8%]">
+        <div className={CHIP}>
           <FolderSync className="size-6 shrink-0" />
           <span className="grid gap-0.5">
             <span>Today queue</span>
@@ -55,13 +60,13 @@ function Decoration() {
       </Float>
 
       {/* Bottom left: a photo with a message box */}
-      <Float delay={0.4} className="top-[648px] left-14 h-[120px] w-[174px] xl:top-[609px] xl:left-[74px] xl:h-[175px] xl:w-[256px]">
+      <Float delay={0.4} className="top-[67.7%] left-[5.1%] h-[calc(var(--u)*12.2)] w-[calc(var(--u)*17.8)]">
         <img src={PHOTOS.installers.src} alt="" decoding="async" className={cx(IMG, 'object-[60%_40%]')} />
       </Float>
-      <Float delay={0.5} className="top-[593px] left-[59px] xl:top-[667px] xl:left-[135px]">
-        <div className={cx(CHIP, 'h-14 w-[249px] gap-3')}>
+      <Float delay={0.5} className="top-[74.1%] left-[9.4%]">
+        <div className={cx(CHIP, 'gap-3')}>
           <MessageSquareText className="size-5 shrink-0" />
-          <span className="flex-1 text-xs tracking-[0.015em] text-core-muted">Text Maria…</span>
+          <span className="pr-2 text-xs tracking-[0.015em] text-core-muted">Text Maria…</span>
           <Mic className="size-4 shrink-0 text-core-muted" />
           <span className="grid size-6 shrink-0 place-items-center rounded-full bg-core-ink text-core-chip">
             <ArrowUp className="size-3.5" />
@@ -70,11 +75,11 @@ function Decoration() {
       </Float>
 
       {/* Bottom right: a photo with a status chip */}
-      <Float delay={0.45} className="top-[622px] right-8 h-[155px] w-[125px] xl:top-[642px] xl:right-[206px] xl:h-[238px] xl:w-[192px]">
+      <Float delay={0.45} className="top-[71.3%] right-[14.3%] h-[calc(var(--u)*16.5)] w-[calc(var(--u)*13.3)]">
         <img src={PHOTOS.coordinator.src} alt="" decoding="async" className={cx(IMG, 'object-[20%_50%]')} />
       </Float>
-      <Float delay={0.55} className="top-[672px] right-10 xl:top-[759px] xl:right-[105px]">
-        <div className={cx(CHIP, 'h-[72px] w-[250px] gap-3 xl:h-16 xl:w-[251px]')}>
+      <Float delay={0.55} className="top-[84.3%] right-[7.3%]">
+        <div className={cx(CHIP, 'gap-3')}>
           <Avatar name="Devon Park" size="md" decorative />
           <span className="grid gap-0.5">
             <span className="text-xs tracking-[0.015em] text-core-muted">Devon, Project coordinator</span>
@@ -102,37 +107,53 @@ function HeadlineLine({ children, delay }: { children: ReactNode; delay: number 
   );
 }
 
+/**
+ * The hero fills the first screen and never needs scrolling to read it.
+ * - Height is `100svh` (the small viewport height), so it still fits when a phone's address bar is showing.
+ *   It is a minimum, not a fixed height: on a very short window the content keeps its size and the page scrolls.
+ * - Type, gaps and the floating images scale with both the width and the height of the window.
+ * - The top padding clears the floating nav bar; the sides and bottom respect device safe areas.
+ */
 export function Hero() {
   const reduce = useReducedMotion();
   return (
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="relative overflow-hidden border-b border-line-subtle bg-core-canvas pt-[22.5rem] pb-16 font-inter text-core-ink md:min-h-[800px] md:pt-[17.5rem] xl:min-h-[900px] xl:pt-[22.4rem]"
+      className={cx(
+        'relative flex min-h-svh flex-col justify-center overflow-hidden border-b border-line-subtle bg-core-canvas font-inter text-core-ink',
+        // --u: one design unit (1/100 of the 1440x900 layout), limited by whichever of width or height is tighter.
+        '[--u:min(1vw,1.6svh)]',
+        'pt-[max(6.25rem,calc(env(safe-area-inset-top)+5.5rem))] pb-[max(1.5rem,env(safe-area-inset-bottom))]',
+        'px-[max(1rem,env(safe-area-inset-left))]',
+      )}
     >
       <Decoration />
 
-      {/* The black dot above the headline, as in the reference. */}
-      <motion.span
-        aria-hidden="true"
-        className="absolute top-[265px] left-1/2 size-[30px] -translate-x-1/2 rounded-full bg-core-ink md:top-[172px] xl:top-[239px]"
-        animate={reduce ? undefined : { scale: [1, 1.18, 1] }}
-        transition={{ duration: 3.2, ease: 'easeInOut', repeat: Infinity }}
-      />
+      <div className="relative mx-auto w-full max-w-[1280px] text-center">
+        {/* The black dot above the headline, as in the reference. */}
+        <motion.span
+          aria-hidden="true"
+          className="mx-auto mb-[clamp(0.75rem,4.5svh,3.5rem)] block size-[30px] rounded-full bg-core-ink"
+          animate={reduce ? undefined : { scale: [1, 1.18, 1] }}
+          transition={{ duration: 3.2, ease: 'easeInOut', repeat: Infinity }}
+        />
 
-      <div className="relative mx-auto max-w-[1280px] px-4 text-center">
-        <h1 id="hero-title" className="font-display text-[3.5rem] leading-none font-normal tracking-[-0.014em] text-balance md:text-[4.5rem] xl:text-[5.5rem]">
+        <h1
+          id="hero-title"
+          className="font-display text-[clamp(2.5rem,min(14.4vw,9.5svh),5.5rem)] leading-none font-normal tracking-[-0.014em] text-balance md:text-[clamp(2.75rem,min(8.8vw,10svh),5.5rem)] xl:text-[clamp(2.75rem,min(6.1vw,10.5svh),5.5rem)]"
+        >
           <HeadlineLine delay={0.05}>Groundwork</HeadlineLine>
           <HeadlineLine delay={0.13}>From signed to switched on.</HeadlineLine>
         </h1>
 
         <Reveal delay={0.3}>
-          <p className="mx-auto mt-6 max-w-[628px] text-md leading-6 tracking-[-0.0075em] md:text-[1.25rem]">
+          <p className="mx-auto mt-[clamp(0.75rem,2.6svh,1.5rem)] max-w-[628px] text-[clamp(0.9375rem,2.2svh,1.25rem)] leading-[1.2] tracking-[-0.0075em]">
             One place for coordinators to see which installs are stuck, move every stage along, and tell homeowners where things stand.
           </p>
         </Reveal>
 
-        <Reveal delay={0.36} className="mt-6 flex flex-wrap justify-center gap-4">
+        <Reveal delay={0.36} className="mt-[clamp(0.75rem,2.6svh,1.5rem)] flex flex-wrap justify-center gap-3 sm:gap-4">
           <Link to="/case-study" className={coreButton('outline')}>
             Case study
           </Link>
@@ -142,7 +163,7 @@ export function Hero() {
         </Reveal>
 
         <motion.div initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.5 }}>
-          <p className="mx-auto mt-6 max-w-[430px] text-xs leading-4 tracking-[0.015em] text-core-muted">
+          <p className="mx-auto mt-[clamp(0.75rem,2.6svh,1.5rem)] max-w-[20rem] text-xs xl:max-w-[430px] leading-4 tracking-[0.015em] text-core-muted">
             <span className="font-medium text-core-ink">{DISCLAIMER}</span> A working prototype with fictional data. Messages are simulated.
           </p>
         </motion.div>
