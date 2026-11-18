@@ -10,7 +10,7 @@ test.describe('landing page at /', () => {
 
   test('shows the headline and a prominent disclaimer', async ({ page }) => {
     await expect(page).toHaveTitle(/Groundwork/);
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('without the silence');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('From signed to switched on');
     await expect(page.getByText('Independent Speculative Concept.').first()).toBeVisible();
     await expect(page.locator('footer')).toContainText('Independent Speculative Concept');
   });
@@ -25,7 +25,10 @@ test.describe('landing page at /', () => {
   test('uses the cool mist surface and the grotesque font', async ({ page }) => {
     const bg = await page.locator('[data-surface="mist"]').evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(bg).toBe('rgb(245, 247, 250)');
-    const font = await page.getByRole('heading', { level: 1 }).evaluate((el) => getComputedStyle(el).fontFamily);
+    // The hero headline is the one serif on the page; everything else is the grotesque.
+    const hero = await page.getByRole('heading', { level: 1 }).evaluate((el) => getComputedStyle(el).fontFamily);
+    expect(hero).toContain('Cormorant');
+    const font = await page.locator('#problem h2').first().evaluate((el) => getComputedStyle(el).fontFamily);
     expect(font).toContain('Inter Tight');
   });
 
@@ -132,5 +135,5 @@ test('a nav link glides to its section and updates the address', async ({ page, 
 test('the old /product address redirects to the homepage', async ({ page }) => {
   await page.goto('/product');
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('without the silence');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('From signed to switched on');
 });

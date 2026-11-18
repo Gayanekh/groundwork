@@ -1,25 +1,101 @@
 import type { ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowRight, HeartPulse, Inbox, MessageSquareText, ShieldCheck } from 'lucide-react';
-import { Atmosphere, Avatar, CardStack, CountUp, EASE_OUT, Panel, Reveal, buttonStyles, cx } from '@/design-system';
+import { ArrowUp, ArrowUpRight, Check, FileText, FolderSync, Mic, MessageSquareText } from 'lucide-react';
+import { Avatar, EASE_OUT, Reveal, cx } from '@/design-system';
 import { Link } from '@/app/router';
-import { HealthBadge } from '@/app/features/projectUi';
 import { PHOTOS } from './images';
-import { jumpTo } from './scroll';
+import { coreButton } from './coreButton';
+import { DISCLAIMER } from './shared';
 
-const HIGHLIGHTS = [
-  { icon: <Inbox />, title: 'Today queue', text: 'Ranked by what is stuck', to: 'solution' },
-  { icon: <HeartPulse />, title: 'Status in words', text: 'Every flag has a reason', to: 'features' },
-  { icon: <ShieldCheck />, title: 'Guardrails', text: 'Rules, not warnings', to: 'features' },
-  { icon: <MessageSquareText />, title: 'Plain updates', text: 'Homeowners read plain words', to: 'plain' },
-];
+/** A floating image or chip, placed by pixel offsets that follow the reference: tablet values first, then the wide-desktop ones. */
+function Float({ className, delay, children }: { className: string; delay: number; children: ReactNode }) {
+  return (
+    <Reveal y={14} delay={delay} className={cx('absolute', className)}>
+      {children}
+    </Reveal>
+  );
+}
+
+const IMG = 'size-full rounded-md object-cover';
+const CHIP = 'flex items-center gap-4 rounded-md bg-core-chip px-4 text-base tracking-[0.01em]';
+
+/** The four clusters of decoration. Illustrative only: nothing here is a real file, message or customer. */
+function Decoration() {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block">
+      {/* Top left: a photo with a file chip */}
+      <Float delay={0.2} className="top-[176px] left-10 h-[158px] w-[131px] xl:top-[184px] xl:left-[127px] xl:h-[187px] xl:w-[156px]">
+        <img src={PHOTOS.homeowner.src} alt="" decoding="async" className={cx(IMG, 'object-[30%_50%]')} />
+      </Float>
+      <Float delay={0.3} className="top-[250px] left-[83px] xl:top-[279px] xl:left-[164px]">
+        <div className={cx(CHIP, 'h-14 w-[244px] xl:w-[248px]')}>
+          <FileText className="size-6 shrink-0" />
+          <span>Permit_Delgado.pdf</span>
+        </div>
+      </Float>
+
+      {/* Top right: three stacked photos with a folder chip */}
+      <Float delay={0.25} className="top-[152px] right-10 h-[111px] w-[93px] xl:top-[171px] xl:right-[125px] xl:h-[122px] xl:w-[102px]">
+        <img src={PHOTOS.installers.src} alt="" decoding="async" className={cx(IMG, 'object-[70%_50%]')} />
+      </Float>
+      <Float delay={0.3} className="top-[165px] right-14 h-[111px] w-[93px] xl:top-[184px] xl:right-[141px] xl:h-[122px] xl:w-[102px]">
+        <img src={PHOTOS.coordinator.src} alt="" decoding="async" className={cx(IMG, 'object-[50%_30%]')} />
+      </Float>
+      <Float delay={0.35} className="top-[183px] right-[68px] h-[111px] w-[93px] xl:top-[197px] xl:right-[151px] xl:h-[122px] xl:w-[102px]">
+        <img src={PHOTOS.homeowner.src} alt="" decoding="async" className={cx(IMG, 'object-[80%_40%]')} />
+      </Float>
+      <Float delay={0.45} className="top-[193px] right-[98px] xl:top-[222px] xl:right-[184px]">
+        <div className={cx(CHIP, 'h-[72px] w-[232px] xl:h-16 xl:w-[236px]')}>
+          <FolderSync className="size-6 shrink-0" />
+          <span className="grid gap-0.5">
+            <span>Today queue</span>
+            <span className="text-xs tracking-[0.015em] text-core-muted">5 need you · Monday</span>
+          </span>
+        </div>
+      </Float>
+
+      {/* Bottom left: a photo with a message box */}
+      <Float delay={0.4} className="top-[648px] left-14 h-[120px] w-[174px] xl:top-[609px] xl:left-[74px] xl:h-[175px] xl:w-[256px]">
+        <img src={PHOTOS.installers.src} alt="" decoding="async" className={cx(IMG, 'object-[60%_40%]')} />
+      </Float>
+      <Float delay={0.5} className="top-[593px] left-[59px] xl:top-[667px] xl:left-[135px]">
+        <div className={cx(CHIP, 'h-14 w-[249px] gap-3')}>
+          <MessageSquareText className="size-5 shrink-0" />
+          <span className="flex-1 text-xs tracking-[0.015em] text-core-muted">Text Maria…</span>
+          <Mic className="size-4 shrink-0 text-core-muted" />
+          <span className="grid size-6 shrink-0 place-items-center rounded-full bg-core-ink text-core-chip">
+            <ArrowUp className="size-3.5" />
+          </span>
+        </div>
+      </Float>
+
+      {/* Bottom right: a photo with a status chip */}
+      <Float delay={0.45} className="top-[622px] right-8 h-[155px] w-[125px] xl:top-[642px] xl:right-[206px] xl:h-[238px] xl:w-[192px]">
+        <img src={PHOTOS.coordinator.src} alt="" decoding="async" className={cx(IMG, 'object-[20%_50%]')} />
+      </Float>
+      <Float delay={0.55} className="top-[672px] right-10 xl:top-[759px] xl:right-[105px]">
+        <div className={cx(CHIP, 'h-[72px] w-[250px] gap-3 xl:h-16 xl:w-[251px]')}>
+          <Avatar name="Devon Park" size="md" decorative />
+          <span className="grid gap-0.5">
+            <span className="text-xs tracking-[0.015em] text-core-muted">Devon, Project coordinator</span>
+            <span className="flex items-center gap-2">
+              <Check className="size-4 text-core-ink" />
+              <span>Permit approved</span>
+              <span className="text-core-muted">1h</span>
+            </span>
+          </span>
+        </div>
+      </Float>
+    </div>
+  );
+}
 
 /** One line of the headline, revealed upward from behind a mask. Transform only. */
 function HeadlineLine({ children, delay }: { children: ReactNode; delay: number }) {
   const reduce = useReducedMotion();
   return (
-    <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
-      <motion.span className="block" initial={reduce ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: EASE_OUT, delay }}>
+    <span className="block overflow-hidden pb-[0.08em]">
+      <motion.span className="block" initial={reduce ? false : { y: '105%' }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: EASE_OUT, delay }}>
         {children}
       </motion.span>
     </span>
@@ -27,111 +103,50 @@ function HeadlineLine({ children, delay }: { children: ReactNode; delay: number 
 }
 
 export function Hero() {
+  const reduce = useReducedMotion();
   return (
-    <div className="relative isolate">
-      <Atmosphere className="absolute inset-0 -z-10" />
-      <section id="top" aria-labelledby="hero-title" className="mx-auto max-w-7xl px-4 pt-28 pb-12 sm:px-10 md:pt-32 md:pb-16">
-        {/* Ordering follows the reference: tag, then headline; under them the trust row beside the buttons; visual on the right. */}
-        <div className="grid gap-x-10 gap-y-8 xl:grid-cols-[11rem_minmax(0,1fr)_minmax(0,26rem)] xl:gap-y-10">
-          <Reveal y={8} className="xl:col-start-1 xl:row-start-1">
-            <p className="inline-flex rounded-full border border-ink-primary/25 bg-paper-raised/50 px-3.5 py-1.5 text-sm whitespace-nowrap uppercase">Project operations</p>
-          </Reveal>
+    <section
+      id="top"
+      aria-labelledby="hero-title"
+      className="relative overflow-hidden border-b border-line-subtle bg-core-canvas pt-[22.5rem] pb-16 font-inter text-core-ink md:min-h-[800px] md:pt-[17.5rem] xl:min-h-[900px] xl:pt-[22.4rem]"
+    >
+      <Decoration />
 
-          <div className="xl:col-start-2 xl:row-start-1">
-            <h1 id="hero-title" className="text-4xl leading-[0.95] font-medium tracking-[-0.04em] md:text-heading">
-              <HeadlineLine delay={0.05}>Signed to</HeadlineLine>
-              <HeadlineLine delay={0.13}>switched on,</HeadlineLine>
-              <HeadlineLine delay={0.21}>
-                <span className="text-ember-600">without the silence.</span>
-              </HeadlineLine>
-            </h1>
-            <Reveal delay={0.3}>
-              <p className="mt-8 max-w-lg text-md leading-snug text-ink-secondary md:text-lg">
-                Groundwork shows project coordinators which home-energy installs need them today, keeps every stage moving, and tells homeowners where things stand in plain words.
-              </p>
-            </Reveal>
-          </div>
+      {/* The black dot above the headline, as in the reference. */}
+      <motion.span
+        aria-hidden="true"
+        className="absolute top-[265px] left-1/2 size-[30px] -translate-x-1/2 rounded-full bg-core-ink md:top-[172px] xl:top-[239px]"
+        animate={reduce ? undefined : { scale: [1, 1.18, 1] }}
+        transition={{ duration: 3.2, ease: 'easeInOut', repeat: Infinity }}
+      />
 
-          <Reveal delay={0.36} className="flex flex-col gap-3 sm:flex-row xl:col-start-2 xl:row-start-2 xl:items-center">
-            <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
-              Try the prototype <ArrowRight aria-hidden="true" />
-            </Link>
-            <Link to="/case-study" className={`${buttonStyles({ variant: 'secondary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
-              Read the case study
-            </Link>
-          </Reveal>
+      <div className="relative mx-auto max-w-[1280px] px-4 text-center">
+        <h1 id="hero-title" className="font-display text-[3.5rem] leading-none font-normal tracking-[-0.014em] text-balance md:text-[4.5rem] xl:text-[5.5rem]">
+          <HeadlineLine delay={0.05}>Groundwork</HeadlineLine>
+          <HeadlineLine delay={0.13}>From signed to switched on.</HeadlineLine>
+        </h1>
 
-          <Reveal delay={0.4} className="xl:col-start-1 xl:row-start-2 xl:self-center">
-            <div className="flex items-center gap-3">
-              <span className="flex shrink-0 -space-x-2.5">
-                {['Maria Delgado', 'Devon Park', 'Priya Nair'].map((n) => (
-                  <Avatar key={n} name={n} size="md" decorative className="ring-2 ring-paper-base" />
-                ))}
-              </span>
-              <p className="text-sm leading-snug text-ink-secondary">Maria, Devon and 12 more demo projects</p>
-            </div>
-          </Reveal>
-
-          <p className="max-w-md text-sm leading-snug text-ink-secondary xl:col-start-2 xl:row-start-3">
-            <span className="font-medium text-ink-primary">Independent Speculative Concept.</span> A working prototype with fictional data. Messages are simulated.
+        <Reveal delay={0.3}>
+          <p className="mx-auto mt-6 max-w-[628px] text-md leading-6 tracking-[-0.0075em] md:text-[1.25rem]">
+            One place for coordinators to see which installs are stuck, move every stage along, and tell homeowners where things stand.
           </p>
+        </Reveal>
 
-          <figure className="mx-auto w-full max-w-md xl:col-start-3 xl:row-span-3 xl:row-start-1 xl:ml-auto xl:self-start">
-            <Reveal from="right">
-              <div className="relative">
-                <div className="aspect-square overflow-hidden rounded-3xl bg-paper-sunken sm:aspect-4/5">
-                  <img src={PHOTOS.installers.src} alt={PHOTOS.installers.alt} decoding="async" className="size-full object-cover object-[62%_50%]" />
-                </div>
-                <CardStack delay={0.6} float className="relative z-10 -mt-12 ml-3 w-[92%] sm:absolute sm:-bottom-8 sm:-left-10 sm:mt-0 sm:ml-0 sm:w-[88%]">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <Avatar name="Maria Delgado" size="lg" decorative />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-md font-semibold tracking-tight">Maria Delgado</p>
-                        <p className="truncate text-sm text-ink-tertiary">Solar + battery · Riverside</p>
-                      </div>
-                      <HealthBadge health="blocked" size="sm" shape="pill" />
-                    </div>
-                    <div className="mt-4 flex items-end gap-3">
-                      <span className="text-6xl leading-none font-medium tracking-[-0.05em] text-danger-fg">
-                        <CountUp value={26} suffix="d" duration={1.6} />
-                      </span>
-                      <span className="pb-1 text-sm leading-snug text-ink-secondary">
-                        in Permitting.
-                        <br />
-                        Target is 21 days.
-                      </span>
-                    </div>
-                  </div>
-                </CardStack>
-              </div>
-            </Reveal>
-            <figcaption className="mt-4 text-xs text-ink-tertiary sm:mt-14">
-              Illustrative photo · Photo: {PHOTOS.installers.photographer} / Unsplash
-            </figcaption>
-          </figure>
+        <Reveal delay={0.36} className="mt-6 flex flex-wrap justify-center gap-4">
+          <Link to="/case-study" className={coreButton('outline')}>
+            Case study
+          </Link>
+          <Link to="/app" className={coreButton('solid')}>
+            Try the prototype <ArrowUpRight aria-hidden="true" />
+          </Link>
+        </Reveal>
 
-          <Reveal delay={0.45} className="xl:col-span-full xl:row-start-4">
-            <Panel padding="none" elevated radius="2xl" className="xl:mt-4">
-              <ul className="grid grid-cols-2 lg:grid-cols-4">
-                {HIGHLIGHTS.map((h, i) => (
-                  <li key={h.title} className={cx('border-line-subtle', i % 2 === 1 && 'border-l', i >= 2 && 'border-t lg:border-t-0', i > 0 && 'lg:border-l')}>
-                    <a href={`#${h.to}`} onClick={jumpTo(h.to)} className="group flex h-full items-center gap-3 p-4 transition-colors duration-fast ease-standard hover:bg-paper-base sm:gap-4 sm:p-5">
-                      <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-full bg-ember-50 text-ember-700 transition-transform duration-base ease-out group-hover:scale-105 [&_svg]:size-5">
-                        {h.icon}
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-base font-semibold tracking-tight">{h.title}</span>
-                        <span className="block text-sm leading-snug text-ink-secondary">{h.text}</span>
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          </Reveal>
-        </div>
-      </section>
-    </div>
+        <motion.div initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.5 }}>
+          <p className="mx-auto mt-6 max-w-[430px] text-xs leading-4 tracking-[0.015em] text-core-muted">
+            <span className="font-medium text-core-ink">{DISCLAIMER}</span> A working prototype with fictional data. Messages are simulated.
+          </p>
+        </motion.div>
+      </div>
+    </section>
   );
 }

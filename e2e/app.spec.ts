@@ -27,5 +27,5 @@ test('the logo in the app goes to the homepage', async ({ page }) => {
   await page.goto('/app?latency=0');
   await page.getByRole('banner').getByRole('link', { name: 'Groundwork, go to the homepage' }).click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('without the silence');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('From signed to switched on');
 });

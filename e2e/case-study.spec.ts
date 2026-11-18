@@ -39,14 +39,14 @@ test.describe('case study at /case-study', () => {
 test('the landing page links to the case study', async ({ page }) => {
   await page.goto('/');
   // The first one is in the hero, right next to the main button.
-  await page.locator('#top').getByRole('link', { name: 'Read the case study' }).click();
+  await page.locator('#top').getByRole('link', { name: 'Case study' }).click();
   await expect(page).toHaveURL(/\/case-study$/);
 });
 
 test('the case study is in the top navigation, on every screen size', async ({ page, viewport }) => {
   await page.goto('/');
-  if ((viewport?.width ?? 0) >= 1024) {
-    await page.getByRole('navigation', { name: 'Sections' }).getByRole('link', { name: 'Case study' }).click();
+  if ((viewport?.width ?? 0) >= 1280) {
+    await page.getByRole('banner').getByRole('link', { name: 'Case study' }).click();
   } else {
     await page.getByRole('button', { name: 'Open section menu' }).click();
     await page.getByRole('menuitem', { name: 'Case study' }).click();

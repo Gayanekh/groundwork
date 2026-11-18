@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { MotionConfig, useMotionValueEvent, useScroll } from 'motion/react';
-import { ArrowRight, Menu as MenuIcon } from 'lucide-react';
-import { IconButton, Menu, MenuItem, buttonStyles, cx } from '@/design-system';
+import { MotionConfig } from 'motion/react';
+import { ArrowUpRight } from 'lucide-react';
+import { Menu, MenuItem } from '@/design-system';
 import { Link, navigate } from '@/app/router';
-import { Logo } from '@/app/layout/Logo';
+import { LogoMark } from '@/app/layout/Logo';
+import { coreButton } from './coreButton';
 import { Hero } from './Hero';
 import { Problem } from './Problem';
 import { Solution } from './Solution';
@@ -21,50 +21,57 @@ const NAV = [
   { id: 'problem', label: 'Problem' },
   { id: 'how', label: 'How it works' },
   { id: 'features', label: 'Features' },
-  { id: 'product', label: 'Product' },
   { id: 'faq', label: 'FAQ' },
 ];
 
 function Header() {
-  // Transparent over the hero; a light frosted background appears once the page scrolls, so the links stay readable.
-  const { scrollY } = useScroll();
-  const [scrolled, setScrolled] = useState(false);
-  useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 24));
+  // A floating near-black bar, like the reference: logo, a few section links, and two actions. It stays put while the page scrolls.
   return (
-    <>
-      <header className={cx('fixed inset-x-0 top-0 z-30 border-b transition-[background-color,border-color] duration-base ease-standard', scrolled ? 'border-line-subtle/60 bg-paper-base/80 backdrop-blur-md' : 'border-transparent')}>
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-10">
-          <a href="#top" onClick={jumpTo('top')} aria-label="Groundwork, back to top" className="-my-2 rounded-sm py-2">
-            <Logo />
-          </a>
-          <nav aria-label="Sections" className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-            {NAV.map((n) => (
-              <a key={n.id} href={`#${n.id}`} onClick={jumpTo(n.id)} className="rounded-full px-4 py-1.5 text-base whitespace-nowrap text-ink-primary transition-colors duration-fast ease-standard hover:bg-paper-raised/70">
-                {n.label}
-              </a>
-            ))}
-            <Link to="/case-study" className="rounded-full px-4 py-1.5 text-base font-medium whitespace-nowrap text-ink-primary transition-colors duration-fast ease-standard hover:bg-paper-raised/70">
-              Case study
-            </Link>
-          </nav>
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
-            <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'md', press: true, pill: true })}>
-              Try the prototype <ArrowRight aria-hidden="true" />
-            </Link>
-            <div className="lg:hidden">
-              <Menu label="Sections" trigger={<IconButton aria-label="Open section menu" icon={<MenuIcon />} />}>
-                {NAV.map((n) => (
-                  <MenuItem key={n.id} onSelect={() => scrollToId(n.id)}>
-                    {n.label}
-                  </MenuItem>
-                ))}
-                <MenuItem onSelect={() => navigate('/case-study')}>Case study</MenuItem>
-              </Menu>
-            </div>
-          </div>
+    <header className="pointer-events-none fixed inset-x-0 top-6 z-30 flex justify-center px-6">
+      <div className="pointer-events-auto flex h-16 w-full max-w-[342px] items-center justify-between rounded-xl bg-core-ink pr-4 pl-6 font-inter text-core-chip xl:h-15 xl:max-w-[920px] xl:pr-2.5">
+        <a href="#top" onClick={jumpTo('top')} aria-label="Groundwork, back to top" className="flex items-center gap-2 rounded-sm">
+          <LogoMark className="size-6" />
+          <span className="text-lg font-medium">Groundwork</span>
+        </a>
+        <nav aria-label="Sections" className="hidden items-center gap-10 xl:flex">
+          {NAV.map((n) => (
+            <a key={n.id} href={`#${n.id}`} onClick={jumpTo(n.id)} className="rounded-sm text-base tracking-[0.01em] whitespace-nowrap transition-opacity duration-fast hover:opacity-70">
+              {n.label}
+            </a>
+          ))}
+        </nav>
+        <div className="hidden items-center gap-2 xl:flex">
+          <Link to="/case-study" className={coreButton('outline-light')}>
+            Case study
+          </Link>
+          <Link to="/app" className={coreButton('light', 'rounded-sm')}>
+            Try the prototype <ArrowUpRight aria-hidden="true" />
+          </Link>
         </div>
-      </header>
-    </>
+        <div className="xl:hidden">
+          <Menu
+            label="Sections"
+            placement="bottom-end"
+            trigger={
+              <button type="button" aria-label="Open section menu" className="grid size-10 place-items-center rounded-md text-core-chip transition-opacity duration-fast hover:opacity-70">
+                <span aria-hidden="true" className="grid w-6 gap-[7px]">
+                  <span className="h-px bg-current" />
+                  <span className="h-px bg-current" />
+                </span>
+              </button>
+            }
+          >
+            {NAV.map((n) => (
+              <MenuItem key={n.id} onSelect={() => scrollToId(n.id)}>
+                {n.label}
+              </MenuItem>
+            ))}
+            <MenuItem onSelect={() => navigate('/case-study')}>Case study</MenuItem>
+            <MenuItem onSelect={() => navigate('/app')}>Try the prototype</MenuItem>
+          </Menu>
+        </div>
+      </div>
+    </header>
   );
 }
 
