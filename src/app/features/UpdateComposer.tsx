@@ -107,7 +107,7 @@ export function UpdateComposer({ project, onSent }: { project: Project; onSent?:
           <Textarea rows={6} value={message} onChange={(e) => setMessage(e.target.value)} />
         </Field>
 
-        <section aria-labelledby="plain-check" className="rounded-lg border border-line-default bg-paper-base p-4">
+        <section aria-labelledby="plain-check" className="rounded-2xl border border-line-subtle bg-paper-base p-4">
           <h3 id="plain-check" className="flex items-center gap-2 text-sm font-semibold">
             <WandSparkles aria-hidden="true" className="size-4 text-ember-600" />
             Plain-language check
@@ -175,7 +175,7 @@ function MessagePreview({ project, channel, message }: { project: Project; chann
           </div>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-line-default bg-paper-raised shadow-md">
+        <div className="overflow-hidden rounded-2xl border border-line-subtle bg-paper-raised shadow-float">
           <div className="space-y-1 border-b border-line-subtle px-4 py-3 text-xs">
             <p>
               <span className="text-ink-tertiary">From </span>Brightline Home Energy

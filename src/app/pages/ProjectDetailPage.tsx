@@ -114,7 +114,7 @@ function ProjectDetail({ project: p }: { project: Project }) {
       <header className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{p.homeowner.name}</h1>
+            <h1 className="text-3xl font-medium tracking-[-0.03em] sm:text-4xl">{p.homeowner.name}</h1>
             <HealthBadge health={h.health} />
           </div>
           <p className="mt-1.5 text-base text-ink-secondary">
@@ -282,7 +282,7 @@ function ProjectDetail({ project: p }: { project: Project }) {
               ) : (
                 <ol className="space-y-3">
                   {p.updates.map((u) => (
-                    <li key={u.id} className="rounded-lg border border-line-default bg-paper-raised p-4">
+                    <li key={u.id} className="rounded-2xl border border-line-subtle bg-paper-raised p-4">
                       <p className="flex flex-wrap items-center gap-2 text-xs text-ink-tertiary">
                         <Badge size="sm" icon={u.channel === 'sms' ? <MessageSquareText /> : <Mail />}>
                           {u.channel === 'sms' ? 'Text' : 'Email'}
@@ -394,7 +394,7 @@ function BlockersPanel({ project: p, onAdd, onResolve }: { project: Project; onA
       ) : (
         <ul className="space-y-3">
           {open.map((b) => (
-            <li key={b.id} className="animate-rise rounded-lg border border-danger-line bg-paper-raised p-4 shadow-sm sm:p-5">
+            <li key={b.id} className="animate-rise rounded-2xl border border-danger-line bg-paper-raised p-4 shadow-sm sm:p-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                 <span aria-hidden="true" className="flex size-8 shrink-0 items-center justify-center rounded-md bg-danger-bg text-danger-fg">
                   <OctagonAlert className="size-4" />
@@ -421,7 +421,7 @@ function BlockersPanel({ project: p, onAdd, onResolve }: { project: Project; onA
           <h2 id="resolved-title" className="mb-2 text-2xs font-semibold tracking-wider text-ink-tertiary uppercase">
             Resolved
           </h2>
-          <ul className="divide-y divide-line-subtle rounded-lg border border-line-default bg-paper-raised">
+          <ul className="divide-y divide-line-subtle rounded-2xl border border-line-subtle bg-paper-raised">
             {resolved.map((b) => (
               <li key={b.id} className="flex items-start gap-3 px-4 py-3 text-sm">
                 <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success-fg" />

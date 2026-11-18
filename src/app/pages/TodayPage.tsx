@@ -50,7 +50,7 @@ export function TodayPage() {
         <p className="text-sm text-ink-tertiary">
           {new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date())}
         </p>
-        <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
+        <h1 className="text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
           {greeting()}, {currentUser.split(' ')[0]}.
         </h1>
         <p className="text-base text-ink-secondary">
@@ -78,7 +78,7 @@ export function TodayPage() {
           {loading ? (
             <ul className="space-y-3">
               {[0, 1, 2].map((i) => (
-                <li key={i} className="rounded-lg border border-line-default bg-paper-raised p-5">
+                <li key={i} className="rounded-2xl border border-line-subtle bg-paper-raised p-5">
                   <Skeleton className="h-4 w-48" />
                   <Skeleton className="mt-3 h-3 w-72 max-w-full" />
                   <Skeleton className="mt-5 h-1.5 w-40" />
@@ -147,16 +147,16 @@ function StatTile({ label, value, icon, tone, to, loading }: { label: string; va
   return (
     <Link
       to={to}
-      className="group flex flex-col justify-between gap-4 rounded-lg border border-line-default bg-paper-raised p-4 shadow-sm transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-md sm:p-5"
+      className="group flex flex-col justify-between gap-4 rounded-2xl border border-line-subtle bg-paper-raised p-4 transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-float sm:p-5"
     >
       <span className="flex items-start justify-between gap-2">
         <span className="text-sm leading-tight text-ink-secondary">{label}</span>
-        <span aria-hidden="true" className={cx('flex size-7 shrink-0 items-center justify-center rounded-sm [&_svg]:size-4', toneClass[tone])}>
+        <span aria-hidden="true" className={cx('flex size-8 shrink-0 items-center justify-center rounded-full [&_svg]:size-4', toneClass[tone])}>
           {icon}
         </span>
       </span>
       <span className="flex items-end justify-between">
-        {loading ? <Skeleton className="h-8 w-10" /> : <span className="text-3xl leading-none font-semibold tracking-tight tabular">{value}</span>}
+        {loading ? <Skeleton className="h-8 w-10" /> : <span className="text-4xl leading-none font-medium tracking-[-0.04em] tabular">{value}</span>}
         <ArrowRight aria-hidden="true" className="size-4 text-ink-tertiary opacity-0 transition-all duration-fast group-hover:translate-x-0.5 group-hover:opacity-100" />
       </span>
     </Link>
@@ -168,7 +168,7 @@ function AttentionCard({ project: p, reasons, health }: { project: Project; reas
   return (
     <Link
       to={`/app/projects/${p.id}`}
-      className="group block rounded-lg border border-line-default bg-paper-raised p-4 shadow-sm transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-md sm:p-5"
+      className="group block rounded-2xl border border-line-subtle bg-paper-raised p-4 transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-float sm:p-5"
     >
       <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
         <div className="min-w-0 flex-1">

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowUpRight, ChevronsUpDown, FolderKanban, Inbox, Menu as MenuIcon, Plus, RotateCcw, Sun } from 'lucide-react';
-import { Avatar, Button, Dialog, IconButton, Menu, MenuItem, MenuLabel, cx, useToast } from '@/design-system';
+import { Atmosphere, Avatar, Button, Dialog, IconButton, Menu, MenuItem, MenuLabel, cx, useToast } from '@/design-system';
 import { Link, useLocation } from '../router';
 import { useProjects } from '../state/ProjectsStore';
 import { getHealth } from '../domain/health';
@@ -40,6 +40,17 @@ export function AppShell({ children }: { children: ReactNode }) {
     mainRef.current?.focus({ preventScroll: true });
   }, [pathname]);
 
+  // The app uses the same cool "mist" surface as the marketing page. Set on <html> so portals (dialogs, menus, toasts) match.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const before = root.getAttribute('data-surface');
+    root.setAttribute('data-surface', 'mist');
+    return () => {
+      if (before === null) root.removeAttribute('data-surface');
+      else root.setAttribute('data-surface', before);
+    };
+  }, []);
+
   const reset = () => {
     resetDemo();
     toast({ title: 'Demo data reset', description: 'All projects are back to their starting state.', tone: 'info' });
@@ -58,9 +69,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           trigger={
             <button
               type="button"
-              className="flex w-full items-center gap-2.5 rounded-md border border-line-default bg-paper-raised px-2.5 py-2 text-left shadow-xs transition-colors hover:border-line-strong"
+              className="flex w-full items-center gap-2.5 rounded-2xl border border-line-subtle bg-paper-raised px-2.5 py-2 text-left transition-colors hover:border-line-strong"
             >
-              <span aria-hidden="true" className="flex size-7 items-center justify-center rounded-sm bg-ember-50 text-ember-700">
+              <span aria-hidden="true" className="flex size-8 items-center justify-center rounded-full bg-ember-50 text-ember-700">
                 <Sun className="size-4" />
               </span>
               <span className="min-w-0 flex-1">
@@ -87,11 +98,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                   to={item.to}
                   aria-current={active ? 'page' : undefined}
                   className={cx(
-                    'group relative flex h-9 items-center gap-3 rounded-md px-3 text-base font-medium transition-colors duration-fast pointer-coarse:h-11 [&_svg]:size-[18px]',
-                    active ? 'bg-paper-raised text-ink-primary shadow-sm' : 'text-ink-secondary hover:bg-paper-sunken hover:text-ink-primary',
+                    'group relative flex h-10 items-center gap-3 rounded-full px-3.5 text-base font-medium transition-colors duration-fast pointer-coarse:h-11 [&_svg]:size-[18px]',
+                    active ? 'bg-paper-raised text-ink-primary shadow-float' : 'text-ink-secondary hover:bg-paper-sunken hover:text-ink-primary',
                   )}
                 >
-                  {active && <span aria-hidden="true" className="absolute top-2 bottom-2 -left-3 w-0.5 rounded-full bg-ember-600" />}
                   <span className={cx(active ? 'text-ember-600' : 'text-ink-tertiary group-hover:text-ink-secondary')}>{item.icon}</span>
                   <span className="flex-1">{item.label}</span>
                   {item.count ? (
@@ -115,7 +125,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="mt-auto space-y-3 p-3">
         <Link
           to="/"
-          className="group block rounded-md border border-dashed border-line-default p-3 text-sm transition-colors hover:border-line-strong hover:bg-paper-raised"
+          className="group block rounded-2xl border border-dashed border-line-default p-3.5 text-sm transition-colors hover:border-line-strong hover:bg-paper-raised"
         >
           <span className="flex items-center justify-between font-semibold text-ink-primary">
             About this concept <ArrowUpRight aria-hidden="true" className="size-4 text-ink-tertiary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -134,7 +144,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-dvh">
+    <div className="relative isolate min-h-dvh bg-paper-base">
+      <Atmosphere parallax={false} className="absolute inset-x-0 top-0 -z-10 h-[30rem] opacity-80" />
       <a
         href="#main"
         className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0"
@@ -143,7 +154,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
 
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-line-subtle bg-paper-base lg:block">{sidebar}</aside>
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-line-subtle/70 bg-paper-base/60 backdrop-blur-sm lg:block">{sidebar}</aside>
 
       {/* Mobile drawer (same content, rendered in a modal for focus management) */}
       <Dialog open={drawer} onClose={() => setDrawer(false)} title="Navigation" placement="left" bare>
@@ -152,7 +163,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="lg:pl-64">
         {/* Mobile top bar */}
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-line-subtle bg-paper-base/90 px-2 backdrop-blur lg:hidden">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-2 bg-paper-base/70 px-2 backdrop-blur-md lg:hidden">
           <IconButton aria-label="Open navigation" icon={<MenuIcon />} onClick={() => setDrawer(true)} />
           <Link to="/app" aria-label="Groundwork, go to Today" className="rounded-sm">
             <Logo />
@@ -162,7 +173,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        <aside aria-label="Prototype notice" className="border-b border-line-subtle bg-paper-sunken/60 px-4 py-1.5 text-center text-xs text-ink-tertiary sm:px-8">
+        <aside aria-label="Prototype notice" className="px-4 py-2 text-center text-xs text-ink-secondary sm:px-8">
           <span className="font-medium text-ink-secondary">Concept prototype.</span> All people, companies and data are illustrative. Messages and actions are simulated.
         </aside>
 

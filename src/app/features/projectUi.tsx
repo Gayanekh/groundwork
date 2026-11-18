@@ -13,11 +13,11 @@ export const HEALTH_META: Record<Health, { label: string; tone: Tone; icon: type
 };
 
 /** Health badge: icon + text, so status never relies on color alone. */
-export function HealthBadge({ health, size }: { health: Health; size?: 'sm' | 'md' }) {
+export function HealthBadge({ health, size, shape }: { health: Health; size?: 'sm' | 'md'; shape?: 'tag' | 'pill' }) {
   const m = HEALTH_META[health];
   const Icon = m.icon;
   return (
-    <Badge tone={m.tone} size={size} icon={<Icon aria-hidden="true" />}>
+    <Badge tone={m.tone} size={size} shape={shape} icon={<Icon aria-hidden="true" />}>
       {m.label}
     </Badge>
   );

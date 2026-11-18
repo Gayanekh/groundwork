@@ -125,7 +125,7 @@ export function ProjectsPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">Projects</h1>
+          <h1 className="text-3xl font-medium tracking-[-0.03em] sm:text-4xl">Projects</h1>
           <p className="mt-1 text-base text-ink-secondary">Every signed project from contract to PTO.</p>
         </div>
         <Button variant="primary" leadingIcon={<Plus />} onClick={() => setNewOpen(true)} className="max-sm:hidden">
@@ -264,7 +264,7 @@ export function ProjectsPage() {
           <ul className="space-y-3 md:hidden">
             {rows.map(({ p, h }) => (
               <li key={p.id}>
-                <Link to={`/app/projects/${p.id}`} className="block rounded-lg border border-line-default bg-paper-raised p-4 shadow-sm active:bg-paper-base">
+                <Link to={`/app/projects/${p.id}`} className="block rounded-2xl border border-line-subtle bg-paper-raised p-4 shadow-sm active:bg-paper-base">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="font-semibold">{p.homeowner.name}</p>
@@ -334,7 +334,7 @@ function ProjectRow({ project: p, health }: { project: Project; health: Health }
 
 function LoadingRows() {
   return (
-    <div aria-busy="true" aria-label="Loading projects" className="rounded-lg border border-line-default bg-paper-raised">
+    <div aria-busy="true" aria-label="Loading projects" className="rounded-2xl border border-line-subtle bg-paper-raised">
       {[0, 1, 2, 3, 4].map((i) => (
         <div key={i} className="flex items-center gap-6 border-b border-line-subtle px-4 py-4 last:border-0">
           <div className="flex-1 space-y-2">
