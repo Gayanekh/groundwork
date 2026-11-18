@@ -31,12 +31,14 @@ export function Hero() {
     <div className="relative isolate">
       <Atmosphere className="absolute inset-0 -z-10" />
       <section id="top" aria-labelledby="hero-title" className="mx-auto max-w-7xl px-4 pt-28 pb-12 sm:px-10 md:pt-32 md:pb-16">
-        <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <Reveal y={8}>
-              <p className="inline-flex rounded-full border border-ink-primary/25 bg-paper-raised/50 px-3.5 py-1.5 text-sm uppercase">Project operations</p>
-            </Reveal>
-            <h1 id="hero-title" className="mt-6 text-4xl leading-[0.95] font-medium tracking-[-0.04em] md:text-heading">
+        {/* Ordering follows the reference: tag, then headline; under them the trust row beside the buttons; visual on the right. */}
+        <div className="grid gap-x-10 gap-y-8 xl:grid-cols-[11rem_minmax(0,1fr)_minmax(0,26rem)] xl:gap-y-10">
+          <Reveal y={8} className="xl:col-start-1 xl:row-start-1">
+            <p className="inline-flex rounded-full border border-ink-primary/25 bg-paper-raised/50 px-3.5 py-1.5 text-sm whitespace-nowrap uppercase">Project operations</p>
+          </Reveal>
+
+          <div className="xl:col-start-2 xl:row-start-1">
+            <h1 id="hero-title" className="text-4xl leading-[0.95] font-medium tracking-[-0.04em] md:text-heading">
               <HeadlineLine delay={0.05}>Signed to</HeadlineLine>
               <HeadlineLine delay={0.13}>switched on,</HeadlineLine>
               <HeadlineLine delay={0.21}>
@@ -47,21 +49,34 @@ export function Hero() {
               <p className="mt-8 max-w-lg text-md leading-snug text-ink-secondary md:text-lg">
                 Groundwork shows project coordinators which home-energy installs need them today, keeps every stage moving, and tells homeowners where things stand in plain words.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
-                  Try the prototype <ArrowRight aria-hidden="true" />
-                </Link>
-                <Link to="/case-study" className={`${buttonStyles({ variant: 'secondary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
-                  Read the case study
-                </Link>
-              </div>
-              <p className="mt-5 max-w-md text-sm leading-snug text-ink-secondary">
-                <span className="font-medium text-ink-primary">Independent Speculative Concept.</span> A working prototype with fictional data. Messages are simulated.
-              </p>
             </Reveal>
           </div>
 
-          <figure className="mx-auto w-full max-w-md lg:col-span-5 lg:ml-auto lg:self-center">
+          <Reveal delay={0.36} className="flex flex-col gap-3 sm:flex-row xl:col-start-2 xl:row-start-2 xl:items-center">
+            <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
+              Try the prototype <ArrowRight aria-hidden="true" />
+            </Link>
+            <Link to="/case-study" className={`${buttonStyles({ variant: 'secondary', size: 'lg', press: true, pill: true })} w-full sm:w-auto`}>
+              Read the case study
+            </Link>
+          </Reveal>
+
+          <Reveal delay={0.4} className="xl:col-start-1 xl:row-start-2 xl:self-center">
+            <div className="flex items-center gap-3">
+              <span className="flex shrink-0 -space-x-2.5">
+                {['Maria Delgado', 'Devon Park', 'Priya Nair'].map((n) => (
+                  <Avatar key={n} name={n} size="md" decorative className="ring-2 ring-paper-base" />
+                ))}
+              </span>
+              <p className="text-sm leading-snug text-ink-secondary">Maria, Devon and 12 more demo projects</p>
+            </div>
+          </Reveal>
+
+          <p className="max-w-md text-sm leading-snug text-ink-secondary xl:col-start-2 xl:row-start-3">
+            <span className="font-medium text-ink-primary">Independent Speculative Concept.</span> A working prototype with fictional data. Messages are simulated.
+          </p>
+
+          <figure className="mx-auto w-full max-w-md xl:col-start-3 xl:row-span-3 xl:row-start-1 xl:ml-auto xl:self-start">
             <Reveal from="right">
               <div className="relative">
                 <div className="aspect-square overflow-hidden rounded-3xl bg-paper-sunken sm:aspect-4/5">
@@ -96,8 +111,8 @@ export function Hero() {
             </figcaption>
           </figure>
 
-          <Reveal delay={0.45} className="lg:col-span-12">
-            <Panel padding="none" elevated radius="2xl" className="lg:mt-4">
+          <Reveal delay={0.45} className="xl:col-span-full xl:row-start-4">
+            <Panel padding="none" elevated radius="2xl" className="xl:mt-4">
               <ul className="grid grid-cols-2 lg:grid-cols-4">
                 {HIGHLIGHTS.map((h, i) => (
                   <li key={h.title} className={cx('border-line-subtle', i % 2 === 1 && 'border-l', i >= 2 && 'border-t lg:border-t-0', i > 0 && 'lg:border-l')}>
