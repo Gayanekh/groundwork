@@ -1,18 +1,17 @@
 import type { ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
-import { Atmosphere, Avatar, CardStack, CountUp, EASE_OUT, Panel, Reveal, Stepper, buttonStyles, type Step } from '@/design-system';
+import { ArrowRight, HeartPulse, Inbox, MessageSquareText, ShieldCheck } from 'lucide-react';
+import { Atmosphere, Avatar, CardStack, CountUp, EASE_OUT, Panel, Reveal, buttonStyles, cx } from '@/design-system';
 import { Link } from '@/app/router';
 import { HealthBadge } from '@/app/features/projectUi';
-import { LogoMark } from '@/app/layout/Logo';
 import { PHOTOS } from './images';
+import { jumpTo } from './scroll';
 
-const steps: Step[] = [
-  { id: 'c', label: 'Contract', status: 'complete' },
-  { id: 's', label: 'Survey', status: 'complete' },
-  { id: 'd', label: 'Design', status: 'complete' },
-  { id: 'p', label: 'Permit', status: 'blocked', meta: '26d' },
-  { id: 'i', label: 'Install', status: 'upcoming' },
+const HIGHLIGHTS = [
+  { icon: <Inbox />, title: 'Today queue', text: 'Ranked by what is stuck', to: 'solution' },
+  { icon: <HeartPulse />, title: 'Status in words', text: 'Every flag has a reason', to: 'features' },
+  { icon: <ShieldCheck />, title: 'Guardrails', text: 'Rules, not warnings', to: 'features' },
+  { icon: <MessageSquareText />, title: 'Plain updates', text: 'Homeowners read plain words', to: 'plain' },
 ];
 
 /** One line of the headline, revealed upward from behind a mask. Transform only. */
@@ -98,31 +97,22 @@ export function Hero() {
           </figure>
 
           <Reveal delay={0.45} className="lg:col-span-12">
-            <Panel padding="md" elevated>
-              <div className="grid gap-8 md:grid-cols-12">
-                <div className="flex flex-col justify-between gap-8 md:col-span-5">
-                  <div>
-                    <p className="text-sm text-ink-tertiary uppercase">Groundwork projects</p>
-                    <p className="mt-3 max-w-xs text-base leading-snug text-ink-secondary">Stages, blockers and homeowner updates stay connected in one place, with the reason behind every flag.</p>
-                  </div>
-                  <div className="flex items-center gap-4 border-t border-dashed border-line-default pt-6">
-                    <LogoMark className="size-14" />
-                    <p className="max-w-56 text-lg leading-snug font-medium tracking-tight">Everything you need to move projects with confidence.</p>
-                  </div>
-                </div>
-                <div className="hidden md:col-span-7 md:block">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-md font-semibold tracking-tight">Maria Delgado</p>
-                      <p className="text-sm text-ink-tertiary">1482 Larkspur Lane · Solar + battery, 8.4 kW</p>
-                    </div>
-                    <HealthBadge health="blocked" size="sm" shape="pill" />
-                  </div>
-                  <div className="mt-8">
-                    <Stepper steps={steps} label="Example project stages" />
-                  </div>
-                </div>
-              </div>
+            <Panel padding="none" elevated radius="2xl" className="lg:mt-4">
+              <ul className="grid grid-cols-2 lg:grid-cols-4">
+                {HIGHLIGHTS.map((h, i) => (
+                  <li key={h.title} className={cx('border-line-subtle', i % 2 === 1 && 'border-l', i >= 2 && 'border-t lg:border-t-0', i > 0 && 'lg:border-l')}>
+                    <a href={`#${h.to}`} onClick={jumpTo(h.to)} className="group flex h-full items-center gap-3 p-4 transition-colors duration-fast ease-standard hover:bg-paper-base sm:gap-4 sm:p-5">
+                      <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-full bg-ember-50 text-ember-700 transition-transform duration-base ease-out group-hover:scale-105 [&_svg]:size-5">
+                        {h.icon}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-base font-semibold tracking-tight">{h.title}</span>
+                        <span className="block text-sm leading-snug text-ink-secondary">{h.text}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </Panel>
           </Reveal>
         </div>
