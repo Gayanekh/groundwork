@@ -136,7 +136,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <footer className="mx-auto max-w-6xl px-4 pb-10 sm:px-8">
         <aside aria-label="Prototype notice" className="border-t border-line-default pt-6 text-sm text-ink-secondary">
-          <span className="font-medium text-ink-primary">Concept prototype.</span> All people, companies and data are illustrative. Messages and actions are simulated.
+          <span className="font-medium text-ink-primary">Concept prototype.</span> All people, companies and data are illustrative, and the portraits are stock photos. Messages and actions are simulated.
         </aside>
       </footer>
 

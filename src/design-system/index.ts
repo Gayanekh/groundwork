@@ -24,7 +24,7 @@ export { Badge, StatusDot, type BadgeProps, type Tone } from './components/Badge
 export { Card, CardHeader, type CardProps, type CardHeaderProps } from './components/Card/Card';
 export { TableContainer, Table, THead, TBody, TRow, TH, TD, type SortDirection } from './components/Table/Table';
 export { ToastProvider, useToast, type ToastOptions } from './components/Toast/Toast';
-export { Avatar, initials, type AvatarProps } from './components/Avatar/Avatar';
+export { Avatar, AvatarPhotos, initials, type AvatarProps } from './components/Avatar/Avatar';
 export { Stepper, type Step, type StepStatus, type StepperProps } from './components/Stepper/Stepper';
 export { Atmosphere, type AtmosphereProps } from './components/Atmosphere/Atmosphere';
 export { Reveal, type RevealProps } from './components/Reveal/Reveal';

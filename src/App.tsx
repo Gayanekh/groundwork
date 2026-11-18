@@ -1,8 +1,9 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Compass } from 'lucide-react';
-import { EmptyState, ToastProvider, buttonStyles } from '@/design-system';
+import { AvatarPhotos, EmptyState, ToastProvider, buttonStyles } from '@/design-system';
 import { Link, matchPath, navigate, useLocation } from './app/router';
 import { ProjectsProvider } from './app/state/ProjectsStore';
+import { AVATAR_PHOTOS } from './app/data/avatars';
 import { AppShell } from './app/layout/AppShell';
 import { TodayPage } from './app/pages/TodayPage';
 import { ProjectsPage } from './app/pages/ProjectsPage';
@@ -77,9 +78,11 @@ function Routes() {
 export default function App() {
   return (
     <ToastProvider>
-      <ProjectsProvider>
-        <Routes />
-      </ProjectsProvider>
+      <AvatarPhotos photos={AVATAR_PHOTOS}>
+        <ProjectsProvider>
+          <Routes />
+        </ProjectsProvider>
+      </AvatarPhotos>
     </ToastProvider>
   );
 }

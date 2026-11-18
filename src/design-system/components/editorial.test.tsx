@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
-import { Atmosphere, Badge, buttonStyles, ChatBubble, CountUp, DURATION, EASE_OUT, EditorialSection, CardStack, Panel, Reveal, SectionTag, SpecimenFrame, ThreadRail } from '../index';
+import { Atmosphere, Avatar, AvatarPhotos, Badge, buttonStyles, ChatBubble, CountUp, DURATION, EASE_OUT, EditorialSection, CardStack, Panel, Reveal, SectionTag, SpecimenFrame, ThreadRail } from '../index';
 
 describe('EditorialSection', () => {
   it('is a region named by its heading, with a running head', () => {
@@ -99,6 +99,27 @@ describe('CountUp', () => {
     const { container } = render(<CountUp value={26} suffix="d" />);
     expect(screen.getByText('26d', { selector: '.sr-only' })).toBeInTheDocument();
     expect(container.querySelector('[aria-hidden="true"]')).not.toBeNull();
+  });
+});
+
+describe('Avatar photos', () => {
+  it('uses a portrait from AvatarPhotos for known names and initials for the rest', () => {
+    const { container } = render(
+      <AvatarPhotos photos={{ 'Maria Delgado': '/m.jpg' }}>
+        <Avatar name="Maria Delgado" />
+        <Avatar name="Linh Tran" />
+      </AvatarPhotos>,
+    );
+    const imgs = container.querySelectorAll('img');
+    expect(imgs).toHaveLength(1);
+    expect(imgs[0]).toHaveAttribute('src', '/m.jpg');
+    expect(imgs[0]).toHaveAttribute('alt', '');
+    expect(screen.getByRole('img', { name: 'Linh Tran' })).toHaveTextContent('LT');
+  });
+
+  it('keeps the accessible name on a photo avatar', () => {
+    render(<Avatar name="Maria Delgado" src="/m.jpg" />);
+    expect(screen.getByRole('img', { name: 'Maria Delgado' })).toBeInTheDocument();
   });
 });
 
