@@ -35,6 +35,22 @@ function* walk(node, path = [], inheritedType) {
 const cssLines = [];
 const flat = {};
 
+/**
+ * Scoped surface themes. Tokens under color.mist.* are also emitted as a block that remaps the
+ * paper/line tokens inside [data-surface="mist"], so every design-system component adopts the cool
+ * surface when a region opts in, and nothing outside that region changes.
+ */
+const MIST_TARGETS = {
+  base: 'paper-base',
+  sunken: 'paper-sunken',
+  inverse: 'paper-inverse',
+  'inverse-hover': 'paper-inverse-hover',
+  'line-subtle': 'line-subtle',
+  'line-default': 'line-default',
+  'line-strong': 'line-strong',
+};
+const mistLines = ['  --font-sans: var(--font-grotesk);'];
+
 const toCubic = (v) => `cubic-bezier(${v.join(', ')})`;
 
 for (const [path, token] of walk(source)) {
@@ -46,6 +62,12 @@ for (const [path, token] of walk(source)) {
   switch (group) {
     case 'color':
       cssLines.push(`  --color-${name}: ${v};`);
+      if (rest[0] === 'mist') {
+        const suffix = rest.slice(1).join('-');
+        const target = MIST_TARGETS[suffix];
+        if (!target) throw new Error(`No remap target for color.mist.${suffix.replace(/-/g, '.')}. Add it to MIST_TARGETS.`);
+        mistLines.push(`  --color-${target}: var(--color-${name});`);
+      }
       break;
     case 'font':
       cssLines.push(`  --font-${name}: ${v};`);
@@ -94,6 +116,11 @@ const css = `${HEADER}
   --color-current: currentColor;
   --color-white: #ffffff;
 ${cssLines.join('\n')}
+}
+
+/* Opt-in cool surface for the marketing page. Put data-surface="mist" on a wrapper element. */
+[data-surface='mist'] {
+${mistLines.join('\n')}
 }
 `;
 

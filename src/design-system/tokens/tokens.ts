@@ -10,9 +10,24 @@ export const tokens = {
   "color.ink.tertiary": "#6B665D",
   "color.ink.disabled": "#A8A398",
   "color.ink.inverse": "#F6F4EF",
+  "color.ink.inverse-secondary": "#C9C4B9",
+  "color.ink.inverse-tertiary": "#A09B90",
   "color.line.subtle": "#E7E3DA",
   "color.line.default": "#D9D4C8",
   "color.line.strong": "#8F887A",
+  "color.line.inverse": "#3A3733",
+  "color.line.inverse-strong": "#6E695F",
+  "color.mist.base": "#F5F7FA",
+  "color.mist.sunken": "#ECF0F6",
+  "color.mist.inverse": "#14161B",
+  "color.mist.inverse-hover": "#2A2D35",
+  "color.mist.line-subtle": "#E2E8F0",
+  "color.mist.line-default": "#D3DAE5",
+  "color.mist.line-strong": "#7E8798",
+  "color.wash.sky": "#CFE4F8",
+  "color.wash.cloud": "#E9F2FB",
+  "color.wash.peach": "#F7CDB9",
+  "color.wash.coral": "#EF8F73",
   "color.ember.50": "#FDF1EA",
   "color.ember.100": "#FADCCB",
   "color.ember.400": "#E8743B",
@@ -37,6 +52,7 @@ export const tokens = {
   "color.neutral.line": "#D9D4C8",
   "font.sans": "'Instrument Sans', ui-sans-serif, system-ui, sans-serif",
   "font.serif": "'Instrument Serif', ui-serif, Georgia, serif",
+  "font.grotesk": "'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif",
   "font.mono": "'JetBrains Mono', ui-monospace, SFMono-Regular, monospace",
   "text.2xs": {
     "fontSize": "0.6875rem",
@@ -82,16 +98,35 @@ export const tokens = {
     "fontSize": "4.75rem",
     "lineHeight": "4.75rem"
   },
+  "text.heading": {
+    "fontSize": "4rem",
+    "lineHeight": "4rem"
+  },
+  "text.6xl": {
+    "fontSize": "6rem",
+    "lineHeight": "5.75rem"
+  },
+  "text.7xl": {
+    "fontSize": "7.5rem",
+    "lineHeight": "7rem"
+  },
+  "text.8xl": {
+    "fontSize": "10rem",
+    "lineHeight": "9rem"
+  },
   "spacing.unit": "0.25rem",
   "radius.xs": "0.25rem",
   "radius.sm": "0.375rem",
   "radius.md": "0.5rem",
   "radius.lg": "0.75rem",
   "radius.xl": "1rem",
+  "radius.2xl": "1.5rem",
+  "radius.3xl": "2rem",
   "shadow.xs": "0 1px 0 rgb(28 27 25 / 0.04)",
   "shadow.sm": "0 1px 2px rgb(28 27 25 / 0.06), 0 1px 1px rgb(28 27 25 / 0.04)",
   "shadow.md": "0 4px 12px -2px rgb(28 27 25 / 0.10), 0 2px 4px -2px rgb(28 27 25 / 0.06)",
   "shadow.lg": "0 24px 48px -12px rgb(28 27 25 / 0.22), 0 8px 16px -8px rgb(28 27 25 / 0.10)",
+  "shadow.float": "0 12px 28px 0 rgb(28 27 25 / 0.12)",
   "duration.fast": "120ms",
   "duration.base": "180ms",
   "duration.slow": "280ms",
