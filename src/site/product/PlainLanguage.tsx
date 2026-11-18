@@ -52,15 +52,15 @@ export function PlainLanguageDemo() {
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-line-subtle pt-5">
         {hits.length > 0 ? (
-          <Badge tone="warning" size="md" shape="pill">
+          <Badge tone="warning" size="md">
             {unique} {unique === 1 ? 'word' : 'words'} a homeowner may not know
           </Badge>
         ) : (
-          <Badge tone="success" size="md" shape="pill" icon={<Check aria-hidden="true" />}>
+          <Badge tone="success" size="md" icon={<Check aria-hidden="true" />}>
             Ready to send
           </Badge>
         )}
-        <Button variant="ghost" size="md" pill leadingIcon={<RotateCcw />} onClick={() => setText(SAMPLE)}>
+        <Button variant="ghost" size="md" leadingIcon={<RotateCcw />} onClick={() => setText(SAMPLE)}>
           Start over
         </Button>
       </div>

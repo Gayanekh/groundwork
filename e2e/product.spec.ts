@@ -22,14 +22,16 @@ test.describe('landing page at /', () => {
     await expect(page.locator('footer')).toContainText('are fictional');
   });
 
-  test('uses the cool mist surface and the grotesque font', async ({ page }) => {
-    const bg = await page.locator('[data-surface="mist"]').evaluate((el) => getComputedStyle(el).backgroundColor);
-    expect(bg).toBe('rgb(245, 247, 250)');
-    // The hero headline is the one serif on the page; everything else is the grotesque.
+  test('uses the neutral core surface: white page, serif headings, Inter text', async ({ page }) => {
+    const bg = await page.locator('[data-surface="core"]').evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(bg).toBe('rgb(255, 255, 255)');
+    // Headings are the serif everywhere; running text is Inter.
     const hero = await page.getByRole('heading', { level: 1 }).evaluate((el) => getComputedStyle(el).fontFamily);
     expect(hero).toContain('Cormorant');
-    const font = await page.locator('#problem h2').first().evaluate((el) => getComputedStyle(el).fontFamily);
-    expect(font).toContain('Inter Tight');
+    const section = await page.locator('#problem h2').first().evaluate((el) => getComputedStyle(el).fontFamily);
+    expect(section).toContain('Cormorant');
+    const body = await page.locator('[data-surface="core"]').evaluate((el) => getComputedStyle(el).fontFamily);
+    expect(body).toContain('Inter');
   });
 
   test('never scrolls sideways', async ({ page }) => {

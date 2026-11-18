@@ -20,7 +20,7 @@ export function QueueCard({ rows, animate = false }: { rows: QueueRow[]; animate
               <p className="text-base font-semibold">{r.name}</p>
               <p className="text-sm leading-snug text-ink-secondary">{r.reason}</p>
             </div>
-            <HealthBadge health={r.health} size="sm" shape="pill" />
+            <HealthBadge health={r.health} size="sm" />
           </motion.li>
         ))}
       </ul>

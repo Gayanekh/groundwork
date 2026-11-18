@@ -42,6 +42,11 @@
   --color-core-chip: #F9F9F9;
   --color-core-ink: #0E0E0E;
   --color-core-muted: #696969;
+  --color-core-ink-hover: #2B2B2B;
+  --color-core-ink-secondary: #4D4D4D;
+  --color-core-line-subtle: #EDEDED;
+  --color-core-line-default: #DDDDDD;
+  --color-core-line-strong: #8A8A8A;
   --color-wash-sky: #CFE4F8;
   --color-wash-cloud: #E9F2FB;
   --color-wash-peach: #F7CDB9;
@@ -140,4 +145,25 @@
   --color-line-subtle: var(--color-mist-line-subtle);
   --color-line-default: var(--color-mist-line-default);
   --color-line-strong: var(--color-mist-line-strong);
+}
+
+/* Opt-in neutral surface for the landing page: white, near-black, Inter, flat 8px shapes. Put data-surface="core" on a wrapper element. */
+[data-surface='core'] {
+  --font-sans: var(--font-inter);
+  --radius-lg: var(--radius-md);
+  --radius-xl: var(--radius-md);
+  --radius-2xl: var(--radius-md);
+  --radius-3xl: var(--radius-md);
+  --shadow-float: var(--shadow-sm);
+  --shadow-lg: var(--shadow-md);
+  --color-paper-base: var(--color-core-canvas);
+  --color-paper-sunken: var(--color-core-chip);
+  --color-paper-inverse: var(--color-core-ink);
+  --color-ink-primary: var(--color-core-ink);
+  --color-ink-tertiary: var(--color-core-muted);
+  --color-paper-inverse-hover: var(--color-core-ink-hover);
+  --color-ink-secondary: var(--color-core-ink-secondary);
+  --color-line-subtle: var(--color-core-line-subtle);
+  --color-line-default: var(--color-core-line-default);
+  --color-line-strong: var(--color-core-line-strong);
 }

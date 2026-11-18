@@ -23,9 +23,9 @@ function Chart() {
       <svg viewBox="0 0 1200 360" role="img" aria-label="Illustrative chart: a project climbing through stages, with a blocker at Permitting" className="h-auto w-full overflow-visible">
         <defs>
           <linearGradient id="progress-fill" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" style={{ stopColor: 'var(--color-wash-sky)', stopOpacity: 0 }} />
-            <stop offset="60%" style={{ stopColor: 'var(--color-wash-sky)', stopOpacity: 0.35 }} />
-            <stop offset="100%" style={{ stopColor: 'var(--color-wash-peach)', stopOpacity: 0.85 }} />
+            <stop offset="0%" style={{ stopColor: 'var(--color-paper-sunken)', stopOpacity: 0 }} />
+            <stop offset="60%" style={{ stopColor: 'var(--color-paper-sunken)', stopOpacity: 0.9 }} />
+            <stop offset="100%" style={{ stopColor: 'var(--color-line-default)', stopOpacity: 0.7 }} />
           </linearGradient>
           <linearGradient id="progress-line" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" style={{ stopColor: 'var(--color-ink-tertiary)', stopOpacity: 0.45 }} />

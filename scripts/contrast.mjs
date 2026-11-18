@@ -32,6 +32,12 @@ const pairs = [
   ['ink.inverse-tertiary', 'paper.inverse', 4.5],
   ['ember.400', 'paper.inverse', 4.5],
   // Mist surface (marketing page): the same text tokens must hold on the cool base and band.
+  ['core.ink', 'core.canvas', 4.5],
+  ['core.ink-secondary', 'core.canvas', 4.5],
+  ['core.muted', 'core.canvas', 4.5],
+  ['core.muted', 'core.chip', 4.5],
+  ['core.line-strong', 'core.canvas', 3],
+  ['ink.inverse', 'core.ink', 4.5],
   ['ink.primary', 'mist.base', 4.5],
   ['ink.secondary', 'mist.base', 4.5],
   ['ink.tertiary', 'mist.base', 4.5],

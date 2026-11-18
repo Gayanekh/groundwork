@@ -24,7 +24,7 @@ export function Atmosphere({ parallax = true, from = 'top', fade = true, classNa
   const y = useTransform(scrollY, [0, 900], [0, 90]);
   const drift = parallax && !reduce ? { y } : undefined;
   return (
-    <div aria-hidden="true" className={cx('pointer-events-none overflow-hidden', className)}>
+    <div aria-hidden="true" className={cx('pointer-events-none overflow-hidden in-data-[surface=core]:hidden', className)}>
       <motion.div style={drift} className="absolute inset-x-[-8%] -top-[8%] h-[116%]">
         {from === 'top' ? (
           <>

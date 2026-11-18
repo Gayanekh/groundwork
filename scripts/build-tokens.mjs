@@ -51,6 +51,31 @@ const MIST_TARGETS = {
 };
 const mistLines = ['  --font-sans: var(--font-grotesk);'];
 
+/**
+ * The neutral "core" surface (the landing page): pure white, near-black ink, hairlines, Inter, flat 8px shapes.
+ * color.core.* remap onto the same paper/ink/line tokens; radii and shadows are flattened with fixed rules below.
+ */
+const CORE_TARGETS = {
+  canvas: ['paper-base'],
+  chip: ['paper-sunken'],
+  ink: ['paper-inverse', 'ink-primary'],
+  'ink-hover': ['paper-inverse-hover'],
+  'ink-secondary': ['ink-secondary'],
+  muted: ['ink-tertiary'],
+  'line-subtle': ['line-subtle'],
+  'line-default': ['line-default'],
+  'line-strong': ['line-strong'],
+};
+const coreLines = [
+  '  --font-sans: var(--font-inter);',
+  '  --radius-lg: var(--radius-md);',
+  '  --radius-xl: var(--radius-md);',
+  '  --radius-2xl: var(--radius-md);',
+  '  --radius-3xl: var(--radius-md);',
+  '  --shadow-float: var(--shadow-sm);',
+  '  --shadow-lg: var(--shadow-md);',
+];
+
 const toCubic = (v) => `cubic-bezier(${v.join(', ')})`;
 
 for (const [path, token] of walk(source)) {
@@ -67,6 +92,12 @@ for (const [path, token] of walk(source)) {
         const target = MIST_TARGETS[suffix];
         if (!target) throw new Error(`No remap target for color.mist.${suffix.replace(/-/g, '.')}. Add it to MIST_TARGETS.`);
         mistLines.push(`  --color-${target}: var(--color-${name});`);
+      }
+      if (rest[0] === 'core') {
+        const suffix = rest.slice(1).join('-');
+        const targets = CORE_TARGETS[suffix];
+        if (!targets) throw new Error(`No remap target for color.core.${suffix}. Add it to CORE_TARGETS.`);
+        for (const t of targets) coreLines.push(`  --color-${t}: var(--color-${name});`);
       }
       break;
     case 'font':
@@ -121,6 +152,11 @@ ${cssLines.join('\n')}
 /* Opt-in cool surface for the marketing page. Put data-surface="mist" on a wrapper element. */
 [data-surface='mist'] {
 ${mistLines.join('\n')}
+}
+
+/* Opt-in neutral surface for the landing page: white, near-black, Inter, flat 8px shapes. Put data-surface="core" on a wrapper element. */
+[data-surface='core'] {
+${coreLines.join('\n')}
 }
 `;
 

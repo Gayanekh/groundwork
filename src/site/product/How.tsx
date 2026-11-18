@@ -33,7 +33,7 @@ function StepCard({ i, total, progress, step }: { i: number; total: number; prog
           </span>
         </div>
         <div>
-          <h3 className="text-3xl font-medium tracking-tight">{step.title}</h3>
+          <h3 className="font-display text-3xl font-normal tracking-[-0.014em]">{step.title}</h3>
           <p className="mt-3 max-w-md text-md text-ink-secondary">{step.body}</p>
         </div>
       </motion.div>
@@ -54,7 +54,7 @@ export function How() {
             Get clear in three simple steps
           </h2>
           <p className="mt-6 max-w-sm text-md leading-snug text-ink-secondary">One coordinator, one morning, one stalled permit. Here is the journey, from the first look to the update Maria reads.</p>
-          <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'lg', pill: true, press: true })} mt-10`}>
+          <Link to="/app" className={`${buttonStyles({ variant: 'primary', size: 'md', press: true })} mt-10`}>
             Try the journey <ArrowRight aria-hidden="true" />
           </Link>
         </div>

@@ -43,7 +43,7 @@ export function Solution() {
               <p className="text-2xs text-ink-inverse-tertiary uppercase">First in the queue</p>
               <div className="mt-2 flex items-center justify-between gap-2">
                 <p className="text-lg font-semibold tracking-tight">Maria Delgado</p>
-                <HealthBadge health="blocked" size="sm" shape="pill" />
+                <HealthBadge health="blocked" size="sm" />
               </div>
               <p className="mt-1 text-sm text-ink-inverse-secondary">Blocked 6 days in Permitting.</p>
             </div>
@@ -57,7 +57,7 @@ export function Solution() {
           <Panel tone="wash" padding="md" className="flex aspect-4/5 flex-col justify-end gap-3">
             {reasons.map((r, n) => (
               <div key={r.health} className="rounded-2xl bg-paper-raised/95 p-4 shadow-float" style={{ marginInline: `${n * 6}px` }}>
-                <HealthBadge health={r.health} size="sm" shape="pill" />
+                <HealthBadge health={r.health} size="sm" />
                 <p className="mt-2 text-base font-medium tracking-tight">{r.why}</p>
               </div>
             ))}

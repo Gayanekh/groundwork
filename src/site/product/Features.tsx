@@ -20,7 +20,7 @@ function GuardrailDemo() {
         </div>
       </fieldset>
       <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line-default pt-4">
-        <Button variant="primary" pill disabled={missing.length > 0} aria-describedby={reasonId} trailingIcon={<ArrowRight />}>
+        <Button variant="primary" disabled={missing.length > 0} aria-describedby={reasonId} trailingIcon={<ArrowRight />}>
           Move to Installation
         </Button>
         <p id={reasonId} className="text-sm text-ink-secondary">
@@ -54,7 +54,7 @@ export function Features() {
         <Reveal>
           <Panel padding="lg" className="h-full">
             <SectionTag label="Checklists" />
-            <h3 className="mt-8 max-w-sm text-3xl leading-[1.05] font-medium tracking-[-0.03em] md:text-4xl">Guardrails, not warnings.</h3>
+            <h3 className="mt-8 max-w-sm text-3xl leading-[1.05] font-display font-normal tracking-[-0.014em] md:text-4xl">Guardrails, not warnings.</h3>
             <p className="mt-3 max-w-sm text-base text-ink-secondary">A project only moves forward when its checklist is done. Try it: check the last item.</p>
             <GuardrailDemo />
           </Panel>
@@ -63,7 +63,7 @@ export function Features() {
         <Reveal delay={0.06}>
           <Panel tone="wash" padding="lg" className="h-full">
             <SectionTag label="Messages" />
-            <h3 className="mt-8 max-w-sm text-3xl leading-[1.05] font-medium tracking-[-0.03em] md:text-4xl">Plain words, ready to send.</h3>
+            <h3 className="mt-8 max-w-sm text-3xl leading-[1.05] font-display font-normal tracking-[-0.014em] md:text-4xl">Plain words, ready to send.</h3>
             <p className="mt-3 max-w-sm text-base text-ink-secondary">Drafts use the homeowner’s name for each stage, and a jargon check runs before anything goes out.</p>
             <div className="mt-8 flex flex-col gap-3 rounded-3xl bg-paper-raised p-5 shadow-float sm:p-6">
               <p className="text-sm text-ink-tertiary">Your draft</p>
@@ -84,10 +84,10 @@ export function Features() {
               <div className="flex flex-col justify-between gap-8 p-6 sm:gap-10 sm:p-12">
                 <div>
                   <SectionTag label="System" ink />
-                  <h3 className="mt-8 max-w-lg text-3xl leading-[1] font-medium tracking-[-0.03em] sm:text-4xl md:text-heading">One system for every stage</h3>
+                  <h3 className="mt-8 max-w-lg text-3xl leading-[1] font-display font-normal tracking-[-0.014em] sm:text-4xl md:text-heading">One system for every stage</h3>
                   <p className="mt-6 max-w-sm text-md leading-snug text-ink-inverse-secondary">Stages, blockers, checklists and homeowner updates share one set of rules, in the app and in the design system behind it.</p>
                 </div>
-                <a href="/storybook/" className={`${buttonStyles({ variant: 'secondary', size: 'lg', pill: true, press: true })} self-start`}>
+                <a href="/storybook/" className={`${buttonStyles({ variant: 'secondary', size: 'md', press: true })} self-start`}>
                   Explore the components <ArrowUpRight aria-hidden="true" />
                 </a>
               </div>
@@ -100,7 +100,7 @@ export function Features() {
                         <p className="text-md font-semibold tracking-tight">Maria Delgado</p>
                         <p className="text-sm text-ink-tertiary">Permitting · 26d of 21d target</p>
                       </div>
-                      <HealthBadge health="blocked" size="sm" shape="pill" />
+                      <HealthBadge health="blocked" size="sm" />
                     </div>
                     <div className="mt-4">
                       <Stepper steps={stages} label="Project stages" variant="compact" />

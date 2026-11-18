@@ -104,12 +104,12 @@ function Footer() {
 export function ProductPage() {
   return (
     <MotionConfig reducedMotion="user">
-      <div data-surface="mist" className="relative min-h-dvh overflow-x-clip bg-paper-base font-sans text-pretty">
+      <div data-surface="core" className="relative min-h-dvh overflow-x-clip bg-paper-base font-sans text-pretty">
         <a href="#content" className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0">
           Skip to content
         </a>
         <Header />
-        <main id="content">
+        <main id="content" className="divide-y divide-line-subtle">
           <Hero />
           <Problem />
           <Solution />

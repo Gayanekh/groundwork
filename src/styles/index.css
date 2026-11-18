@@ -78,3 +78,10 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Landing page (core surface): section headings use the display serif, like the hero. Unlayered on purpose so it wins over the size utilities' font settings. */
+[data-surface='core'] h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.014em;
+}

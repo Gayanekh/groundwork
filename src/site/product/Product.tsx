@@ -68,7 +68,7 @@ function Demo() {
             </ol>
             <div aria-live="polite" className="mt-6 lg:mt-0">
               <p className="font-mono text-sm text-ink-tertiary">[05-{step + 1}]</p>
-              <h3 className="mt-2 text-2xl leading-tight font-medium tracking-tight">{STEPS[step].title}</h3>
+              <h3 className="mt-2 font-display text-2xl leading-tight font-normal tracking-[-0.014em]">{STEPS[step].title}</h3>
               <p className="mt-3 max-w-sm text-base text-ink-secondary">{STEPS[step].body}</p>
               {pinned && <p className="mt-6 text-xs text-ink-tertiary">Keep scrolling, or pick a step.</p>}
             </div>

@@ -50,7 +50,7 @@ export function Problem() {
               <p className="text-7xl leading-none font-normal tracking-[-0.045em] md:text-8xl">{s.stat}</p>
               <div className="flex flex-wrap items-end justify-between gap-5">
                 <p className="max-w-sm text-base leading-snug text-ink-secondary">{s.body}</p>
-                <a href="#solution" onClick={jumpTo('solution')} className={buttonStyles({ variant: 'primary', pill: true, press: true })}>
+                <a href="#solution" onClick={jumpTo('solution')} className={buttonStyles({ variant: 'primary', press: true })}>
                   See the fix <ArrowRight aria-hidden="true" />
                 </a>
               </div>

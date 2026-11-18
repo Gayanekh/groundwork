@@ -9,7 +9,7 @@ export function Closing() {
   const headingId = useId();
   return (
     <section id="start" aria-labelledby={headingId} className="scroll-mt-16">
-      <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-10 sm:pb-14 md:pb-20">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-10 sm:py-14 md:py-20">
         <Reveal>
           <Panel tone="wash" padding="lg">
             <div className="grid items-center gap-10 lg:grid-cols-12">
@@ -20,10 +20,10 @@ export function Closing() {
                 </h2>
                 <p className="mt-6 max-w-md text-md leading-snug text-ink-secondary">Open the working prototype and take the stalled-permit journey yourself, from the Today queue to the update Maria reads. Everything in it is fictional, and nothing is really sent.</p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'lg', pill: true, press: true })}>
+                  <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'md', press: true })}>
                     Try the prototype <ArrowRight aria-hidden="true" />
                   </Link>
-                  <Link to="/case-study" className={buttonStyles({ variant: 'secondary', size: 'lg', pill: true, press: true })}>
+                  <Link to="/case-study" className={buttonStyles({ variant: 'secondary', size: 'md', press: true })}>
                     Read the case study
                   </Link>
                 </div>
