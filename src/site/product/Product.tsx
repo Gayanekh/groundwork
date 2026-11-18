@@ -1,6 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import { useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
-import { Atmosphere, SectionTag, cx, useMediaQuery } from '@/design-system';
+import { SectionTag, cx, useMediaQuery } from '@/design-system';
 import { DEVON, MARIA_BLOCKED, PRIYA, TOM, type QueueRow } from './shared';
 import { QueueCard } from './TodayScreen';
 
@@ -46,11 +46,11 @@ function Demo() {
                   aria-current={n === step ? 'step' : undefined}
                   onClick={() => setStep(n)}
                   className={cx(
-                    'flex min-h-12 w-full items-center justify-center gap-2 rounded-full border px-2 text-sm font-medium transition-colors duration-fast ease-standard',
-                    n === step ? 'border-ink-primary bg-paper-inverse text-ink-inverse' : 'border-line-default bg-paper-raised/80 text-ink-primary',
+                    'flex min-h-12 w-full items-center justify-center gap-2 rounded-md border px-2 text-sm transition-colors duration-300 ease-standard',
+                    n === step ? 'border-ink-primary bg-paper-inverse text-ink-inverse' : 'border-ink-primary bg-transparent text-ink-primary hover:bg-core-card',
                   )}
                 >
-                  <span className="font-mono text-xs opacity-70">{n + 1}</span>
+                  <span className="text-xs opacity-70 tabular">{n + 1}</span>
                   {s.short}
                 </button>
               </li>
@@ -67,9 +67,9 @@ function Demo() {
               ))}
             </ol>
             <div aria-live="polite" className="mt-6 lg:mt-0">
-              <p className="font-mono text-sm text-ink-tertiary">[05-{step + 1}]</p>
-              <h3 className="mt-2 font-display text-2xl leading-tight font-normal tracking-[-0.014em]">{STEPS[step].title}</h3>
-              <p className="mt-3 max-w-sm text-base text-ink-secondary">{STEPS[step].body}</p>
+              <p className="text-sm text-ink-tertiary">Step {step + 1} of {STEPS.length}</p>
+              <h3 className="mt-2 font-display text-3xl leading-tight font-normal tracking-[-0.014em]">{STEPS[step].title}</h3>
+              <p className="mt-3 max-w-sm text-md text-ink-secondary">{STEPS[step].body}</p>
               {pinned && <p className="mt-6 text-xs text-ink-tertiary">Keep scrolling, or pick a step.</p>}
             </div>
           </div>
@@ -85,17 +85,14 @@ function Demo() {
 export function Product() {
   const headingId = useId();
   return (
-    <section id="product" aria-labelledby={headingId} className="scroll-mt-16 px-2 sm:px-3">
-      <div className="relative isolate overflow-clip rounded-3xl bg-paper-base md:rounded-[5rem]">
-        <Atmosphere from="bottom" parallax={false} className="absolute inset-0 -z-10" />
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-10 sm:py-14 md:py-20">
-          <SectionTag label="Product" />
-          <h2 id={headingId} className="mt-8 max-w-2xl text-3xl leading-[1] font-medium tracking-[-0.03em] text-balance sm:text-4xl md:text-heading">
-            Every project, clear and within easy reach.
-          </h2>
-          <div className="mt-10 md:mt-16">
-            <Demo />
-          </div>
+    <section id="product" aria-labelledby={headingId} className="scroll-mt-16">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-10 sm:py-14 md:py-20">
+        <SectionTag label="Product" />
+        <h2 id={headingId} className="mt-8 max-w-2xl text-3xl leading-[1] font-medium tracking-[-0.03em] text-balance sm:text-4xl md:text-heading">
+          Every project, clear and within easy reach.
+        </h2>
+        <div className="mt-10 md:mt-16">
+          <Demo />
         </div>
       </div>
     </section>
