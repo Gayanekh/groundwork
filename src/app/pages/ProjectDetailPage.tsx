@@ -270,7 +270,7 @@ function ProjectDetail({ project: p }: { project: Project }) {
               <UpdateComposer key={`${p.stage}-${open.length}-${p.updates.length}`} project={p} />
             </Card>
             <section aria-labelledby="history-title">
-              <h2 id="history-title" className="mb-3 text-md font-semibold tracking-tight">
+              <h2 id="history-title" className="mb-3 font-display text-3xl leading-tight font-light tracking-[-0.014em]">
                 Sent updates
               </h2>
               {p.updates.length === 0 ? (
@@ -282,7 +282,7 @@ function ProjectDetail({ project: p }: { project: Project }) {
               ) : (
                 <ol className="space-y-3">
                   {p.updates.map((u) => (
-                    <li key={u.id} className="rounded-2xl border border-line-subtle bg-paper-raised p-4">
+                    <li key={u.id} className="rounded-2xl bg-paper-raised p-4">
                       <p className="flex flex-wrap items-center gap-2 text-xs text-ink-tertiary">
                         <Badge size="sm" icon={u.channel === 'sms' ? <MessageSquareText /> : <Mail />}>
                           {u.channel === 'sms' ? 'Text' : 'Email'}
@@ -421,7 +421,7 @@ function BlockersPanel({ project: p, onAdd, onResolve }: { project: Project; onA
           <h2 id="resolved-title" className="mb-2 text-2xs font-semibold tracking-wider text-ink-tertiary uppercase">
             Resolved
           </h2>
-          <ul className="divide-y divide-line-subtle rounded-2xl border border-line-subtle bg-paper-raised">
+          <ul className="divide-y divide-line-subtle rounded-2xl bg-paper-raised">
             {resolved.map((b) => (
               <li key={b.id} className="flex items-start gap-3 px-4 py-3 text-sm">
                 <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success-fg" />

@@ -48,10 +48,11 @@ export function Field({ label, hint, error, required = false, optional = false, 
 
   return (
     <FieldContext.Provider value={{ id, describedBy, invalid: Boolean(error), required }}>
-      <div className={cx('flex flex-col gap-1.5', className)}>
+      <div className={cx('flex flex-col gap-1.5 in-data-[surface=core]:gap-2', className)}>
         <div className={cx('flex items-baseline justify-between gap-3', hideLabel && 'sr-only')}>
-          <label htmlFor={id} className="text-sm font-medium text-ink-primary">
+          <label htmlFor={id} className="text-sm font-medium text-ink-primary in-data-[surface=core]:text-md in-data-[surface=core]:font-normal">
             {label}
+            <span aria-hidden="true" className="hidden in-data-[surface=core]:inline">:</span>
             {required && (
               <span className="ml-0.5 text-ember-600" aria-hidden="true">
                 *

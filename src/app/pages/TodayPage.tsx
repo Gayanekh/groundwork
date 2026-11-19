@@ -68,7 +68,7 @@ export function TodayPage() {
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <section aria-labelledby="queue-title" aria-busy={loading}>
           <div className="mb-3 flex items-baseline justify-between">
-            <h2 id="queue-title" className="text-md font-semibold tracking-tight">
+            <h2 id="queue-title" className="font-display text-3xl leading-tight font-light tracking-[-0.014em]">
               Needs your attention
             </h2>
             <Link to="/app/projects?owner=me" className="text-sm font-medium text-ember-600 hover:text-ember-700">
@@ -78,7 +78,7 @@ export function TodayPage() {
           {loading ? (
             <ul className="space-y-3">
               {[0, 1, 2].map((i) => (
-                <li key={i} className="rounded-2xl border border-line-subtle bg-paper-raised p-5">
+                <li key={i} className="rounded-2xl bg-paper-raised p-5">
                   <Skeleton className="h-4 w-48" />
                   <Skeleton className="mt-3 h-3 w-72 max-w-full" />
                   <Skeleton className="mt-5 h-1.5 w-40" />
@@ -168,7 +168,7 @@ function AttentionCard({ project: p, reasons, health }: { project: Project; reas
   return (
     <Link
       to={`/app/projects/${p.id}`}
-      className="group block rounded-2xl border border-line-subtle bg-paper-raised p-4 transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-float sm:p-5"
+      className="group block rounded-2xl bg-paper-raised p-4 transition-[border-color,box-shadow] duration-fast hover:border-line-strong hover:shadow-float sm:p-5"
     >
       <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
         <div className="min-w-0 flex-1">

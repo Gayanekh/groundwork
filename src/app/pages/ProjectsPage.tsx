@@ -142,6 +142,7 @@ export function ProjectsPage() {
           <Input
             ref={searchRef}
             type="search"
+            size="sm"
             aria-label="Search projects by name, address or ID"
             placeholder="Search projects"
             value={q}
@@ -160,6 +161,7 @@ export function ProjectsPage() {
           />
           <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap">
             <Select<StageId | 'all'>
+              size="sm"
               aria-label="Filter by stage"
               prefix="Stage"
               value={stage}
@@ -168,6 +170,7 @@ export function ProjectsPage() {
               options={[{ value: 'all', label: 'All stages' }, ...STAGES.map((s) => ({ value: s.id, label: s.label, description: String(stageCounts[s.id] ?? 0) }))]}
             />
             <Select
+              size="sm"
               aria-label="Filter by coordinator"
               prefix="Owner"
               value={owner}
@@ -180,6 +183,7 @@ export function ProjectsPage() {
               ]}
             />
             <Select<SortKey | 'health'>
+              size="sm"
               aria-label="Sort projects"
               prefix="Sort"
               value={sort}
@@ -355,7 +359,7 @@ function ProjectCard({ project: p, health }: { project: Project; health: Health 
   return (
     <Link
       to={`/app/projects/${p.id}`}
-      className="group flex h-full flex-col rounded-3xl border border-line-subtle bg-paper-raised p-5 transition-shadow duration-base ease-standard hover:shadow-float sm:p-6"
+      className="group flex h-full flex-col rounded-3xl bg-paper-raised p-5 transition-shadow duration-base ease-standard hover:shadow-float sm:p-6"
     >
       <div className="flex items-center gap-3">
         <Avatar name={p.homeowner.name} size="lg" decorative />
@@ -398,7 +402,7 @@ function LoadingRows() {
   return (
     <ul aria-busy="true" aria-label="Loading projects" className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {[0, 1, 2, 3].map((i) => (
-        <li key={i} className="rounded-3xl border border-line-subtle bg-paper-raised p-6">
+        <li key={i} className="rounded-3xl bg-paper-raised p-6">
           <div className="flex items-center gap-3">
             <Skeleton className="size-11 rounded-full" />
             <div className="flex-1 space-y-2">

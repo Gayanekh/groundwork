@@ -6,6 +6,8 @@ import { useField } from '../Field/Field';
 export const controlStyles = cx(
   'w-full rounded-sm in-data-[surface=mist]:rounded-2xl border bg-paper-raised text-ink-primary shadow-xs in-data-[surface=mist]:shadow-none',
   'placeholder:text-ink-tertiary transition-[border-color,box-shadow] duration-fast ease-standard',
+  // Core surface (landing, case study, app): white field, light 1px border, no shadow.
+  'in-data-[surface=core]:border-line-default in-data-[surface=core]:bg-paper-base in-data-[surface=core]:shadow-none in-data-[surface=core]:hover:border-line-strong',
   'hover:border-ink-tertiary',
   'focus-visible:outline-none focus-visible:border-ember-600 focus-visible:ring-3 focus-visible:ring-ember-100 in-data-[surface=mist]:focus-visible:ring-4 in-data-[surface=mist]:focus-visible:ring-ember-100/70',
   'disabled:cursor-not-allowed disabled:bg-paper-sunken disabled:text-ink-disabled disabled:hover:border-line-default disabled:border-line-default',
@@ -44,8 +46,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         className={cx(
           controlStyles,
           // 16px text on touch avoids iOS zoom-on-focus
-          size === 'sm' ? 'h-8 px-2.5 text-sm in-data-[surface=mist]:h-10 pointer-coarse:h-10 pointer-coarse:text-md' : 'h-10 px-3 text-base in-data-[surface=mist]:h-12 in-data-[surface=mist]:rounded-full in-data-[surface=mist]:px-5 pointer-coarse:h-11 pointer-coarse:text-md',
-          leading ? 'pl-9 in-data-[surface=mist]:pl-12' : '',
+          size === 'sm' ? 'h-8 px-2.5 text-sm in-data-[surface=mist]:h-10 in-data-[surface=core]:h-10 in-data-[surface=core]:px-3 in-data-[surface=core]:text-base pointer-coarse:h-10 pointer-coarse:text-md' : 'in-data-[surface=core]:h-16 in-data-[surface=core]:px-4 in-data-[surface=core]:text-md h-10 px-3 text-base in-data-[surface=mist]:h-12 in-data-[surface=mist]:rounded-full in-data-[surface=mist]:px-5 pointer-coarse:h-11 pointer-coarse:text-md',
+          leading ? 'pl-9 in-data-[surface=mist]:pl-12 in-data-[surface=core]:pl-10' : '',
           trailing ? 'pr-10' : '',
         )}
         {...rest}
@@ -73,7 +75,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       required={required ?? field?.required}
       aria-invalid={isInvalid || undefined}
       aria-describedby={rest['aria-describedby'] ?? field?.describedBy}
-      className={cx(controlStyles, 'min-h-20 resize-y px-3 py-2.5 text-base leading-relaxed pointer-coarse:text-md', className)}
+      className={cx(controlStyles, 'min-h-20 resize-y px-3 py-2.5 text-base leading-relaxed in-data-[surface=core]:min-h-40 in-data-[surface=core]:px-4 in-data-[surface=core]:py-4 in-data-[surface=core]:text-md pointer-coarse:text-md', className)}
       {...rest}
     />
   );

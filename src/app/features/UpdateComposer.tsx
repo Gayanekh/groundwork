@@ -175,7 +175,7 @@ function MessagePreview({ project, channel, message }: { project: Project; chann
           </div>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-line-subtle bg-paper-raised shadow-float">
+        <div className="overflow-hidden rounded-2xl bg-paper-raised shadow-float">
           <div className="space-y-1 border-b border-line-subtle px-4 py-3 text-xs">
             <p>
               <span className="text-ink-tertiary">From </span>Brightline Home Energy

@@ -62,11 +62,11 @@ export function SegmentedControl<V extends string>({ options, value, defaultValu
             className={cx(
               'inline-flex items-center gap-1.5 rounded-sm in-data-[surface=mist]:rounded-full font-medium whitespace-nowrap transition-[background-color,color,box-shadow] duration-fast ease-standard',
               size === 'sm' ? 'h-7 px-2.5 text-sm pointer-coarse:h-9' : 'h-8 px-3 text-sm pointer-coarse:h-10',
-              selected ? 'bg-paper-raised text-ink-primary shadow-sm' : 'text-ink-secondary hover:text-ink-primary',
+              selected ? 'bg-paper-raised text-ink-primary shadow-sm in-data-[surface=core]:bg-paper-inverse in-data-[surface=core]:text-ink-inverse in-data-[surface=core]:shadow-none' : 'text-ink-secondary hover:text-ink-primary',
             )}
           >
             {o.label}
-            {o.count !== undefined && <span className={cx('text-xs tabular', selected ? 'text-ink-secondary' : 'text-ink-tertiary')}>{o.count}</span>}
+            {o.count !== undefined && <span className={cx('text-xs tabular', selected ? 'text-ink-secondary in-data-[surface=core]:text-ink-inverse/70' : 'text-ink-tertiary')}>{o.count}</span>}
           </button>
         );
       })}

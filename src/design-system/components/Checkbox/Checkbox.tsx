@@ -36,7 +36,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
           disabled={disabled}
           aria-describedby={description ? `${inputId}-d` : undefined}
           className={cx(
-            'peer size-[18px] cursor-pointer appearance-none rounded-xs border border-line-strong bg-paper-raised transition-colors duration-fast',
+            'peer size-[18px] cursor-pointer appearance-none rounded-xs in-data-[surface=core]:rounded-full border border-line-strong bg-paper-raised in-data-[surface=core]:bg-paper-base transition-colors duration-fast',
             'checked:border-paper-inverse checked:bg-paper-inverse group-hover:border-ink-tertiary checked:group-hover:border-paper-inverse',
             'disabled:cursor-not-allowed disabled:bg-paper-sunken disabled:border-line-default',
           )}
