@@ -79,8 +79,10 @@
   }
 }
 
-/* Landing page (core surface): section headings use the display serif, like the hero. Unlayered on purpose so it wins over the size utilities' font settings. */
-[data-surface='core'] h2 {
+/* Core surface: page titles (h1) use the display serif everywhere. Pages that opt in with data-headings="serif" (the landing page and the case study) also set their section headings (h2) in it.
+   Unlayered on purpose so it wins over the size utilities' font settings. */
+[data-surface='core'] h1,
+[data-headings='serif'] h2 {
   font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: -0.014em;

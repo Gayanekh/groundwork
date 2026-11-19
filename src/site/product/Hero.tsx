@@ -4,7 +4,7 @@ import { ArrowUp, ArrowUpRight, Check, FileText, FolderSync, Mic, MessageSquareT
 import { Avatar, EASE_OUT, Reveal, cx } from '@/design-system';
 import { Link } from '@/app/router';
 import { PHOTOS } from './images';
-import { coreButton } from './coreButton';
+import { coreButton } from '@/app/layout/coreButton';
 import { DISCLAIMER } from './shared';
 
 /** 0 while the hero is first on screen, 1 once the cards have fanned out into their places. */

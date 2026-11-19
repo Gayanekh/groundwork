@@ -58,7 +58,7 @@ export function TodayPage() {
         </p>
       </header>
 
-      <section aria-label="Summary" className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line-subtle bg-line-subtle lg:grid-cols-4">
+      <section aria-label="Summary" className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line-subtle bg-paper-base lg:grid-cols-4">
         <StatTile loading={loading} label="Blocked" value={stats.blocked} icon={<OctagonAlert />} tone="danger" to="/app/projects?health=blocked&owner=me" />
         <StatTile loading={loading} label="At risk" value={stats.atRisk} icon={<Clock3 />} tone="warning" to="/app/projects?health=at-risk&owner=me" />
         <StatTile loading={loading} label="Homeowner waiting > 7 days" value={stats.waiting} icon={<BellRing />} tone="ember" to="/app/projects?owner=me&sort=update" />
@@ -180,7 +180,7 @@ function AttentionCard({ project: p, reasons, health }: { project: Project; reas
             {p.address.street}, {p.address.city} · {stage.label}
           </p>
         </div>
-        <HealthBadge health={health} shape="pill" />
+        <HealthBadge health={health} />
       </div>
       <ul className="mt-3 space-y-1">
         {reasons.map((r) => (

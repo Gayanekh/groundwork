@@ -1,9 +1,14 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('prototype app', () => {
-  test('new project form can be filled, including the dropdowns', async ({ page }) => {
+  test('new project form can be filled, including the dropdowns', async ({ page, viewport }) => {
     await page.goto('/app?latency=0');
-    await page.getByRole('button', { name: 'New project' }).and(page.locator(':visible')).first().click();
+    if ((viewport?.width ?? 0) >= 1280) {
+      await page.getByRole('button', { name: 'New project' }).click();
+    } else {
+      await page.getByRole('button', { name: 'Open menu' }).click();
+      await page.getByRole('menuitem', { name: 'New project' }).click();
+    }
     const dialog = page.getByRole('dialog', { name: 'New project' });
 
     await dialog.getByLabel(/Full name/).fill('Test Person');

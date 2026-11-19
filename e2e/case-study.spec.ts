@@ -13,9 +13,9 @@ test.describe('case study at /case-study', () => {
     await expect(page.getByRole('link', { name: 'Back to the homepage', exact: true })).toBeAttached();
   });
 
-  test('uses the new look and never scrolls sideways', async ({ page }) => {
-    const bg = await page.locator('[data-surface="mist"]').evaluate((el) => getComputedStyle(el).backgroundColor);
-    expect(bg).toBe('rgb(245, 247, 250)');
+  test('uses the neutral core look and never scrolls sideways', async ({ page }) => {
+    const bg = await page.locator('[data-surface="core"]').evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(bg).toBe('rgb(255, 255, 255)');
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
   });

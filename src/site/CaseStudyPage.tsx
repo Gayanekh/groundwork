@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
-import { ArrowRight, Boxes, FileCode2, Inbox, LayoutList, MessageSquareText, OctagonAlert, ShieldCheck, Workflow } from 'lucide-react';
-import { Atmosphere, Badge, Button, SectionTag, Stepper, buttonStyles, cx, tokens, type Step } from '@/design-system';
-import { Link } from '@/app/router';
+import { ArrowRight, ArrowUpRight, Boxes, FileCode2, Inbox, LayoutList, MessageSquareText, OctagonAlert, ShieldCheck, Workflow } from 'lucide-react';
+import { Badge, Button, MenuItem, SectionTag, Stepper, buttonStyles, cx, tokens, type Step } from '@/design-system';
+import { Link, navigate } from '@/app/router';
 import { Logo } from '@/app/layout/Logo';
+import { TopBar } from '@/app/layout/TopBar';
+import { coreButton } from '@/app/layout/coreButton';
 import { HealthBadge } from '@/app/features/projectUi';
 import { PlainLanguageDemo } from './product/PlainLanguage';
 import { jumpTo } from './product/scroll';
@@ -19,7 +21,7 @@ const EVIDENCE: Record<Evidence, { label: string; tone: 'success' | 'info' | 'ac
 
 function Tag({ kind }: { kind: Evidence }) {
   return (
-    <Badge tone={EVIDENCE[kind].tone} size="sm" shape="pill">
+    <Badge tone={EVIDENCE[kind].tone} size="sm">
       {EVIDENCE[kind].label}
     </Badge>
   );
@@ -53,35 +55,43 @@ function Section({ n, title, kicker, children, id }: { n: string; title: ReactNo
 
 export function CaseStudyPage() {
   return (
-    <div data-surface="mist" className="relative min-h-dvh overflow-x-clip bg-paper-base font-sans text-pretty">
+    <div data-surface="core" data-headings="serif" className="relative min-h-dvh overflow-x-clip bg-paper-base font-sans text-pretty">
       <a href="#content" className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0">
         Skip to content
       </a>
-      <header className="sticky top-0 z-30 bg-paper-base/70 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-8">
+      <TopBar
+        brand={
           <Link to="/" aria-label="Groundwork, back to the homepage" className="rounded-sm">
-            <Logo />
+            <Logo onDark />
           </Link>
-          <span className="hidden text-xs text-ink-tertiary md:inline">{DISCLAIMER}</span>
-          <Link to="/" className={cx(buttonStyles({ variant: 'ghost', size: 'sm' }), 'ml-auto')}>
-            Home
-          </Link>
-          <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'sm', press: true })}>
-            Open prototype <ArrowRight aria-hidden="true" />
-          </Link>
-        </div>
-      </header>
+        }
+        actions={
+          <>
+            <Link to="/" className={coreButton('outline-light')}>
+              Home
+            </Link>
+            <Link to="/app" className={coreButton('light', 'rounded-sm')}>
+              Open prototype <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </>
+        }
+        menu={
+          <>
+            <MenuItem onSelect={() => navigate('/')}>Home</MenuItem>
+            <MenuItem onSelect={() => navigate('/app')}>Open prototype</MenuItem>
+          </>
+        }
+      />
 
       <main id="content" className="mx-auto max-w-6xl px-4 sm:px-8">
         {/* Hero */}
-        <section aria-labelledby="hero-title" className="relative isolate pt-12 pb-12 sm:pt-16 sm:pb-16">
-          <Atmosphere parallax={false} className="absolute inset-x-[-50vw] top-[-6rem] -z-10 h-[34rem]" />
-          <p role="note" className="inline-flex items-center gap-2 rounded-full border border-line-subtle bg-paper-raised/70 px-3 py-1 text-xs font-medium text-ink-secondary shadow-xs">
-            <span aria-hidden="true" className="size-1.5 rounded-full bg-ember-600" />
+        <section aria-labelledby="hero-title" className="relative isolate pt-36 pb-12 sm:pb-16">
+          <p role="note" className="inline-flex items-center gap-2 rounded-md bg-core-chip px-3 py-1.5 text-xs font-medium text-ink-primary">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-core-ink" />
             {DISCLAIMER}
           </p>
-          <h1 id="hero-title" className="mt-6 max-w-4xl animate-rise text-4xl leading-[0.95] font-medium tracking-[-0.04em] text-balance md:text-heading">
-            The long, quiet months between <em className="text-ember-600 not-italic">signed</em> and <em className="text-ember-600 not-italic">switched on</em>.
+          <h1 id="hero-title" className="mt-6 max-w-4xl animate-rise text-4xl leading-[0.95] font-normal text-balance md:text-heading">
+            The long, quiet months between <em className="not-italic">signed</em> and <em className="not-italic">switched on</em>.
           </h1>
           <p className="mt-6 max-w-2xl text-md leading-relaxed text-ink-secondary sm:text-lg">
             Groundwork is a speculative product concept for the people who carry a home-energy project from signed contract to permission to
@@ -89,10 +99,10 @@ export function CaseStudyPage() {
             together to create thoughtful, functional software.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'lg', pill: true, press: true })}>
-              Open the working prototype <ArrowRight aria-hidden="true" />
+            <Link to="/app" className={buttonStyles({ variant: 'primary', size: 'md', press: true })}>
+              Open the working prototype <ArrowUpRight aria-hidden="true" />
             </Link>
-            <a href="#case-study" onClick={jumpTo('case-study')} className={buttonStyles({ variant: 'secondary', size: 'lg', pill: true, press: true })}>
+            <a href="#case-study" onClick={jumpTo('case-study')} className={buttonStyles({ variant: 'secondary', size: 'md', press: true })}>
               Read the case study
             </a>
           </div>
@@ -118,7 +128,7 @@ export function CaseStudyPage() {
                   <p className="text-lg font-semibold tracking-tight">Maria Delgado</p>
                   <p className="text-sm text-ink-tertiary">1482 Larkspur Lane, Riverside · Solar + battery, 8.4 kW</p>
                 </div>
-                <HealthBadge health="blocked" shape="pill" />
+                <HealthBadge health="blocked" />
               </div>
               <div className="mt-8">
                 <Stepper steps={heroSteps} label="Example project stages" />
@@ -232,8 +242,8 @@ export function CaseStudyPage() {
             ))}
           </ol>
           <div className="mt-6">
-            <Link to="/app" className={buttonStyles({ variant: 'secondary', pill: true, press: true })}>
-              Try this journey in the prototype <ArrowRight aria-hidden="true" />
+            <Link to="/app" className={buttonStyles({ variant: 'secondary', press: true })}>
+              Try this journey in the prototype <ArrowUpRight aria-hidden="true" />
             </Link>
           </div>
         </Section>
@@ -440,9 +450,9 @@ function TokenShowcase() {
             <Button variant="primary" disabled>
               Disabled
             </Button>
-            <HealthBadge health="on-track" shape="pill" />
-            <HealthBadge health="at-risk" shape="pill" />
-            <HealthBadge health="blocked" shape="pill" />
+            <HealthBadge health="on-track" />
+            <HealthBadge health="at-risk" />
+            <HealthBadge health="blocked" />
           </div>
           <p className="mt-3 text-xs text-ink-tertiary">
             Full inventory with every state:{' '}

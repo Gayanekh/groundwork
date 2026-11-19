@@ -327,7 +327,7 @@ function ProjectRow({ project: p, health }: { project: Project; health: Health }
         <ProjectStepper project={p} variant="compact" />
       </TD>
       <TD>
-        <HealthBadge health={health} shape="pill" />
+        <HealthBadge health={health} />
       </TD>
       <TD align="right" className="tabular">
         <span className={inStage > sla && health !== 'complete' ? 'font-medium text-warning-fg' : ''}>{inStage}d</span>
@@ -365,7 +365,7 @@ function ProjectCard({ project: p, health }: { project: Project; health: Health 
             {p.address.street}, {p.address.city} · {TRADE_LABEL[p.trade]}
           </p>
         </div>
-        <HealthBadge health={health} size="sm" shape="pill" />
+        <HealthBadge health={health} size="sm" />
       </div>
 
       <div className="mt-7 flex items-end gap-3">

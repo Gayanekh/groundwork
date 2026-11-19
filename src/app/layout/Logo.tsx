@@ -11,11 +11,12 @@ export function LogoMark({ className }: { className?: string }) {
   );
 }
 
-export function Logo({ className }: { className?: string }) {
+/** The mark and the name. `onDark` is for the near-black top bar. */
+export function Logo({ className, onDark }: { className?: string; onDark?: boolean }) {
   return (
     <span className={cx('flex items-center gap-2', className)}>
-      <LogoMark />
-      <span className="text-[17px] font-semibold tracking-[-0.02em] text-ink-primary">Groundwork</span>
+      <LogoMark className={onDark ? 'size-6' : undefined} />
+      <span className={onDark ? 'text-lg font-medium text-core-chip' : 'text-[17px] font-semibold tracking-[-0.02em] text-ink-primary'}>Groundwork</span>
     </span>
   );
 }

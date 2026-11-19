@@ -1,11 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Plus, RotateCcw, Sparkles } from 'lucide-react';
-import { Atmosphere, Avatar, Button, IconButton, Menu, MenuItem, MenuLabel, cx, useToast } from '@/design-system';
+import { Avatar, Menu, MenuItem, MenuLabel, cx, useToast } from '@/design-system';
 import { Link, navigate, useLocation } from '../router';
 import { useProjects } from '../state/ProjectsStore';
 import { getHealth } from '../domain/health';
 import { NewProjectDialog } from '../features/NewProjectDialog';
 import { Logo } from './Logo';
+import { TopBar } from './TopBar';
+import { coreButton } from './coreButton';
 
 interface NavItem {
   to: string;
@@ -15,15 +17,14 @@ interface NavItem {
 }
 
 /**
- * The prototype's frame. It is laid out like the landing page, not like an admin dashboard: a
- * top bar with the logo, pill navigation and one main action, then a centered page.
+ * The prototype's frame. It looks like the landing page, not like an admin dashboard: the same floating
+ * near-black bar with the logo, two links and the main action, then a centered page on the white "core" surface.
  */
 export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const { projects, resetDemo, currentUser } = useProjects();
   const toast = useToast();
   const [newOpen, setNewOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
 
   const attention = projects.filter((p) => {
@@ -42,19 +43,11 @@ export function AppShell({ children }: { children: ReactNode }) {
     mainRef.current?.focus({ preventScroll: true });
   }, [pathname]);
 
-  // Transparent over the top of the page, a light frosted bar once you scroll, like the landing page.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // The app uses the same cool "mist" surface as the landing page. Set on <html> so portals (dialogs, menus, toasts) match.
+  // The app uses the same neutral "core" surface as the landing page. Set on <html> so portals (dialogs, menus, toasts) match.
   useLayoutEffect(() => {
     const root = document.documentElement;
     const before = root.getAttribute('data-surface');
-    root.setAttribute('data-surface', 'mist');
+    root.setAttribute('data-surface', 'core');
     return () => {
       if (before === null) root.removeAttribute('data-surface');
       else root.setAttribute('data-surface', before);
@@ -67,70 +60,70 @@ export function AppShell({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="relative isolate min-h-dvh bg-paper-base">
-      <Atmosphere parallax={false} className="absolute inset-x-0 top-0 -z-10 h-[32rem] opacity-80" />
-
+    <div className="relative min-h-dvh bg-paper-base font-sans [--color-paper-raised:var(--color-core-chip)]">
       <a href="#main" className="fixed top-2 left-2 z-[70] -translate-y-20 rounded-md bg-paper-inverse px-3 py-2 text-sm font-medium text-ink-inverse focus:translate-y-0">
         Skip to content
       </a>
 
-      <header className={cx('sticky top-0 z-30 border-b transition-[background-color,border-color] duration-base ease-standard', scrolled ? 'border-line-subtle/60 bg-paper-base/80 backdrop-blur-md' : 'border-transparent')}>
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-1 px-4 py-2 sm:px-8 md:h-16 md:flex-nowrap md:py-0">
+      <TopBar
+        brand={
           <Link to="/" className="rounded-sm" aria-label="Groundwork, go to the homepage">
-            <Logo />
+            <Logo onDark />
           </Link>
-
-          <nav aria-label="Primary" className="order-3 flex w-full items-center gap-1 pb-1 md:order-none md:w-auto md:flex-1 md:justify-center md:pb-0">
-            {nav.map((item) => {
-              const active = item.match(pathname);
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  aria-current={active ? 'page' : undefined}
-                  className={cx(
-                    'inline-flex h-10 items-center gap-2 rounded-full px-4 text-base whitespace-nowrap transition-colors duration-fast ease-standard',
-                    active ? 'bg-paper-raised font-medium text-ink-primary shadow-float' : 'text-ink-secondary hover:bg-paper-raised/70 hover:text-ink-primary',
-                  )}
-                >
-                  {item.label}
-                  {item.count ? (
-                    <span className="rounded-full bg-paper-inverse px-1.5 text-xs leading-5 text-ink-inverse tabular">
-                      {item.count}
-                      <span className="sr-only"> need attention</span>
-                    </span>
-                  ) : null}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="ml-auto flex items-center gap-2 md:ml-0">
-            <Button variant="primary" leadingIcon={<Plus />} onClick={() => setNewOpen(true)} className="max-sm:hidden">
-              New project
-            </Button>
-            <IconButton aria-label="New project" variant="secondary" icon={<Plus />} onClick={() => setNewOpen(true)} className="sm:hidden" />
-            <Menu
-              placement="bottom-end"
-              trigger={
-                <button type="button" aria-label="Account and demo options" className="grid size-10 place-items-center rounded-full transition-shadow duration-fast hover:shadow-float">
-                  <Avatar name={currentUser} size="md" decorative />
-                </button>
-              }
+        }
+        links={nav.map((item) => {
+          const active = item.match(pathname);
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              aria-current={active ? 'page' : undefined}
+              className={cx(
+                'inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-base tracking-[0.01em] whitespace-nowrap transition-colors duration-300 ease-standard',
+                active ? 'bg-core-chip/15' : 'hover:bg-core-chip/10',
+              )}
             >
-              <MenuLabel>{currentUser} · Project coordinator (fictional)</MenuLabel>
-              <MenuItem icon={<RotateCcw />} onSelect={reset}>
-                Reset demo data
+              {item.label}
+              {item.count ? (
+                <span className="rounded-md bg-core-chip px-1.5 text-xs leading-5 text-core-ink tabular">
+                  {item.count}
+                  <span className="sr-only"> need attention</span>
+                </span>
+              ) : null}
+            </Link>
+          );
+        })}
+        actions={
+          <>
+            <button type="button" onClick={() => setNewOpen(true)} className={coreButton('light')}>
+              <Plus aria-hidden="true" /> New project
+            </button>
+            <AccountMenu name={currentUser} onReset={reset} />
+          </>
+        }
+        menuLabel="Open menu"
+        menu={
+          <>
+            {nav.map((item) => (
+              <MenuItem key={item.to} onSelect={() => navigate(item.to)}>
+                {item.label}
+                {item.count ? ` (${item.count} need attention)` : ''}
               </MenuItem>
-              <MenuItem icon={<Sparkles />} onSelect={() => navigate('/')}>
-                About this concept
-              </MenuItem>
-            </Menu>
-          </div>
-        </div>
-      </header>
+            ))}
+            <MenuItem icon={<Plus />} onSelect={() => setNewOpen(true)}>
+              New project
+            </MenuItem>
+            <MenuItem icon={<RotateCcw />} onSelect={reset}>
+              Reset demo data
+            </MenuItem>
+            <MenuItem icon={<Sparkles />} onSelect={() => navigate('/')}>
+              About this concept
+            </MenuItem>
+          </>
+        }
+      />
 
-      <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-6xl px-4 pt-8 pb-20 outline-none sm:px-8 md:pt-12">
+      <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-6xl px-4 pt-32 pb-20 outline-none sm:px-8 md:pt-36">
         {children}
       </main>
 
@@ -142,5 +135,27 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <NewProjectDialog open={newOpen} onClose={() => setNewOpen(false)} />
     </div>
+  );
+}
+
+/** The avatar menu in the bar (wide screens). On small screens the same items live in the hamburger menu. */
+function AccountMenu({ name, onReset }: { name: string; onReset: () => void }) {
+  return (
+    <Menu
+      placement="bottom-end"
+      trigger={
+        <button type="button" aria-label="Account and demo options" className="grid size-10 place-items-center rounded-full transition-opacity duration-fast hover:opacity-80">
+          <Avatar name={name} size="md" decorative />
+        </button>
+      }
+    >
+      <MenuLabel>{name} · Project coordinator (fictional)</MenuLabel>
+      <MenuItem icon={<RotateCcw />} onSelect={onReset}>
+        Reset demo data
+      </MenuItem>
+      <MenuItem icon={<Sparkles />} onSelect={() => navigate('/')}>
+        About this concept
+      </MenuItem>
+    </Menu>
   );
 }
