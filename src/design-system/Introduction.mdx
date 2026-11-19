@@ -12,10 +12,18 @@ No UI component library is used: every component here is custom React + TypeScri
 ## Principles
 
 1. **Status in words, not color alone.** Every status color is paired with an icon and a text label.
-2. **Calm surfaces, one accent.** A cool, quiet canvas with white cards; `ember` is reserved for focus, progress and brand moments. The toolbar's **Surface** switch shows both the cool _mist_ surface used by the site and the app, and the original warm paper.
+2. **Calm surfaces, one accent.** A white, neutral canvas with light gray cards and near-black ink; `ember` is reserved for focus, progress and brand moments. The toolbar's **Surface** switch shows the neutral _core_ surface used by the landing page, the case study and the app, the cooler _mist_ surface of the earlier look, and the original warm paper.
 3. **States are part of the component.** Hover, focus-visible, active, disabled, loading, invalid and empty are designed and built, not left to defaults.
 4. **Keyboard first.** Every interactive component follows its WAI-ARIA pattern.
 5. **Tokens are data.** `src/design-system/tokens/tokens.json` is the single source of truth.
+
+## Surfaces
+
+The default tokens are warm paper. Putting `data-surface="core"` on an element (the landing page, the case study and the app do it on their root) remaps the paper, ink and line tokens to white and near-black, swaps the font to Inter, and flattens corners (controls 8px, cards 16px). Buttons, cards, inputs, tabs and segmented controls follow on their own, so no page needs special classes. `data-surface="mist"` is the earlier cool blue-gray look with soft pill shapes.
+
+## Marketing and motion
+
+Section layout (`EditorialSection`, `Panel`, `CardStack`), the hero wash (`Atmosphere`), scroll reveals (`Reveal`), counting numbers (`CountUp`) and chat bubbles (`ChatBubble`) live under **Components → Editorial & motion**. Motion uses the `motion` package, animates only `transform` and `opacity`, takes its easing from the motion tokens, and is switched off by `prefers-reduced-motion`.
 
 ## Surfaces
 

@@ -1,15 +1,15 @@
-import { useLayoutEffect, type ReactNode } from 'react';
+import { useLayoutEffect } from 'react';
 import type { Preview } from '@storybook/react-vite';
 import { ToastProvider } from '../src/design-system';
 import '../src/styles/index.css';
 
-type Surface = 'mist' | 'warm';
+type Surface = 'core' | 'mist' | 'warm';
 
 /** Sets the surface on <html> (like the app does) so portals, menus and dialogs match the story. */
-function SurfaceScope({ surface, children }: { surface: Surface; children: ReactNode }) {
+function SurfaceScope({ surface, children }: { surface: Surface; children: React.ReactNode }) {
   useLayoutEffect(() => {
     const root = document.documentElement;
-    if (surface === 'mist') root.setAttribute('data-surface', 'mist');
+    if (surface === 'core' || surface === 'mist') root.setAttribute('data-surface', surface);
     else root.removeAttribute('data-surface');
     document.body.style.background = 'var(--color-paper-base)';
   }, [surface]);
@@ -25,16 +25,17 @@ const preview: Preview = {
         icon: 'paintbrush',
         dynamicTitle: true,
         items: [
-          { value: 'mist', title: 'Mist (cool, used by the site and the app)' },
+          { value: 'core', title: 'Core (white, neutral: the landing page, case study and app)' },
+          { value: 'mist', title: 'Mist (cool blue-gray, the earlier look)' },
           { value: 'warm', title: 'Warm paper (default tokens)' },
         ],
       },
     },
   },
-  initialGlobals: { surface: 'mist' },
+  initialGlobals: { surface: 'core' },
   decorators: [
     (Story, context) => (
-      <SurfaceScope surface={(context.globals.surface as Surface) ?? 'mist'}>
+      <SurfaceScope surface={(context.globals.surface as Surface) ?? 'core'}>
         <ToastProvider>
           <div className="font-sans text-ink-primary">
             <Story />

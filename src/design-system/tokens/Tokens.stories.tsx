@@ -13,7 +13,7 @@ const entries = (prefix: string) => Object.entries(tokens).filter(([k]) => k.sta
 
 export const Color: Story = {
   render: () => {
-    const groups = ['paper', 'ink', 'line', 'mist', 'wash', 'ember', 'success', 'warning', 'danger', 'info', 'neutral'];
+    const groups = ['paper', 'ink', 'line', 'core', 'mist', 'wash', 'ember', 'success', 'warning', 'danger', 'info', 'neutral'];
     return (
       <div className="space-y-8">
         {groups.map((g) => (
@@ -37,22 +37,30 @@ export const Color: Story = {
   },
 };
 
-// The page may already be on the mist surface, so the warm card sets the original paper values itself.
+// The page itself sits on the core or mist surface, so the warm card sets the original values itself.
 const warm = {
   '--color-paper-base': tokens['color.paper.base'],
   '--color-paper-sunken': tokens['color.paper.sunken'],
   '--color-paper-inverse': tokens['color.paper.inverse'],
+  '--color-ink-primary': tokens['color.ink.primary'],
+  '--color-ink-secondary': tokens['color.ink.secondary'],
+  '--color-ink-tertiary': tokens['color.ink.tertiary'],
   '--color-line-subtle': tokens['color.line.subtle'],
   '--color-line-default': tokens['color.line.default'],
+  '--font-sans': tokens['font.sans'],
+  '--radius-lg': tokens['radius.lg'],
+  '--radius-2xl': tokens['radius.2xl'],
+  '--radius-3xl': tokens['radius.3xl'],
 } as CSSProperties;
 
 export const Surfaces: Story = {
-  parameters: { docs: { description: { story: 'The same components on warm paper (default) and on the cool mist surface. Mist is switched on with `data-surface="mist"`.' } } },
+  parameters: { docs: { description: { story: 'The same components on warm paper (the default tokens), the neutral core surface (the landing page, case study and app) and the cool mist surface. A surface is switched on with `data-surface="core"` or `data-surface="mist"`.' } } },
   render: () => (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 lg:grid-cols-3">
       {[
-        { name: 'Warm paper (default)', surface: undefined, style: warm },
-        { name: 'Mist (site and app)', surface: 'mist', style: undefined },
+        { name: 'Warm paper (default tokens)', surface: undefined, style: warm },
+        { name: 'Core (site, case study, app)', surface: 'core', style: undefined },
+        { name: 'Mist (earlier look)', surface: 'mist', style: undefined },
       ].map(({ name, surface, style }) => (
         <div key={name} data-surface={surface} style={style} className="rounded-3xl bg-paper-base p-6 ring-1 ring-line-default">
           <p className="font-mono text-xs text-ink-tertiary">{name}</p>
