@@ -123,11 +123,11 @@ export function AppShell({ children }: { children: ReactNode }) {
         }
       />
 
-      <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-6xl px-4 pt-32 pb-20 outline-none sm:px-8 md:pt-36">
+      <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-7xl px-4 pt-32 pb-20 outline-none sm:px-10 md:pt-36">
         {children}
       </main>
 
-      <footer className="mx-auto max-w-6xl px-4 pb-10 sm:px-8">
+      <footer className="mx-auto max-w-7xl px-4 pb-10 sm:px-10">
         <aside aria-label="Prototype notice" className="border-t border-line-default pt-6 text-sm text-ink-secondary">
           <span className="font-medium text-ink-primary">Concept prototype.</span> All people, companies and data are illustrative, and the portraits are stock photos. Messages and actions are simulated.
         </aside>

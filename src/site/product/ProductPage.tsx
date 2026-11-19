@@ -68,29 +68,16 @@ function Header() {
 function Footer() {
   return (
     <footer className="overflow-hidden">
-      <div className="mx-auto grid max-w-7xl gap-8 border-t border-line-default px-4 pt-10 pb-12 text-sm text-ink-secondary sm:px-10 md:grid-cols-2">
+      <div className="mx-auto grid max-w-7xl gap-8 border-t border-line-default px-4 pt-10 pb-12 text-sm text-ink-secondary sm:px-10">
         <p className="max-w-md">
           <span className="font-medium text-ink-primary">{DISCLAIMER}</span> All people, companies, addresses and numbers in the prototype are fictional. Messages are simulated.
         </p>
-        <div className="space-y-2 md:text-right">
-          <p className="flex flex-wrap gap-x-5 gap-y-1 md:justify-end">
-            <Link to="/case-study" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
-              Case study
-            </Link>
-            <a href="/storybook/" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
-              Storybook
-            </a>
-            <a href="https://github.com/Gayanekh/groundwork" className="inline-block py-3 font-medium text-ink-primary underline-offset-4 hover:underline">
-              Source
-            </a>
-          </p>
-        </div>
       </div>
     </footer>
   );
 }
 
-/** The Groundwork landing page, served at "/" in the cool "mist" surface. */
+/** The Groundwork landing page, served at "/" on the neutral "core" surface. */
 export function ProductPage() {
   return (
     <MotionConfig reducedMotion="user">

@@ -70,15 +70,16 @@ export function UpdateComposer({ project, onSent }: { project: Project; onSent?:
           </Alert>
         )}
 
-        <div className="flex flex-wrap items-end gap-3">
+        <div className="flex flex-wrap items-start gap-3">
           <div className="w-full sm:w-56">
             <Field label="Start from">
-              <Select<TemplateId> value={template} onChange={pickTemplate} options={TEMPLATES.map((t) => ({ value: t.id, label: t.label }))} />
+              <Select<TemplateId> size="sm" value={template} onChange={pickTemplate} options={TEMPLATES.map((t) => ({ value: t.id, label: t.label }))} />
             </Field>
           </div>
           <div>
-            <p className="mb-1.5 text-sm font-medium text-ink-primary" id="channel-label">
+            <p className="mb-1.5 text-sm font-medium text-ink-primary in-data-[surface=core]:mb-2 in-data-[surface=core]:text-md in-data-[surface=core]:font-normal" id="channel-label">
               Send by
+              <span aria-hidden="true" className="hidden in-data-[surface=core]:inline">:</span>
             </p>
             <SegmentedControl<Channel>
               label="Send by"

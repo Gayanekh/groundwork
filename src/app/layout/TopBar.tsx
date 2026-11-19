@@ -24,7 +24,7 @@ export interface TopBarProps {
 export function TopBar({ brand, links, linksLabel = 'Primary', actions, menu, menuLabel = 'Open section menu' }: TopBarProps) {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-6 z-30 flex justify-center px-6">
-      <div className="pointer-events-auto flex h-16 w-full max-w-[342px] items-center justify-between rounded-xl bg-core-ink pr-4 pl-6 font-inter text-core-chip md:max-w-[640px] xl:h-15 xl:max-w-[1120px] xl:pr-2.5">
+      <div className="pointer-events-auto flex h-16 w-full max-w-[342px] items-center justify-between rounded-xl bg-core-ink pr-4 pl-6 font-inter text-core-chip md:max-w-[640px] xl:h-15 xl:max-w-[1200px] xl:pr-2.5">
         {brand}
         {links ? <nav aria-label={linksLabel} className="hidden items-center gap-10 xl:flex">{links}</nav> : null}
         {actions ? <div className="hidden items-center gap-2 xl:flex">{actions}</div> : null}

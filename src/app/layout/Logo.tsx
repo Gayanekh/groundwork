@@ -15,8 +15,8 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({ className, onDark }: { className?: string; onDark?: boolean }) {
   return (
     <span className={cx('flex items-center gap-2', className)}>
-      <LogoMark className={onDark ? 'size-6' : undefined} />
-      <span className={onDark ? 'text-lg font-medium text-core-chip' : 'text-[17px] font-semibold tracking-[-0.02em] text-ink-primary'}>Groundwork</span>
+      <LogoMark className={onDark ? '-ml-1 size-10' : undefined} />
+      <span className={onDark ? 'text-[17px] font-medium text-core-chip' : 'text-[17px] font-semibold tracking-[-0.02em] text-ink-primary'}>Groundwork</span>
     </span>
   );
 }

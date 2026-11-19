@@ -83,7 +83,7 @@ export function CaseStudyPage() {
         }
       />
 
-      <main id="content" className="mx-auto max-w-6xl px-4 sm:px-8">
+      <main id="content" className="mx-auto max-w-7xl px-4 sm:px-10">
         {/* Hero */}
         <section aria-labelledby="hero-title" className="relative isolate pt-36 pb-12 sm:pb-16">
           <p role="note" className="inline-flex items-center gap-2 rounded-md bg-core-chip px-3 py-1.5 text-xs font-medium text-ink-primary">
@@ -319,7 +319,7 @@ export function CaseStudyPage() {
       </main>
 
       <footer className="border-t border-line-default bg-paper-sunken/50">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-ink-tertiary sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 text-sm text-ink-tertiary sm:flex-row sm:items-center sm:justify-between sm:px-10">
           <p>
             <span className="font-medium text-ink-secondary">{DISCLAIMER}</span> All people, companies, addresses and numbers in the prototype are
             fictional.
